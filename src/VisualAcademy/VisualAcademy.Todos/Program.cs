@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,8 +10,26 @@ var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
 
-app.MapGet("/todos", async (TodoDb db) => 
+var todos = app.MapGroup("/todos");
+
+todos.MapGet("/",
+    async (TodoDb db) =>
     await db.Todos.ToListAsync());
+
+todos.MapPost("/",
+    async (Todo todo, TodoDb db) =>
+    {
+        db.Todos.Add(todo);
+        await db.SaveChangesAsync();
+        return TypedResults.Created($"/todos/{todo.Id}", todo);
+    });
+
+todos.MapGet("/{id}",
+    async Task<Results<Ok<Todo>, NotFound>> (int id, TodoDb db) =>
+    await db.Todos.FindAsync(id)
+        is Todo todo
+            ? TypedResults.Ok(todo)
+            : TypedResults.NotFound());
 
 app.Run();
 
