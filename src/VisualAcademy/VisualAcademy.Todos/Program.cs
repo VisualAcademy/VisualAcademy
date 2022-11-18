@@ -10,19 +10,24 @@ var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
 
-app.MapGet("/todos", async (TodoDb db) => 
+var todos = app.MapGroup("/todos");
+
+todos.MapGet("/",
+    async (TodoDb db) =>
     await db.Todos.ToListAsync());
 
-app.MapPost("/todos", async (Todo todo, TodoDb db) => 
-{ 
-    db.Todos.Add(todo);
-    await db.SaveChangesAsync();
-    return TypedResults.Created($"/todos/{todo.Id}", todo);
-});
+todos.MapPost("/",
+    async (Todo todo, TodoDb db) =>
+    {
+        db.Todos.Add(todo);
+        await db.SaveChangesAsync();
+        return TypedResults.Created($"/todos/{todo.Id}", todo);
+    });
 
-app.MapGet("/todos/{id}", async Task<Results<Ok<Todo>, NotFound>> (int id, TodoDb db) => 
+todos.MapGet("/{id}",
+    async Task<Results<Ok<Todo>, NotFound>> (int id, TodoDb db) =>
     await db.Todos.FindAsync(id)
-        is Todo todo 
+        is Todo todo
             ? TypedResults.Ok(todo)
             : TypedResults.NotFound());
 
