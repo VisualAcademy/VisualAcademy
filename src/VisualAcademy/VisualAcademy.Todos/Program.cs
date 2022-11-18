@@ -12,6 +12,13 @@ app.MapGet("/", () => "Hello World!");
 app.MapGet("/todos", async (TodoDb db) => 
     await db.Todos.ToListAsync());
 
+app.MapPost("/todos", (Todo todo, TodoDb db) => 
+{ 
+    db.Todos.Add(todo);
+    db.SaveChanges();
+    return TypedResults.Ok();
+});
+
 app.Run();
 
 class Todo
