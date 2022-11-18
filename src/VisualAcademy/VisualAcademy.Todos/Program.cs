@@ -9,6 +9,8 @@ var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
 
+app.MapGet("/todos", (TodoDb db) => db.Todos.ToList());
+
 app.Run();
 
 class Todo
