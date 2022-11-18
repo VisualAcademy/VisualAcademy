@@ -1,6 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<TodoDb>(
+    opt => opt.UseInMemoryDatabase("Todos"));
+
 var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
@@ -19,5 +23,5 @@ class TodoDb : DbContext
     public TodoDb(DbContextOptions<TodoDb> options)
         : base(options) { }
 
-    public DbSet<Todo> Todos { get; set; }
+    public DbSet<Todo> Todos => Set<Todo>();
 }
