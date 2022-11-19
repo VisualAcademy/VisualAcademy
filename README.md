@@ -1,5 +1,9 @@
 ### Hi there 👋
 
+Blazor Server 7.0 기초 강좌가 오픈되었습니다.
+
+https://www.youtube.com/playlist?list=PLO56HZSjrPTAS3bC6UUNWBH9ih5yujpvS
+
 <!--
 **VisualAcademy/VisualAcademy** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
