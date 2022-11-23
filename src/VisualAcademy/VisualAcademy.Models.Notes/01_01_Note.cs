@@ -17,25 +17,25 @@ namespace Hawaso.Models.Notes
         public string Name { get; set; } = string.Empty; 
 
         [EmailAddress(ErrorMessage = "* 이메일을 정확히 입력하세요.")]
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         [Display(Name = "제목")]
         [Required(ErrorMessage = "* 제목을 작성해 주세요.")]
-        public string Title { get; set; }
+        public string Title { get; set; } = "";
 
         [Display(Name = "작성일")]
         public DateTime PostDate { get; set; }
 
         [Display(Name = "작성IP")]
-        public string PostIp { get; set; }
+        public string PostIp { get; set; } = "127.0.0.1";
 
         [Display(Name = "내용")]
         [Required(ErrorMessage = "* 내용을 작성해 주세요.")]
-        public string Content { get; set; }
+        public string Content { get; set; } = "";
 
         [Display(Name = "비밀번호")]
         [Required(ErrorMessage = "* 비밀번호를 작성해 주세요.")]
-        public string Password { get; set; }
+        public string Password { get; set; } = "";
 
         [Display(Name = "조회수")]
         public int ReadCount { get; set; }
@@ -44,16 +44,16 @@ namespace Hawaso.Models.Notes
         public string Encoding { get; set; } = "Text";
 
         [Display(Name = "홈페이지")]
-        public string Homepage { get; set; }
+        public string Homepage { get; set; } = "";
 
         [Display(Name = "수정일")]
         public DateTime? ModifyDate { get; set; }
 
         [Display(Name = "수정IP")]
-        public string ModifyIp { get; set; }
+        public string ModifyIp { get; set; } = "";
 
         [Display(Name = "파일")]
-        public string FileName { get; set; }
+        public string FileName { get; set; } = "";
 
         [Display(Name = "파일크기")]
         public int FileSize { get; set; }
@@ -80,7 +80,7 @@ namespace Hawaso.Models.Notes
         public int CommentCount { get; set; }
 
         [Display(Name = "카테고리")]
-        public string Category { get; set; } // = "Free"; // 자유게시판(Free) 기본
+        public string Category { get; set; } = ""; // = "Free"; // 자유게시판(Free) 기본
 
         public int? Num { get; set; }
         public int? UserId { get; set; }

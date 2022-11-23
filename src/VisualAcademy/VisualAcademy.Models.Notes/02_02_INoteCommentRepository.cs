@@ -8,7 +8,7 @@ namespace Hawaso.Models.Notes
         int DeleteNoteComment(int boardId, int id, string password);
         int GetCountBy(int boardId, int id, string password);
         List<NoteComment> GetNoteComments(int boardId);
-        List<NoteComment> GetRecentComments();
+        List<NoteComment>? GetRecentComments();
         List<NoteComment> GetRecentCommentsNoCache();
     }
 }

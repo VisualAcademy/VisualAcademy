@@ -7,11 +7,11 @@ namespace Hawaso.Models.Notes
         // 게시판에서 사용
         void Add(Note model);
         int DeleteNote(int id, string password);
-        List<Note> GetAll(int page);
+        List<Note>? GetAll(int page);
         int GetCountAll();
         int GetCountBySearch(string searchField, string searchQuery);
-        string GetFileNameById(int id);
-        Note GetNoteById(int id);
+        string? GetFileNameById(int id);
+        Note? GetNoteById(int id);
         List<Note> GetSeachAll(
             int page, string searchField, string searchQuery);
         void ReplyNote(Note model);
@@ -21,11 +21,11 @@ namespace Hawaso.Models.Notes
 
         // 메인 페이지에서 사용
         List<Note> GetRecentPosts();
-        List<Note> GetRecentPostsCache();
+        List<Note>? GetRecentPostsCache();
         List<Note> GetNewPhotos();
-        List<Note> GetNewPhotosCache();
+        List<Note>? GetNewPhotosCache();
         List<Note> GetNoteSummaryByCategory(string category);
-        List<Note> GetNoteSummaryByCategoryCache(string category);
+        List<Note>? GetNoteSummaryByCategoryCache(string category);
         List<Note> GetNoteSummaryByCategoryBlog(string category);
 
         // 관리자 기능(페이지)에서 사용

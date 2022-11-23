@@ -143,7 +143,7 @@ namespace Hawaso.Models.Notes
         /// 또는 GetNotes(), GetComments() 형태도 많이 사용
         /// </summary>
         /// <param name="page">페이지 번호</param>
-        public List<Note> GetAll(int page)
+        public List<Note>? GetAll(int page)
         {
             _logger.LogInformation("데이터 출력");
             try
@@ -202,7 +202,7 @@ namespace Hawaso.Models.Notes
         /// <summary>
         /// Id에 해당하는 파일명 반환
         /// </summary>
-        public string GetFileNameById(int id) => con.Query<string>("Select FileName From Notes Where Id = @Id", new { Id = id }).SingleOrDefault();
+        public string? GetFileNameById(int id) => con.Query<string>("Select FileName From Notes Where Id = @Id", new { Id = id }).SingleOrDefault();
 
         /// <summary>
         /// 검색 결과 리스트
@@ -230,7 +230,7 @@ namespace Hawaso.Models.Notes
         /// <summary>
         /// 상세 보기 
         /// </summary>
-        public Note GetNoteById(int id) => con.Query<Note>("ViewNote", new DynamicParameters(new { Id = id }), commandType: CommandType.StoredProcedure).SingleOrDefault();
+        public Note? GetNoteById(int id) => con.Query<Note>("ViewNote", new DynamicParameters(new { Id = id }), commandType: CommandType.StoredProcedure).SingleOrDefault();
 
         /// <summary>
         /// 삭제 
@@ -250,7 +250,7 @@ namespace Hawaso.Models.Notes
             return con.Query<Note>(sql).ToList();
         }
 
-        public List<Note> GetNewPhotosCache()
+        public List<Note>? GetNewPhotosCache()
         {
             //string sql =
             //    "SELECT TOP 4 Id, Title, FileName, FileSize FROM Notes "
@@ -258,7 +258,7 @@ namespace Hawaso.Models.Notes
             //    + " FileName Like '%.jpeg' Or FileName Like '%.gif' "
             //    + " Order By Id Desc";
             //return con.Query<Note>(sql).ToList();
-            var cacheData = _cache.GetOrCreate("GetNewPhotosCache", entry =>
+            List<Note>? cacheData = _cache.GetOrCreate("GetNewPhotosCache", entry =>
             {
                 entry.SlidingExpiration = TimeSpan.FromMinutes(60);
                 string sql =
@@ -283,9 +283,9 @@ namespace Hawaso.Models.Notes
                 + " Where Category = @Category Order By Id Desc";
             return con.Query<Note>(sql, new { Category = category }).ToList();
         }
-        public List<Note> GetNoteSummaryByCategoryCache(string category)
+        public List<Note>? GetNoteSummaryByCategoryCache(string category)
         {
-            var cacheData = _cache.GetOrCreate("GetNoteSummaryByCategoryCache", entry =>
+            List<Note>? cacheData = _cache.GetOrCreate("GetNoteSummaryByCategoryCache", entry =>
             {
                 entry.SlidingExpiration = TimeSpan.FromMinutes(5);
                 string sql = "SELECT TOP 2 Id, Title, Name, PostDate, FileName, "
@@ -319,13 +319,13 @@ namespace Hawaso.Models.Notes
                 + " Order By Id Desc";
             return con.Query<Note>(sql).ToList();
         }
-        public List<Note> GetRecentPostsCache()
+        public List<Note>? GetRecentPostsCache()
         {
             string sql = "SELECT TOP 2 Id, Title, Name, PostDate FROM Notes Order By Id Desc";
             //return con.Query<Note>(sql).ToList();
 
             // 캐시에 담을 개체 생성
-            List<Note> notes;
+            List<Note>? notes;
 
             // 캐시에 데이터가 들어있으면 해당 데이터를 가져오기
             if (!_cache.TryGetValue("GetRecentPostsCache", out notes))

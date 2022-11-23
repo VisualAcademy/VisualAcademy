@@ -68,13 +68,13 @@ namespace Hawaso.Models.Notes
         /// <summary>
         /// 최근 댓글 리스트 전체
         /// </summary>
-        public List<NoteComment> GetRecentComments()
+        public List<NoteComment>? GetRecentComments()
         {
             string sql =
                 "SELECT TOP 2 * FROM NoteComments Order By Id Desc";
 
             // 캐시에 담을 개체
-            List<NoteComment> cacheData;
+            List<NoteComment>? cacheData;
 
             // 캐시에 데이터가 들어있으면 해당 데이터를 가져오기
             if (!_cache.TryGetValue("GetRecentComments", out cacheData))
