@@ -7,7 +7,7 @@ namespace Hawaso.Models.Notes
     /// </summary>
     public class NoteCommentViewModel
     {
-        public List<NoteComment> NoteCommentList { get; set; }
+        public List<NoteComment>? NoteCommentList { get; set; }
         public int BoardId { get; set; }
     }
 }
