@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Hawaso.Models.Notes
+﻿namespace Hawaso.Models.Notes
 {
     public interface INoteRepository
     {
