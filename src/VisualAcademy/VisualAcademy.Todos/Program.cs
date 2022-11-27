@@ -7,7 +7,7 @@ builder.Services.AddDbContext<TodoDb>(
     opt => opt.UseInMemoryDatabase("Todos"));
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(); 
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
