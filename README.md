@@ -1,4 +1,4 @@
-### Hi there 👋
+## Hi there 👋
 
 😄 Blazor Server 7.0 기초 강좌가 오픈되었습니다.
 
@@ -21,3 +21,14 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
+
+
+## ASP.NET Core 7.0 Minimal APIs
+
+### 01_ASP.NET Core Empty 프로젝트 템플릿을 사용하여 VisualAcademy.Todos 프로젝트 생성 및 실행
+
+https://youtu.be/Lh-O5tGEsxw
+
+> [!Video https://www.youtube.com/embed/Lh-O5tGEsxw]
+
+
