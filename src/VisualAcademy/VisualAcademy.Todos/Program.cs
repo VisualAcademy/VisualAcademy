@@ -40,7 +40,7 @@ todos.MapGet("/{id}",
             ? TypedResults.Ok(todo)
             : TypedResults.NotFound());
 
-todos.MapPut("/{id}", async Task<Results<NotFound, NoContent>> (int id, Todo inputTodo, TodoDb db) => 
+todos.MapPut("/{id}", async Task<IResult> (int id, Todo inputTodo, TodoDb db) => 
 {
     var todo = await db.Todos.FindAsync(id);
 
@@ -57,7 +57,7 @@ todos.MapPut("/{id}", async Task<Results<NotFound, NoContent>> (int id, Todo inp
     return TypedResults.NoContent();
 });
 
-todos.MapDelete("/{id}", async Task<Results<Ok<Todo>, NotFound>> (int id, TodoDb db) => 
+todos.MapDelete("/{id}", async Task<IResult> (int id, TodoDb db) => 
 {
     if (await db.Todos.FindAsync(id) is Todo todo)
     {
