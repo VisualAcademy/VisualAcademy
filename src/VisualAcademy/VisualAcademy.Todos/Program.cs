@@ -40,6 +40,35 @@ todos.MapGet("/{id}",
             ? TypedResults.Ok(todo)
             : TypedResults.NotFound());
 
+todos.MapPut("/{id}", async (int id, Todo inputTodo, TodoDb db) => 
+{
+    var todo = await db.Todos.FindAsync(id);
+
+    if (todo is null)
+    {
+        return Results.NotFound();
+    }
+
+    todo.Name = inputTodo.Name;
+    todo.IsComplete = inputTodo.IsComplete;
+
+    await db.SaveChangesAsync();
+
+    return Results.NoContent();
+});
+
+todos.MapDelete("/{id}", async (int id, TodoDb db) => 
+{
+    if (await db.Todos.FindAsync(id) is Todo todo)
+    {
+        db.Todos.Remove(todo);
+        await db.SaveChangesAsync();
+        return Results.Ok(todo); 
+    }
+
+    return Results.NotFound(); 
+});
+
 app.Run();
 
 class Todo
