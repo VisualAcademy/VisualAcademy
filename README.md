@@ -31,4 +31,8 @@ https://youtu.be/Lh-O5tGEsxw
 
 > [!Video https://www.youtube.com/embed/Lh-O5tGEsxw]
 
+### 02_Todo 모델 클래스 생성
 
+https://youtu.be/ynqCx72rfxw
+
+> [!Video https://www.youtube.com/embed/ynqCx72rfxw]
