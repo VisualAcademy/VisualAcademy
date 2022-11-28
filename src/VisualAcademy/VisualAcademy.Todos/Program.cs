@@ -8,6 +8,8 @@ builder.Services.AddDbContext<TodoDb>(
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAuthentication().AddJwtBearer();
+builder.Services.AddAuthorization(); 
 
 var app = builder.Build();
 
@@ -19,7 +21,7 @@ if (app.Environment.IsDevelopment())
 
 app.MapGet("/", () => "Hello World!");
 
-var todos = app.MapGroup("/todos");
+var todos = app.MapGroup("/todos").RequireAuthorization();
 
 todos.MapGet("/",
     async (TodoDb db) =>
