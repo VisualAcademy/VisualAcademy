@@ -36,3 +36,9 @@ https://youtu.be/Lh-O5tGEsxw
 https://youtu.be/ynqCx72rfxw
 
 > [!Video https://www.youtube.com/embed/ynqCx72rfxw]
+
+### 03_Microsoft.EntityFrameworkCore.InMemory 패키지 추가 및 TodoDb 이름으로 DbContext 클래스 생성
+
+https://youtu.be/wjzjyM6Fd9s
+
+> [!Video https://www.youtube.com/embed/wjzjyM6Fd9s]
