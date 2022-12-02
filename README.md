@@ -42,3 +42,9 @@ https://youtu.be/ynqCx72rfxw
 https://youtu.be/wjzjyM6Fd9s
 
 > [!Video https://www.youtube.com/embed/wjzjyM6Fd9s]
+
+### 04_TodoDb DbContext 클래스를 builder 개체의 서비스로 등록하기
+
+https://youtu.be/GLKphLzsMLE
+
+> [!Video https://www.youtube.com/embed/GLKphLzsMLE]
