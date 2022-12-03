@@ -5,6 +5,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 builder.Services.AddDbContext<TodoDb>(
     opt => opt.UseInMemoryDatabase("Todos"));
 
@@ -35,6 +36,7 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
