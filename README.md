@@ -1,5 +1,7 @@
 ## Hi there 👋
 
+## 
+
 😄 Blazor Server 7.0 기초 강좌가 오픈되었습니다.
 
 http://www.devlec.com/?_pageVariable=strdown_v4&code=PT001TB4349&method=S&relation=PT001TB4349_BlazorServer
