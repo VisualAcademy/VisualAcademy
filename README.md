@@ -52,3 +52,9 @@ https://youtu.be/wjzjyM6Fd9s
 https://youtu.be/GLKphLzsMLE
 
 > [!Video https://www.youtube.com/embed/GLKphLzsMLE]
+
+### 05_Todos 테이블의 모든 데이터를 JSON으로 반환하는 HttpGet 메서드 구현하고 빈 JSON 배열 출력 확인
+
+https://youtu.be/YMupOLGwAYw
+
+> [!Video https://www.youtube.com/embed/YMupOLGwAYw]
