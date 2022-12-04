@@ -1,5 +1,9 @@
 ## Hi there 👋
 
+비주얼아카데미 채널에 오신 걸 환영합니다.
+
+## Blazor Server 7.0 Fundamentals 
+
 😄 Blazor Server 7.0 기초 강좌가 오픈되었습니다.
 
 http://www.devlec.com/?_pageVariable=strdown_v4&code=PT001TB4349&method=S&relation=PT001TB4349_BlazorServer
