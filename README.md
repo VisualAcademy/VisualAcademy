@@ -58,3 +58,9 @@ https://youtu.be/GLKphLzsMLE
 https://youtu.be/YMupOLGwAYw
 
 > [!Video https://www.youtube.com/embed/YMupOLGwAYw]
+
+### 06_HttpGet 메서드를 동기 방식에서 async와 await를 사용하는 비동기 방식으로 변경
+
+https://youtu.be/KD-fFP_dnDU
+
+> [!Video https://www.youtube.com/embed/KD-fFP_dnDU]
