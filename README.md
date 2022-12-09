@@ -64,3 +64,9 @@ https://youtu.be/YMupOLGwAYw
 https://youtu.be/KD-fFP_dnDU
 
 > [!Video https://www.youtube.com/embed/KD-fFP_dnDU]
+
+### 07_HttpPost 메서드를 MapPost 메서드를 사용하여 기본 모양으로 구현하고 Postman 도구로 테스트 데모
+
+https://youtu.be/hAkTvn-WriA
+
+> [!Video https://www.youtube.com/embed/hAkTvn-WriA]
