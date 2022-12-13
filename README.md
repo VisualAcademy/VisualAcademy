@@ -70,3 +70,9 @@ https://youtu.be/KD-fFP_dnDU
 https://youtu.be/hAkTvn-WriA
 
 > [!Video https://www.youtube.com/embed/hAkTvn-WriA]
+
+### 08_상세 보기용 HttpGet 메서드 만들고 Post 메서드에서 201 상태를 반환하는 방식으로 변경
+
+https://youtu.be/Ay227QV9KvM
+
+> [!Video https://www.youtube.com/embed/Ay227QV9KvM]
