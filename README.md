@@ -83,3 +83,8 @@ https://youtu.be/28k_tBf4jYA
 
 > [!Video https://www.youtube.com/embed/28k_tBf4jYA]
 
+### 10_Swagger UI 사용을 위한 패키지 및 서비스 그리고 미들웨어 등록하기
+
+https://youtu.be/6hBszE4B9kc
+
+> [!Video https://www.youtube.com/embed/6hBszE4B9kc]
