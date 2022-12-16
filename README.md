@@ -76,3 +76,10 @@ https://youtu.be/hAkTvn-WriA
 https://youtu.be/Ay227QV9KvM
 
 > [!Video https://www.youtube.com/embed/Ay227QV9KvM]
+
+### 09_MapGroup 메서드로 엔드포인트를 그룹화하여 묶어 관리하기
+
+https://youtu.be/28k_tBf4jYA
+
+> [!Video https://www.youtube.com/embed/28k_tBf4jYA]
+
