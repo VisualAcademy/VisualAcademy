@@ -10,12 +10,15 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisualAcademy.Models.Notes", "VisualAcademy.Models.Notes\VisualAcademy.Models.Notes.csproj", "{29A659C5-7069-4CE3-A478-0191640F6CFB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5977A27F-4E5C-4E96-B111-CCB5ACD41B8C}"
+	ProjectSection(SolutionItems) = preProject
+		TodoSolution.dgml = TodoSolution.dgml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6C471E34-A102-40AC-BF73-C7E9016EC52E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{C2044C3F-27EA-4262-A2B2-0852A59B5E9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{8E434D37-B69F-4041-9844-8A78FB55BE97}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{8E434D37-B69F-4041-9844-8A78FB55BE97}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{B95EBBA0-77DD-46BA-96AD-603F8E8C190F}"
 EndProject
@@ -23,15 +26,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{EA131B72-3C2A-4E81-A149-B97B24D9E9F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{06134C6C-3ABA-4489-9B05-6FC06431BC35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{06134C6C-3ABA-4489-9B05-6FC06431BC35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{E8B6C3C3-9A2A-432B-9FA8-4155A356C08E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Persistence\Persistence.csproj", "{E8B6C3C3-9A2A-432B-9FA8-4155A356C08E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{2A6777D2-C3D3-4473-BED3-45CF2F17F160}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{7CCC5D17-113B-44F5-A8F6-B612DAB9586A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Presentation\Presentation.csproj", "{7CCC5D17-113B-44F5-A8F6-B612DAB9586A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{FE36E9A2-25FE-454D-A601-FA500B1F030B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{FE36E9A2-25FE-454D-A601-FA500B1F030B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
