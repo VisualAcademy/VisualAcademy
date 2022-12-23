@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.Common.Interfaces.Buffets;
+using Domain.Entities.Buffets;
+using Microsoft.EntityFrameworkCore;
 
 namespace Persistence
 {
-    internal class BuffetDatabaseService
+    public class BuffetDatabaseService : DbContext, IBuffetDatabaseService
     {
+        public DbSet<Broth> Broths { get; set; }
+
+        public void Save()
+        {
+            this.SaveChanges();
+        }
     }
 }
