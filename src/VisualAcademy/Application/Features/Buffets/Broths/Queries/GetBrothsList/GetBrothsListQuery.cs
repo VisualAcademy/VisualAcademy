@@ -6,10 +6,7 @@ public class GetBrothsListQuery : IGetBrothsListQuery
 {
     private readonly IBuffetDatabaseService _db;
 
-    public GetBrothsListQuery(IBuffetDatabaseService db)
-    {
-        _db = db;
-    }
+    public GetBrothsListQuery(IBuffetDatabaseService db) => _db = db;
 
     public List<BrothListItemModel> Execute()
     {
