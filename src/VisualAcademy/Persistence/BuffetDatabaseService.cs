@@ -14,10 +14,7 @@ public class BuffetDatabaseService : DbContext, IBuffetDatabaseService
 
     public DbSet<Broth> Broths { get; set; }
 
-    public void Save()
-    {
-        this.SaveChanges();
-    }
+    public void Save() => this.SaveChanges();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
