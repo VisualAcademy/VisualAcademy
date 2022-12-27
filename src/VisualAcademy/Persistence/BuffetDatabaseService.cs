@@ -7,10 +7,8 @@ namespace Persistence;
 
 public class BuffetDatabaseService : DbContext, IBuffetDatabaseService
 {
-    public BuffetDatabaseService(DbContextOptions<BuffetDatabaseService> options) : base(options)
-    {
-        Database.EnsureCreated(); // 인-메모리 데이터베이스 생성
-    }
+    public BuffetDatabaseService(DbContextOptions<BuffetDatabaseService> options) : base(options) 
+        => Database.EnsureCreated(); // 인-메모리 데이터베이스 생성
 
     public DbSet<Broth> Broths { get; set; }
 
