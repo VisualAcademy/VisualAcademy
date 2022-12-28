@@ -6,26 +6,7 @@
 
 😄 Blazor Server 7.0 기초 강좌가 오픈되었습니다.
 
-http://www.devlec.com/?_pageVariable=strdown_v4&code=PT001TB4349&method=S&relation=PT001TB4349_BlazorServer
-
-https://www.youtube.com/playlist?list=PLO56HZSjrPTAS3bC6UUNWBH9ih5yujpvS
-
-
-<!--
-**VisualAcademy/VisualAcademy** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
-
-Here are some ideas to get you started:
-
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
-
+[데브렉 Blazor Server 7.0](http://www.devlec.com/?_pageVariable=strdown_v4&code=PT001TB4349&method=S&relation=PT001TB4349_BlazorServer)
 
 ## ASP.NET Core 7.0 Minimal APIs
 
