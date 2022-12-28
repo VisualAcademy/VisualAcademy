@@ -40,7 +40,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.UnitTests", "Domain.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{8D3CE0FC-2E49-413F-9C3B-2608BDEB5597}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{0BD7430B-810A-4999-AAA7-C4BA087F4999}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{0BD7430B-810A-4999-AAA7-C4BA087F4999}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
