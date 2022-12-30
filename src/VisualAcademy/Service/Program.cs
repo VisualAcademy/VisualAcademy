@@ -19,6 +19,8 @@ app.MapGet("/api/broths/withdbcontext", async (BuffetDatabaseService db) => awai
 
 app.MapGet("/api/broths/withquery", (IGetBrothsListQuery query) => query.Execute());
 
+//TODO: withrepository
+
 app.MapPost("/broths", async (Broth broth, BuffetDatabaseService db) =>
 {
     db.Broths.Add(broth);
