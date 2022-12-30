@@ -16,16 +16,15 @@ var app = builder.Build();
 app.MapGet("/", () => "Hello World!");
 
 app.MapGet("/api/broths/withdbcontext", async (BuffetDatabaseService db) => await db.Broths.ToListAsync());
-
-app.MapGet("/api/broths/withquery", (IGetBrothsListQuery query) => query.Execute());
-
-//TODO: withrepository
-
-app.MapPost("/broths", async (Broth broth, BuffetDatabaseService db) =>
+app.MapPost("/api/broths/withdbcontext", async (Broth broth, BuffetDatabaseService db) =>
 {
     db.Broths.Add(broth);
     await db.SaveChangesAsync();
     return TypedResults.Ok();
 });
+
+app.MapGet("/api/broths/withquery", (IGetBrothsListQuery query) => query.Execute());
+
+//TODO: withrepository
 
 app.Run();
