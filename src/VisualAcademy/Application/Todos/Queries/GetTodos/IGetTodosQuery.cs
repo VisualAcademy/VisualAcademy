@@ -1,7 +1,6 @@
-﻿namespace Application.Todos.Queries.GetTodos
+﻿namespace Application.Todos.Queries.GetTodos;
+
+public interface IGetTodosQuery
 {
-    public interface IGetTodosQuery
-    {
-        List<TodoModel> Execute();
-    }
+    List<TodoModel> Execute();
 }
