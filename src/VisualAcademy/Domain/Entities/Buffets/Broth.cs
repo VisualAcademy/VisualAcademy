@@ -1,6 +1,4 @@
-﻿using Domain.Common;
-
-namespace Domain.Entities.Buffets;
+﻿namespace Domain.Entities.Buffets;
 
 /// <summary>
 /// 국물
