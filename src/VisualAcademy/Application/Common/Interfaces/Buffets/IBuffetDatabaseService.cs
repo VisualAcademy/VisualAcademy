@@ -1,12 +1,11 @@
 ﻿using Domain.Entities.Buffets;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Common.Interfaces.Buffets
-{
-    public interface IBuffetDatabaseService
-    {
-        DbSet<Broth> Broths { get; set; }
+namespace Application.Common.Interfaces.Buffets;
 
-        void Save();
-    }
+public interface IBuffetDatabaseService
+{
+    DbSet<Broth> Broths { get; set; }
+
+    void Save();
 }
