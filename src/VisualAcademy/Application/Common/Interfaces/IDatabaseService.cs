@@ -1,12 +1,11 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Common.Interfaces
-{
-    public interface IDatabaseService
-    {
-        DbSet<Todo> Todos { get; }
+namespace Application.Common.Interfaces;
 
-        void Save();
-    }
+public interface IDatabaseService
+{
+    DbSet<Todo> Todos { get; }
+
+    void Save();
 }
