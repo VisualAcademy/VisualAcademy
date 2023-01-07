@@ -44,7 +44,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csp
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Specification", "Specification", "{650548D2-334B-4647-9906-B5BA5CF10A78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wireframe", "Wireframe\Wireframe.csproj", "{911BC623-481B-4BFA-B029-29DAE4F83AED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wireframe", "Wireframe\Wireframe.csproj", "{911BC623-481B-4BFA-B029-29DAE4F83AED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTests", "Application.UnitTests\Application.UnitTests.csproj", "{7F674027-8B99-41C2-B64F-CF16ECF7C858}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +102,10 @@ Global
 		{911BC623-481B-4BFA-B029-29DAE4F83AED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{911BC623-481B-4BFA-B029-29DAE4F83AED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{911BC623-481B-4BFA-B029-29DAE4F83AED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F674027-8B99-41C2-B64F-CF16ECF7C858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F674027-8B99-41C2-B64F-CF16ECF7C858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F674027-8B99-41C2-B64F-CF16ECF7C858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F674027-8B99-41C2-B64F-CF16ECF7C858}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,6 +126,7 @@ Global
 		{0BD7430B-810A-4999-AAA7-C4BA087F4999} = {8D3CE0FC-2E49-413F-9C3B-2608BDEB5597}
 		{650548D2-334B-4647-9906-B5BA5CF10A78} = {5977A27F-4E5C-4E96-B111-CCB5ACD41B8C}
 		{911BC623-481B-4BFA-B029-29DAE4F83AED} = {650548D2-334B-4647-9906-B5BA5CF10A78}
+		{7F674027-8B99-41C2-B64F-CF16ECF7C858} = {6C471E34-A102-40AC-BF73-C7E9016EC52E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0DE1D08F-8124-469F-9D4F-970570062155}
