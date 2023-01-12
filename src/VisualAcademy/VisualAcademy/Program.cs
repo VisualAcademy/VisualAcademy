@@ -18,7 +18,8 @@ namespace VisualAcademy
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            builder.Services.AddRazorPages();
+            builder.Services.AddRazorPages(); // Razor Pages
+            builder.Services.AddControllersWithViews(); // MVC
 
             var app = builder.Build();
 
@@ -41,6 +42,9 @@ namespace VisualAcademy
 
             app.UseAuthorization();
 
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}"); // MVC ¶ó¿ìÆÃ
             app.MapRazorPages();
 
             app.Run();
