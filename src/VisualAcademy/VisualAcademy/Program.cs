@@ -13,6 +13,8 @@ namespace VisualAcademy
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            //[!] ConfigureServices... 
+
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -40,6 +42,8 @@ namespace VisualAcademy
             builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             var app = builder.Build();
+
+            //[!] Configure...
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
