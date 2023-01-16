@@ -46,7 +46,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Specification", "Specificat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wireframe", "Wireframe\Wireframe.csproj", "{911BC623-481B-4BFA-B029-29DAE4F83AED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTests", "Application.UnitTests\Application.UnitTests.csproj", "{7F674027-8B99-41C2-B64F-CF16ECF7C858}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.UnitTests", "Application.UnitTests\Application.UnitTests.csproj", "{7F674027-8B99-41C2-B64F-CF16ECF7C858}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualAcademy.Models", "VisualAcademy.Models\VisualAcademy.Models.csproj", "{21016683-249F-4712-BD69-5B6C4E2D6D6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -106,6 +108,10 @@ Global
 		{7F674027-8B99-41C2-B64F-CF16ECF7C858}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F674027-8B99-41C2-B64F-CF16ECF7C858}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F674027-8B99-41C2-B64F-CF16ECF7C858}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21016683-249F-4712-BD69-5B6C4E2D6D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21016683-249F-4712-BD69-5B6C4E2D6D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21016683-249F-4712-BD69-5B6C4E2D6D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21016683-249F-4712-BD69-5B6C4E2D6D6E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
