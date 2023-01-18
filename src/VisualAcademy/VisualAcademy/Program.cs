@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using VisualAcademy.Areas.Identity;
 using VisualAcademy.Areas.Identity.Models;
 using VisualAcademy.Areas.Identity.Services;
 using VisualAcademy.Data;
@@ -33,6 +35,9 @@ namespace VisualAcademy
                 .AddDefaultTokenProviders();
 
             builder.Services.AddRazorPages(); // Razor Pages
+            builder.Services.AddServerSideBlazor();
+            builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+            builder.Services.AddSingleton<WeatherForecastService>();
             builder.Services.AddControllersWithViews(); // MVC
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -70,6 +75,8 @@ namespace VisualAcademy
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}"); // MVC ¶ó¿ìÆÃ
             app.MapRazorPages();
+            app.MapBlazorHub();
+            app.MapFallbackToPage("/_Host");
 
             app.Run();
         }
