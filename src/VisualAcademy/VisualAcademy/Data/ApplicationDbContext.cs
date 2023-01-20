@@ -10,4 +10,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         : base(options)
     {
     }
+
+    public void SeedInitialData()
+    { 
+        // Empty
+    }
 }

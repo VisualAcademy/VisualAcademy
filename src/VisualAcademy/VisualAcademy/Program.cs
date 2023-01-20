@@ -50,6 +50,20 @@ namespace VisualAcademy
 
             //[!] Configure...
 
+            #region SeedInitialData
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var ctx = services.GetRequiredService<ApplicationDbContext>();
+                //ctx.Database.Migrate();
+
+                if (app.Environment.IsDevelopment())
+                {
+                    ctx.SeedInitialData();
+                }
+            } 
+            #endregion
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
