@@ -30,6 +30,8 @@ namespace VisualAcademy
                 {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.SignIn.RequireConfirmedEmail = false;
+
+                    // options.Password.RequireDigit = false; 
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
