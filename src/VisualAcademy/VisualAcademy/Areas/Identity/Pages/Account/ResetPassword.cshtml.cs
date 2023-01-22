@@ -16,10 +16,7 @@ public class ResetPasswordModel : PageModel
 {
     private readonly UserManager<ApplicationUser> _userManager;
 
-    public ResetPasswordModel(UserManager<ApplicationUser> userManager)
-    {
-        _userManager = userManager;
-    }
+    public ResetPasswordModel(UserManager<ApplicationUser> userManager) => _userManager = userManager;
 
     /// <summary>
     ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
