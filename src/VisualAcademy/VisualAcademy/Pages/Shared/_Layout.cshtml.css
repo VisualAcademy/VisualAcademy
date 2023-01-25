@@ -39,6 +39,7 @@ button.accept-policy {
   line-height: inherit;
 }
 
+/*footer는 하단에 고정하는 역할*/ 
 .footer {
   position: absolute;
   bottom: 0;
