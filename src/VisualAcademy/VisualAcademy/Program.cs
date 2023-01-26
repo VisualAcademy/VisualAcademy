@@ -36,6 +36,9 @@ namespace VisualAcademy
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            // Google, Microsoft, GitHub Authentication
+            //builder.Services.AddAuthentication();
+
             builder.Services.AddRazorPages(); // Razor Pages
             builder.Services.AddServerSideBlazor();
             builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
