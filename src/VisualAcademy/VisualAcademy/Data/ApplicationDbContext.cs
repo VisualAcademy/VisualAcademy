@@ -17,6 +17,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         //SeedRoles(builder);
     }
 
+    #region SeedRoles: 기본 역할(Role)들을 생성하는 코드 중 하나 
     /// <summary>
     /// 기본 역할(Role)들을 생성하는 코드 중 하나 
     /// </summary>
@@ -59,7 +60,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         //        Description = "게스트 사용자 그룹 계정"
         //    }
         //);
-    }
+    } 
+    #endregion
 
     public void SeedInitialData()
     { 
