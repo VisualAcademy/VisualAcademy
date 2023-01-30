@@ -36,6 +36,23 @@ namespace VisualAcademy
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            // Identity 옵션 설정
+            builder.Services.Configure<IdentityOptions>(options =>
+            {
+                // 암호 설정
+                options.Password.RequiredLength = 8; // 암호는 최소 8자로 
+                options.Password.RequireDigit = true; // 숫자 반드시 포함
+                options.Password.RequireLowercase = true; // 소문자 반드시 포함
+                options.Password.RequireNonAlphanumeric = true; // 알파벳 이외의 문자 필요  
+
+                // 잠금 설정
+                options.Lockout.MaxFailedAccessAttempts = 5; // 5번 시도 후 잠금
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10); // 10분 후 잠금 해제
+
+                // 사용자 설정
+                options.User.RequireUniqueEmail = true; // 이메일 중복 방지
+            });
+
             // Google, Microsoft, GitHub Authentication
             //builder.Services.AddAuthentication();
 

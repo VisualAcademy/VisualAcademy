@@ -11,5 +11,13 @@ public class ApplicationUser : IdentityUser
     public string? Timezone { get; set; }
 
     // TODO: 
+    /// <summary>
+    /// 주소
+    /// </summary>
+    public string? Address { get; set; }
 
+    /// <summary>
+    /// 성별
+    /// </summary>
+    public string? Gender { get; set; }
 }
