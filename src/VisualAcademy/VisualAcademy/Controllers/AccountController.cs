@@ -194,10 +194,7 @@ namespace VisualAcademy.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Lockout()
-        {
-            return View();
-        }
+        public IActionResult Lockout() => View();
 
         [HttpGet]
         [AllowAnonymous]
