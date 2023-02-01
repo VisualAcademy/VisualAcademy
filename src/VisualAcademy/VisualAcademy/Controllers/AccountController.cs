@@ -415,10 +415,7 @@ public class AccountController : Controller
 
 
     [HttpGet]
-    public IActionResult AccessDenied()
-    {
-        return View();
-    }
+    public IActionResult AccessDenied() => View();
 
     #region Helpers
 
