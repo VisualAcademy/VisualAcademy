@@ -1,13 +1,12 @@
 ﻿#nullable disable
 using System.ComponentModel.DataAnnotations;
 
-namespace VisualAcademy.Models.AccountViewModels
+namespace VisualAcademy.Models.AccountViewModels;
+
+public class LoginWithRecoveryCodeViewModel
 {
-    public class LoginWithRecoveryCodeViewModel
-    {
-        [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "Recovery Code")]
-        public string RecoveryCode { get; set; }
-    }
+    [Required]
+    [DataType(DataType.Text)]
+    [Display(Name = "Recovery Code")]
+    public string RecoveryCode { get; set; }
 }
