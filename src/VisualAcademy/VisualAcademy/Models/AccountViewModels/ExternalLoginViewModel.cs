@@ -1,12 +1,11 @@
 #nullable disable
 using System.ComponentModel.DataAnnotations;
 
-namespace VisualAcademy.Models.AccountViewModels
+namespace VisualAcademy.Models.AccountViewModels;
+
+public class ExternalLoginViewModel
 {
-    public class ExternalLoginViewModel
-    {
-        [Required]
-        [EmailAddress]
-        public string Email { get; set; }
-    }
+    [Required]
+    [EmailAddress]
+    public string Email { get; set; }
 }
