@@ -1,4 +1,6 @@
-﻿namespace VisualAcademy.Models.ManageViewModels
+﻿#nullable disable
+
+namespace VisualAcademy.Models.ManageViewModels
 {
     public class RemoveLoginViewModel
     {
