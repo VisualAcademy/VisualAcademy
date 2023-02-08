@@ -67,4 +67,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     { 
         // Empty
     }
+
+    public DbSet<VisualAcademy.Models.Property> Properties { get; set; } = null!;
 }
