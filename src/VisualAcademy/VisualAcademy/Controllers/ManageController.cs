@@ -511,14 +511,11 @@ public class ManageController : Controller
         return result.ToString().ToLowerInvariant();
     }
 
-    private string GenerateQrCodeUri(string email, string unformattedKey)
-    {
-        return string.Format(
+    private string GenerateQrCodeUri(string email, string unformattedKey) => string.Format(
             AuthenticatorUriFormat,
             _urlEncoder.Encode("VisualAcademy"),
             _urlEncoder.Encode(email),
             unformattedKey);
-    }
 
     private async Task LoadSharedKeyAndQrCodeUriAsync(ApplicationUser user, EnableAuthenticatorViewModel model)
     {
