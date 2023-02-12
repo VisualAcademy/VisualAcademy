@@ -15,7 +15,7 @@ namespace VisualAcademy
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            //[!] ConfigureServices... 
+            //[!] ConfigureServices... Startup.cs 파일에서 ConfigureServices 메서드 영역: 
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -70,7 +70,7 @@ namespace VisualAcademy
 
             var app = builder.Build();
 
-            //[!] Configure...
+            //[!] Configure... Startup.cs 파일에서 Configure 메서드 영역: 
 
             #region SeedInitialData
             using (var scope = app.Services.CreateScope())
