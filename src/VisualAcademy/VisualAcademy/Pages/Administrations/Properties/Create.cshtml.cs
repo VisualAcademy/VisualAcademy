@@ -10,10 +10,7 @@ public class CreateModel : PageModel
 {
     private readonly ApplicationDbContext _context;
 
-    public CreateModel(ApplicationDbContext context)
-    {
-        _context = context;
-    }
+    public CreateModel(ApplicationDbContext context) => _context = context;
 
     public IActionResult OnGet()
     {
