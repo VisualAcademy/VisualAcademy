@@ -1,4 +1,5 @@
 ﻿#nullable disable
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace VisualAcademy.Apis
@@ -9,6 +10,7 @@ namespace VisualAcademy.Apis
         public string Name { get; set; }
     }
 
+    [Authorize(Roles = "Administrators")]
     [ApiController]
     [Route("api/[controller]")]
     public class CitiesController : ControllerBase
