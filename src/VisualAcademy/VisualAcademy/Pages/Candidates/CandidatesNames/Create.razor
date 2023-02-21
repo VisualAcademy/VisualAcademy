@@ -1,0 +1,96 @@
+﻿@page "/Candidates/CandidatesNames/Create"
+@using VisualAcademy.Models.Candidates.CandidatesNames
+@inject IDbContextFactory<CandidateAppDbContext> _ContextFactory
+
+<PageTitle>Candidate Create</PageTitle>
+
+<h1>Create</h1>
+
+<h4>Candidate</h4>
+<hr />
+
+@if (!String.IsNullOrEmpty(StatusMessage))
+{
+    var statusMessageClass = StatusMessage.StartsWith("Error") ? "danger" : "success";
+    <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" 
+            aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @StatusMessage
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <VisualAcademy.Pages.Candidates.CandidatesNames.Components.EditorForm Model="@Model" Busy="@Busy"
+            OnSubmitCallback="@OnSubmitCallback"
+        >
+        </VisualAcademy.Pages.Candidates.CandidatesNames.Components.EditorForm>
+    </div>
+</div>
+
+<div>
+    <a href="/Candidates/CandidatesNames">Back to List</a>
+</div>
+
+@code {
+    public CandidateName? Model { get; set; }
+
+    public string? StatusMessage { get; set; }
+
+    public bool Busy { get; set; }
+
+    protected override void OnInitialized()
+    {
+        //Model = new Candidate { FirstName = "YJ", LastName = "Park", IsEnrollment = true };
+        Model = new();
+    }
+
+    protected async Task FormSubmit()
+    {
+        if (Busy)
+        {
+            return; 
+        }
+
+        Busy = true;
+
+        try
+        {
+            if (Model is not null)
+            {
+
+
+                using var ctx = _ContextFactory.CreateDbContext();
+                ctx.CandidatesNames.Add(Model);
+                await ctx.SaveChangesAsync();
+
+                StatusMessage = "Success";
+            }
+        }
+        catch (Exception)
+        {
+            StatusMessage = "Error";
+        }
+        finally
+        {
+            Busy = false;         
+        }
+    }
+
+    protected void HandleInvalidSubmit()
+    {
+        StatusMessage = ""; 
+    }
+
+    protected async Task OnSubmitCallback(bool isValid)
+    {
+        if (isValid)
+        {
+            await FormSubmit();
+        }
+        else
+        {
+            HandleInvalidSubmit(); 
+        }
+    }
+}

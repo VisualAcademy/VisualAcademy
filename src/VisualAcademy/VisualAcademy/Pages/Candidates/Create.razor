@@ -1,0 +1,99 @@
+﻿@page "/Candidates/Create"
+@inject IDbContextFactory<CandidateAppDbContext> _ContextFactory
+
+<PageTitle>Candidate Create</PageTitle>
+
+<h1>Create</h1>
+
+<h4>Candidate</h4>
+<hr />
+
+@if (!String.IsNullOrEmpty(StatusMessage))
+{
+    var statusMessageClass = StatusMessage.StartsWith("Error") ? "danger" : "success";
+    <div class="alert alert-@statusMessageClass alert-dismissible fade show" role="alert">
+        @StatusMessage
+        <button type="button" class="close" data-bs-dismiss="alert" 
+            aria-label="Close"></button>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <VisualAcademy.Pages.Candidates.Components.EditorForm
+            Model="@Model" Busy="@Busy"
+            OnSubmitCallback="@OnSubmitCallback"
+        >
+        </VisualAcademy.Pages.Candidates.Components.EditorForm>
+    </div>
+</div>
+
+<div>
+    <a href="/Candidates">Back to List</a>
+</div>
+
+@code {
+    public Candidate? Model { get; set; }
+
+    public string? StatusMessage { get; set; }
+
+    public bool Busy { get; set; }
+
+    protected override void OnInitialized()
+    {
+        //Model = new Candidate { FirstName = "YJ", LastName = "Park", IsEnrollment = true };
+        Model = new();
+    }
+
+    protected async Task FormSubmit()
+    {
+        // 전송 버튼을 누르고 아직 저장 완료가 되지 않았으면 진행 종료: 중복 입력 방지
+        if (Busy)
+        {
+            return; 
+        }
+
+        Busy = true;
+
+        try
+        {
+            if (Model is not null)
+            {
+                Model.Age = 0;
+
+                using var ctx = _ContextFactory.CreateDbContext();
+                ctx.Candidates.Add(Model);
+                await ctx.SaveChangesAsync();
+                // await Task.Delay(5000); 
+                Model = new() { IsEnrollment = Model.IsEnrollment }; // 모델 초기화
+
+                StatusMessage = "Success";
+            }
+        }
+        catch (Exception)
+        {
+            StatusMessage = "Error";
+        }
+        finally
+        {
+            Busy = false;         
+        }
+    }
+
+    protected void HandleInvalidSubmit()
+    {
+        StatusMessage = ""; 
+    }
+
+    protected async Task OnSubmitCallback(bool isValid)
+    {
+        if (isValid)
+        {
+            await FormSubmit();
+        }
+        else
+        {
+            HandleInvalidSubmit(); 
+        }
+    }
+}

@@ -6,6 +6,7 @@ using VisualAcademy.Areas.Identity;
 using VisualAcademy.Areas.Identity.Models;
 using VisualAcademy.Areas.Identity.Services;
 using VisualAcademy.Data;
+using VisualAcademy.Models.Candidates;
 
 namespace VisualAcademy
 {
@@ -22,6 +23,16 @@ namespace VisualAcademy
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+            #region 새로운 DbContext 추가 - CandidateAppDbContext
+            // 새로운 DbContext 추가 
+
+            //[a] MVC, RazorPages, Web API에서는 DbContext 사용 가능
+            //builder.Services.AddDbContext<CandidateAppDbContext>(options => options.UseSqlServer(connectionString));
+
+            //[b] Blazor Server에서는 DbContextFactory 사용 권장
+            builder.Services.AddDbContextFactory<CandidateAppDbContext>(options => options.UseSqlServer(connectionString));
+            #endregion
 
             //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
             //builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
@@ -57,7 +68,7 @@ namespace VisualAcademy
             //builder.Services.AddAuthentication();
 
             builder.Services.AddRazorPages(); // Razor Pages
-            builder.Services.AddServerSideBlazor();
+            builder.Services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
             builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             builder.Services.AddSingleton<WeatherForecastService>();
             builder.Services.AddControllersWithViews(); // MVC
@@ -66,11 +77,20 @@ namespace VisualAcademy
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            // 종속성 주입 추가 
             builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             var app = builder.Build();
 
             //[!] Configure... Startup.cs 파일에서 Configure 메서드 영역: 
+
+            // 개발 환경에서 Update-Database, Seed 데이터 추가
+            if (app.Environment.IsDevelopment())
+            {
+                //await CheckCandidateDbMigrated(app.Services);
+                CandidateSeedData(app);
+                CandidateDbInitializer.Initialize(app);
+            }
 
             #region SeedInitialData
             using (var scope = app.Services.CreateScope())
@@ -248,6 +268,45 @@ namespace VisualAcademy
                 await userManager.AddToRoleAsync(administrator, Dul.Roles.Users.ToString());
                 await userManager.AddToRoleAsync(guest, Dul.Roles.Guests.ToString());
                 await userManager.AddToRoleAsync(anonymous, Dul.Roles.Guests.ToString());
+            }
+        }
+        #endregion
+
+        #region CandidateSeedData: Candidates 테이블에 기본 데이터 입력
+        // Candidates 테이블에 기본 데이터 입력
+        static void CandidateSeedData(WebApplication app)
+        {
+            // https://docs.microsoft.com/ko-kr/aspnet/core/fundamentals/dependency-injection
+            // ?view=aspnetcore-6.0#resolve-a-service-at-app-start-up
+            using (var serviceScope = app.Services.CreateScope())
+            {
+                var services = serviceScope.ServiceProvider;
+
+                var candidateDbContext = services.GetRequiredService<CandidateAppDbContext>();
+
+                // Candidates 테이블에 데이터가 없을 때에만 데이터 입력
+                if (!candidateDbContext.Candidates.Any())
+                {
+                    candidateDbContext.Candidates.Add(
+                        new Candidate { FirstName = "길동", LastName = "홍", IsEnrollment = false });
+                    candidateDbContext.Candidates.Add(
+                        new Candidate { FirstName = "두산", LastName = "백", IsEnrollment = false });
+
+                    candidateDbContext.SaveChanges();
+                }
+            }
+        }
+        #endregion
+
+        #region CheckCandidateDbMigrated: 데이터베이스 마이그레이션 진행
+        // 데이터베이스 마이그레이션 진행
+        async Task CheckCandidateDbMigrated(IServiceProvider services)
+        {
+            using var scope = services.CreateScope();
+            using var candidateContext = scope.ServiceProvider.GetService<CandidateAppDbContext>();
+            if (candidateContext is not null)
+            {
+                await candidateContext.Database.MigrateAsync();
             }
         }
         #endregion

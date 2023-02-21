@@ -1,0 +1,15 @@
+﻿@page
+@model VisualAcademy.Pages.Candidates.CandidatesNames.ManageTestModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Manage 컴포넌트 테스트</h1>
+
+
+<component type="typeof(VisualAcademy.Pages.Candidates.CandidatesNames.Manage)"
+           render-mode="ServerPrerendered"
+           param-UseOtherNames="true"
+           param-UserId="Model.UserId" />
+
+

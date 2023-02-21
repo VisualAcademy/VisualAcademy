@@ -1,0 +1,87 @@
+﻿@namespace VisualAcademy.Pages.Candidates.CandidatesNames.Components
+@using VisualAcademy.Models.Candidates.CandidatesNames
+
+@if (Model is not null)
+{
+    <EditForm Model="@Model"
+          OnValidSubmit="FormSubmit"
+          OnInvalidSubmit="@HandleInvalidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <InputText @bind-Value="Model.LastName" id="txtLastName" class="form-control" placeholder="Last Name" />
+                    <ValidationMessage For="@(() => Model.LastName)"></ValidationMessage>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <InputText @bind-Value="Model.FirstName" id="txtFirstName" class="form-control" placeholder="First Name" />
+                    <ValidationMessage For="() => Model.FirstName" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <InputText @bind-Value="Model.MiddleName" id="txtMiddleName" class="form-control" placeholder="Middle Name" />
+                    <ValidationMessage For="@(() => Model.MiddleName)"></ValidationMessage>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    @if (IsEdit)
+                    {
+                        <input type="submit" value="Edit" class="btn btn-primary" disabled="@Busy" />
+                        <input type="button" value="Cancel" class="btn btn-secondary" disabled="@Busy"
+                       @onclick="HandleCancel" />
+                    }
+                    else
+                    {
+                        <input type="submit" value="Add" class="btn btn-success form-control" disabled="@Busy" />
+                    }
+                </div>
+            </div>
+        </div>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public CandidateName? Model { get; set; }
+
+    [Parameter]
+    public bool Busy { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnSubmitCallback { get; set; }
+
+    [Parameter]
+    public bool IsEdit { get; set; }
+
+    protected async Task FormSubmit()
+    {
+        if (OnSubmitCallback.HasDelegate)
+        {
+            await OnSubmitCallback.InvokeAsync(true);
+        }
+    }
+
+    protected async Task HandleInvalidSubmit()
+    {
+        if (OnSubmitCallback.HasDelegate)
+        {
+            await OnSubmitCallback.InvokeAsync(false);
+        }
+    }
+
+    [Parameter]
+    public EventCallback OnCancelCallback { get; set; }
+
+    protected async Task HandleCancel()
+    {
+        if (OnCancelCallback.HasDelegate)
+        {
+            await OnCancelCallback.InvokeAsync();
+        }
+    }
+}
