@@ -1,0 +1,117 @@
+﻿@inject IDbContextFactory<CandidateAppDbContext> _ContextFactory
+
+<PageTitle>Candidate Create</PageTitle>
+
+<h1>Create</h1>
+
+<h4>Candidate</h4>
+<hr />
+
+@if (!String.IsNullOrEmpty(StatusMessage))
+{
+    var statusMessageClass = StatusMessage.StartsWith("Error") ? "danger" : "success";
+    <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" 
+            aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @StatusMessage
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-4">
+        @if (Model is not null)
+        {
+            <EditForm Model="@Model" 
+                OnValidSubmit="FormSubmit" 
+                OnInvalidSubmit="@HandleInvalidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group">
+                    <label class="control-label" for="txtFirstName">FirstName</label>
+                    @*<input class="form-control" type="text" data-val="true" data-val-length="The field FirstName must be a string with a maximum length of 50." data-val-length-max="50" data-val-required="The FirstName field is required." id="FirstName" maxlength="50" name="FirstName" value="" />*@
+                    <InputText @bind-Value="Model.FirstName" id="txtFirstName" class="form-control" placeholder="Enter FirstName" />
+                    @*<span class="text-danger field-validation-valid" data-valmsg-for="FirstName" data-valmsg-replace="true"></span>*@
+                    <ValidationMessage For="() => Model.FirstName" />
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label" for="txtLastName">LastName</label>
+                    <InputText @bind-Value="Model.LastName" id="txtLastName" class="form-control" placeholder="Enter LastName" />
+                    <ValidationMessage For="@(() => Model.LastName)"></ValidationMessage>
+                </div>
+
+                <div class="form-group form-check">
+                    <label class="form-check-label" for="IsEnrollment">
+                        @*<input class="form-check-input" type="checkbox" data-val="true" data-val-required="The IsEnrollment field is required." id="IsEnrollment" name="IsEnrollment" value="true" /> *@
+                        <InputCheckbox @bind-Value="Model.IsEnrollment" id="IsEnrollment" class="form-check-input" />
+                        Is Enrollment
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary"
+                        disabled="@Busy"
+                    />
+                </div>
+            </EditForm>
+        }
+    </div>
+</div>
+
+<div>
+    <a href="/Candidates">Back to List</a>
+</div>
+
+@code {
+    public Candidate? Model { get; set; }
+
+    public string? StatusMessage { get; set; }
+
+    public bool Busy { get; set; }
+
+    protected override void OnInitialized()
+    {
+        //Model = new Candidate { FirstName = "YJ", LastName = "Park", IsEnrollment = true };
+        Model = new();
+    }
+
+    protected async Task FormSubmit()
+    {
+        if (Busy)
+        {
+            return; 
+        }
+
+        Busy = true;
+
+        try
+        {
+            if (Model is not null)
+            {
+                Model.Age = 0;
+
+                using var ctx = _ContextFactory.CreateDbContext(); // DbContext 생성 
+                ctx.Candidates.Add(Model);
+                await ctx.SaveChangesAsync();
+                // await Task.Delay(5000); 
+                Model = new() { IsEnrollment = Model.IsEnrollment }; 
+
+                StatusMessage = "Success";
+            }
+        }
+        catch (Exception)
+        {
+            StatusMessage = "Error";
+        }
+        finally
+        {
+            Busy = false;         
+        }
+    }
+
+    protected void HandleInvalidSubmit()
+    {
+        StatusMessage = ""; 
+    }
+}

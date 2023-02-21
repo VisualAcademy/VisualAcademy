@@ -1,0 +1,279 @@
+﻿@page "/Candidates/CandidatesIncomes/Manage"
+
+@inject IDbContextFactory<CandidateAppDbContext> _ContextFactory
+@inject NavigationManager NavigationManagerInjector
+
+@using VisualAcademy.Models.Candidates.CandidatesIncomes
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage ProtectedLocalStore
+
+@inject IJSRuntime JSRuntime
+
+@namespace VisualAcademy.Pages.Candidates.CandidatesIncomes
+
+<PageTitle>CandidatesIncomes List</PageTitle>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Gross Annual Income (For Your Household*)</h4>
+                </div>
+                <div class="card-body">
+                    <p><i><strong>* NOTE: “Household” refers to yourself and your spouse <u>only</u>.  Parents, siblings and/or roommates should not be included.</strong></i></p>
+
+                    <VisualAcademy.Pages.Candidates.CandidatesIncomes.Components.EditorForm Model="@Model" Busy="@Busy"
+                                                                                     OnSubmitCallback="@OnSubmitCallback">
+                    </VisualAcademy.Pages.Candidates.CandidatesIncomes.Components.EditorForm>
+
+                    @if (Models is null)
+                    {
+                        <div>Loading...</div>
+                    }
+                    else if (Models.Length > 0)
+                    {
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-striped table-bordered">
+                                    <colgroup>
+                                        <col style="width: 400px;" />
+                                        <col style="width: 400px;" />
+                                        <col style="width: auto;" />
+                                        <col style="width: 150px;" />
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">
+                                                Source of Income
+                                            </th>
+                                            <th class="text-center">
+                                                Annual Amount
+                                            </th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var m in Models)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @m.Source
+                                                </td>
+                                                <td class="px-3">
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">$</span>
+                                                        <input type="text" class="form-control text-end" value="@(Decimal.Truncate(m.Amount ?? 0))" />
+                                                        <span class="input-group-text">.00</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="button" class="btn btn-danger btn-sm" value="Delete"
+                                                   @onclick="() => DeleteBy(m)" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td>
+
+                                            </td>
+                                            <td class="px-3">
+                                                <label class="form-label fw-bold" for="total-income">Total Gross Annual Income</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input type="text" class="form-control text-end" id="total-income"
+                                                        value="@(Decimal.Truncate(Models.Sum(it => it.Amount ?? 0)))" />
+                                                    <span class="input-group-text">.00</span>
+                                                </div>
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                            <td>
+
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@code {
+    // 부모 Component 또는 MVC, Razor Pages에서 넘어온 UserId 값을 받아 저장 
+    [Parameter]
+    public string UserId { get; set; } = "945503cc-ed22-4914-b40b-661cdbc732ad";
+
+    // names에 대해서 관리하는지 여부
+    [Parameter]
+    public bool UseOtherNames 
+    {
+        get
+        {
+            return blnNames;    
+        }
+        set
+        {
+            blnNames = value;     
+        }
+    }
+
+    private bool blnNames = true;
+
+    // 현재 페이지에서 사용할 모델 또는 컬렉션
+    private CandidateIncome[]? Models { get; set; }
+
+    /// <summary>
+    /// 페이지 사이즈: 한 페이지에 몇 개의 레코드를 보여줄건지 결정
+    /// </summary>
+    public int PageSize { get; set; } = 10;
+
+    /// <summary>
+    /// 페이지 번호: 현재 보여줄 페이지 번호: 1 페이지, 2 페이지, ...
+    /// </summary>
+    [Parameter]
+    public int? Page { get; set; } = 1; // PageNumber
+
+    /// <summary>
+    /// 페이지 인덱스: 현재 보여줄 페이지 번호의 인덱스(PageNumber - 1)
+    /// </summary>
+    public int PageIndex { get; set; } = 0;
+
+    /// <summary>
+    /// 총 몇 개의 페이지가 만들어지는지: Math.Ceiling(총 레코드 수 / 10(한 페이지에서 보여줄))
+    /// </summary>
+    public int PageCount { get; set; } = 1;
+
+    /// <summary>
+    /// 레코드 카운트: 현재 테이블에 몇 개의 레코드가 있는지 지정
+    /// </summary>
+    public int RecordCount { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await DisplayData();
+    }
+
+    private async Task DisplayData()
+    {
+        if (Page is null or < 1)
+        {
+            Page = 1;
+            return;
+        }
+
+        PageIndex = 0;
+
+        using var context = _ContextFactory.CreateDbContext();
+
+        RecordCount = await context.CandidatesIncomes.Where(ui => ui.UserId == UserId).CountAsync();
+
+        PageCount = Convert.ToInt32(Math.Ceiling(RecordCount / (double)PageSize));
+        if (PageCount == 0)
+        {
+            PageCount = 1;
+        }
+
+        Models = await context.CandidatesIncomes.Where(ui => ui.UserId == UserId)
+            .OrderByDescending(it => it.Id)
+            //.Skip(PageIndex * PageSize)
+            //.Take(PageSize)
+            .ToArrayAsync();
+    }
+
+    protected async Task DeleteBy(CandidateIncome model)
+    {
+        bool isDelete = await JSRuntime.InvokeAsync<bool>(
+            "confirm", "Are you sure you want to delete this?");
+        if (isDelete)
+        {
+            try
+            {
+                using var context = _ContextFactory.CreateDbContext();
+                context.CandidatesIncomes.Remove(model);
+                await context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // Empty
+            }
+
+            await DisplayData();
+        }
+    }
+
+    public CandidateIncome? Model { get; set; }
+
+    public string? StatusMessage { get; set; }
+
+    public bool Busy { get; set; }
+
+    protected override void OnInitialized() => Model = new();
+
+    protected async Task FormSubmit()
+    {
+        if (Busy)
+        {
+            return;
+        }
+
+        Busy = true;
+
+        try
+        {
+            if (Model is not null)
+            {
+                using var ctx = _ContextFactory.CreateDbContext();
+                Model.UserId = UserId;
+                ctx.CandidatesIncomes.Add(Model);
+                ctx.SaveChanges();
+
+                StatusMessage = "Success";
+            }
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"Error: {ex.Message}";
+        }
+        finally
+        {
+            Busy = false;
+
+            Model = new();
+
+            await DisplayData();
+        }
+    }
+
+    protected void HandleInvalidSubmit()
+    {
+        StatusMessage = "";
+    }
+
+    protected async Task OnSubmitCallback(bool isValid)
+    {
+        if (isValid)
+        {
+            await FormSubmit();
+        }
+        else
+        {
+            HandleInvalidSubmit();
+        }
+    }
+}

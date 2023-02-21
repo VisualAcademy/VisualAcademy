@@ -1,0 +1,85 @@
+﻿@namespace VisualAcademy.Pages.Candidates.CandidatesIncomes.Components
+@using VisualAcademy.Models.Candidates.CandidatesIncomes
+
+@if (Model is not null)
+{
+    <EditForm Model="@Model"
+          OnValidSubmit="FormSubmit"
+          OnInvalidSubmit="@HandleInvalidSubmit">
+        <DataAnnotationsValidator />
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <InputText @bind-Value="Model.Source" id="txtSource" class="form-control" placeholder="Source of Income" />
+                    <ValidationMessage For="() => Model.Source" />
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-text">$</span>
+                        <InputNumber @bind-Value="Model.Amount" id="txtAmount" 
+                            class="form-control text-end" placeholder="Annual Amount" />
+                        <span class="input-group-text">.00</span>
+                    </div>
+                    <ValidationMessage For="() => Model.Amount" />
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group">
+                    @if (IsEdit)
+                    {
+                        <input type="submit" value="Edit" class="btn btn-primary" disabled="@Busy" />
+                        <input type="button" value="Cancel" class="btn btn-secondary" disabled="@Busy"
+                       @onclick="HandleCancel" />
+                    }
+                    else
+                    {
+                        <input type="submit" value="Add" class="btn btn-success form-control" disabled="@Busy" />
+                    }
+                </div>
+            </div>
+        </div>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public CandidateIncome? Model { get; set; }
+
+    [Parameter]
+    public bool Busy { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnSubmitCallback { get; set; }
+
+    [Parameter]
+    public bool IsEdit { get; set; }
+
+    protected async Task FormSubmit()
+    {
+        if (OnSubmitCallback.HasDelegate)
+        {
+            await OnSubmitCallback.InvokeAsync(true);
+        }
+    }
+
+    protected async Task HandleInvalidSubmit()
+    {
+        if (OnSubmitCallback.HasDelegate)
+        {
+            await OnSubmitCallback.InvokeAsync(false);
+        }
+    }
+
+    [Parameter]
+    public EventCallback OnCancelCallback { get; set; }
+
+    protected async Task HandleCancel()
+    {
+        if (OnCancelCallback.HasDelegate)
+        {
+            await OnCancelCallback.InvokeAsync();
+        }
+    }
+}

@@ -1,0 +1,69 @@
+﻿@page "/Buffets/Noodles"
+@page "/Buffets/Noodles/Index"
+@using VisualAcademy.Data
+@using VisualAcademy.Models.Buffets
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext _Context
+
+<PageTitle>Noodles</PageTitle>
+
+<h1>Noodles</h1>
+
+<p>
+    <a href="/Noodles/Create">Create New</a>
+</p>
+
+@if (Noodles is null)
+{
+    <div>Loading...</div>
+}
+else
+{
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Broth
+                </th>
+                <th>
+                    Is Vegan
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in Noodles)
+            {
+                <tr>
+                    <td>
+                        @m.Name
+                    </td>
+                    <td>
+                        @m.Broth?.Name
+                    </td>
+                    <td>
+                        <input class="check-box" type="checkbox" checked="@m.Broth?.IsVegan" />
+                    </td>
+                    <td>
+                        <a href="/Noodles/Edit/@m.Id">Edit</a> |
+                        <a href="/Noodles/Details/@m.Id">Details</a> |
+                        <a href="/Noodles/Delete/@m.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    // 현재 페이지에서 사용할 모델 또는 컬렉션
+    private List<Noodle>? Noodles { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Noodles = await _Context.Noodles.Include(n => n.Broth).ToListAsync();
+    }
+}

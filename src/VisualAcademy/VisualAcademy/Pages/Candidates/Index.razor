@@ -1,0 +1,195 @@
+﻿@page "/Candidates/{Page:int?}"
+@page "/Candidates/Index/{Page:int?}"
+@page "/Candidates/List/{Page:int?}"
+
+@inject IDbContextFactory<CandidateAppDbContext> _ContextFactory
+@inject NavigationManager NavigationManagerInjector
+
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using Microsoft.EntityFrameworkCore;
+@using VisualAcademy.Models.Candidates;
+@inject ProtectedLocalStorage ProtectedLocalStore
+
+@inject IJSRuntime JSRuntime
+
+@namespace VisualAcademy.Pages.Candidates
+
+<PageTitle>Candidate List</PageTitle>
+
+<h1>Candidate List</h1>
+
+<p>
+    <a href="/Candidates/Create">Create New</a>
+</p>
+
+@if (Candidates is null)
+{
+    <div>Loading...</div>
+}
+else
+{
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    FirstName
+                </th>
+                <th>
+                    LastName
+                </th>
+                <th>
+                    Is Enrollment
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in Candidates)
+            {
+                <tr>
+                    <td>
+                        @m.FirstName
+                    </td>
+                    <td>
+                        @m.LastName
+                    </td>
+                    <td>
+                        <input class="check-box" type="checkbox" checked="@m.IsEnrollment" />
+                    </td>
+                    <td>
+                        <a href="/Candidates/Edit/@m.Id" class="btn btn-primary btn-sm">Edit</a> |
+                        <input type="button" class="btn btn-danger btn-sm" value="Delete"
+                       @onclick="() => DeleteBy(m)" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <ul class="pagination">
+        <li class="page-item @((Page == 1) ? "disabled" : "")">
+            <a class="page-link" href="/Candidates/@(Page - 1)">Prev</a>
+        </li>
+        @{
+            int start = PageIndex / (int)5 * 5 + 1;
+            int end = (PageIndex / (int)5 + 1) * 5;
+        }
+        @for (int i = start; i <= end; i++)
+        {
+            var currentNumber = i;
+
+            if (i > PageCount)
+            {
+                break;     
+            }
+            <li class="page-item @((i == Page) ? "active" : "")">
+                <a class="page-link" href="/Candidates/@(i)">@(i)</a>
+            </li>
+        }
+        <li class="page-item @((Page == PageCount) ? "disabled" : "")">
+            <a class="page-link" href="/Candidates/@(Page + 1)">Next</a>
+        </li>
+    </ul>
+
+}
+
+@code {
+    // 현재 페이지에서 사용할 모델 또는 컬렉션
+    private Candidate[]? Candidates { get; set; }
+
+    /// <summary>
+    /// 페이지 사이즈: 한 페이지에 몇 개의 레코드를 보여줄건지 결정
+    /// </summary>
+    public int PageSize { get; set; } = 4;
+
+    /// <summary>
+    /// 페이지 번호: 현재 보여줄 페이지 번호: 1 페이지, 2 페이지, ...
+    /// </summary>
+    [Parameter]
+    public int? Page { get; set; } // PageNumber
+
+    /// <summary>
+    /// 페이지 인덱스: 현재 보여줄 페이지 번호의 인덱스(PageNumber - 1)
+    /// </summary>
+    public int PageIndex { get; set; }
+
+    /// <summary>
+    /// 총 몇 개의 페이지가 만들어지는지: Math.Ceiling(총 레코드 수 / 10(한 페이지에서 보여줄))
+    /// </summary>
+    public int PageCount { get; set; }
+
+    /// <summary>
+    /// 레코드 카운트: 현재 테이블에 몇 개의 레코드가 있는지 지정
+    /// </summary>
+    public int RecordCount { get; set; }
+
+    protected override async Task OnParametersSetAsync() => await DisplayData();
+
+    private async Task DisplayData()
+    {
+        if (Page is null or < 1)
+        {
+            //Page = 1;
+            NavigationManagerInjector.NavigateTo("/Candidates/Index/1");
+            return;
+        }
+
+        PageIndex = Page.Value - 1;
+
+        // Blazor에서는 반드시 DbContext facotry 사용 권장(필수) 
+        // https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/
+        //Candidates = await _Context.Candidates.ToArrayAsync();
+        using var context = _ContextFactory.CreateDbContext(); // DbContext 생성
+
+        RecordCount = await context.Candidates.CountAsync();
+
+        PageCount = Convert.ToInt32(Math.Ceiling(RecordCount / (double)PageSize));
+        if (PageCount == 0)
+        {
+            PageCount = 1; // 데이터가 없으면 1 페이지로 초기화
+        }
+
+        if (Page > PageCount)
+        {
+            NavigationManagerInjector.NavigateTo($"/Candidates/List/{PageCount}");
+            return;
+        }
+
+        Candidates = await context.Candidates
+            .OrderByDescending(it => it.Id)
+            .Skip(PageIndex * PageSize)
+            .Take(PageSize)
+            .ToArrayAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (Page is not null)
+        {
+            // 현재 페이지 번호를 상태 데이터에 저장
+            await ProtectedLocalStore.SetAsync("Page", Page.Value);
+        }
+    }
+
+    protected async Task DeleteBy(Candidate model)
+    {
+        bool isDelete = await JSRuntime.InvokeAsync<bool>(
+            "confirm", "Are you sure you want to delete this?");
+        if (isDelete)
+        {
+            try
+            {
+                using var context = _ContextFactory.CreateDbContext();
+                context.Candidates.Remove(model);
+                await context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                // Empty
+            }
+
+            await DisplayData();
+        }
+    }
+}
+ 

@@ -1,0 +1,118 @@
+﻿@page "/Candidates/Edit/{Id:int}"
+@inject IDbContextFactory<CandidateAppDbContext> ContextFactoryInjector
+@inject NavigationManager NavigationManagerInjector
+
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage ProtectedLocalStore
+
+<PageTitle>Candidate Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h4>Candidate</h4>
+<hr />
+
+@if (!String.IsNullOrEmpty(StatusMessage))
+{
+    var statusMessageClass = StatusMessage.StartsWith("Error") ? "danger" : "success";
+    <div class="alert alert-@statusMessageClass alert-dismissible fade show" role="alert">
+        @StatusMessage
+        <button type="button" class="btn-close" data-bs-dismiss="alert"
+            aria-label="Close">
+        </button>
+    </div>
+}
+
+@if (Model is null && !Busy)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        Not Found
+        <button type="button" class="btn-close" data-bs-dismiss="alert"
+            aria-label="Close">
+        </button>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <VisualAcademy.Pages.Candidates.Components.EditorForm
+                Model="@Model" Busy="@Busy" IsEdit="true"
+                OnSubmitCallback="@OnSubmitCallback"
+                OnCancelCallback="@GotoIndexPage"
+            >
+            </VisualAcademy.Pages.Candidates.Components.EditorForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/Candidates">Back to List</a>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public Candidate? Model { get; set; }
+
+    public bool Busy { get; set; }
+
+    public string? StatusMessage { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Busy = true;
+
+        try
+        {
+            using var ctx = ContextFactoryInjector.CreateDbContext();
+            Model = await ctx.Candidates.AsNoTracking().FirstOrDefaultAsync(it => it.Id == Id);
+        }
+        finally
+        {
+            Busy = false;            
+        }
+    }
+
+    protected async Task OnSubmitCallback(bool isValid)
+    {
+        if (Model is null || !isValid || Busy)
+        {
+            StatusMessage = "";
+            return;
+        }
+
+        Busy = true;
+
+        try
+        {
+            using var ctx = ContextFactoryInjector.CreateDbContext();
+            ctx.Candidates.Update(Model);
+            await ctx.SaveChangesAsync();
+
+            //StatusMessage = "Success";
+            await GotoIndexPage(); 
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            StatusMessage = $"Error - 이미 삭제 또는 변경되었습니다. 새로고침 후 다시 시도하세요.";
+        }
+        catch (Exception ex)
+        {
+            StatusMessage = $"Error - {ex.Message}";
+        }
+        finally
+        {
+            Busy = false;
+        }
+    }
+
+    private async Task GotoIndexPage()
+    {
+        var result = await ProtectedLocalStore.GetAsync<int>("Page");
+        var currentPage = result.Success ? result.Value : 1;
+
+        NavigationManagerInjector.NavigateTo($"/Candidates/{currentPage}");
+    }
+}

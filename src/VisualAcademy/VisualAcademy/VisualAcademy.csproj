@@ -49,6 +49,7 @@
         <None Include="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
         <None Include="Areas\Identity\Pages\_ViewImports.cshtml" />
         <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
+        <None Include="Pages\Candidates\CandidatesLanguages\Manage.razor" />
         <None Include="wwwroot\js\site.js" />
     </ItemGroup>
 
