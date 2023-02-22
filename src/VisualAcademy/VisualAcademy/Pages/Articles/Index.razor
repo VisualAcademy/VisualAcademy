@@ -1,0 +1,66 @@
+﻿@page "/Articles"
+@page "/Articles/Index"
+
+@namespace ArticleApp.Pages.Articles
+
+<h3>Index</h3>
+
+<div class="row">
+    <div class="col-md-12">
+        <a href="/Articles/Create" class="btn btn-primary">Create</a>
+        <AuthorizeView>
+            <Authorized>
+            </Authorized>
+            <NotAuthorized>
+                <a href="/Articles/Manage" class="btn btn-primary">Manage</a>
+            </NotAuthorized>
+        </AuthorizeView>
+        <AuthorizeView Roles="Administrators, Managers">
+            <a href="/Articles/Manage" class="btn btn-primary">Manage</a>
+        </AuthorizeView>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @if (articles == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Created</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var article in articles)
+                    {
+                        <tr>
+                            <td>@article.Id</td>
+                            <td @onclick="@(() => btnTitle_Click(article.Id))">
+                                <a href="/Articles/Details/@article.Id">
+                                    @article.Title
+                                </a>
+                            </td>
+                            <td>@article.Created.ToShortTimeString()</td>
+                            <td>
+                                <a href="/Articles/Details/@article.Id" class="btn btn-light">Details</a>
+                                <a href="/Articles/Edit/@article.Id" class="btn btn-light">Edit</a>
+                                <a href="/Articles/Delete/@article.Id" class="btn btn-light">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+    <div class="col-md-12">
+        <DulPagerComponent Model="pager" PageIndexChanged="PageIndexChanged"></DulPagerComponent>
+    </div>
+</div>

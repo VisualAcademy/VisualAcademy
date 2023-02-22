@@ -1,0 +1,154 @@
+﻿@using Dul.Web
+
+<div class="d-flex">
+
+    <ul class="pagination pagination-sm mx-auto">
+        @*처음 링크*@
+        @if (Model.PageNumber == 1)
+        {
+            <li class="page-item">
+                <a class="page-link first btn disabled"><span style="font-size: 7pt;">FIRST</span></a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link first btn" @onclick="@(() => PagerButtonClicked(1))"><span style="font-size: 7pt;">FIRST</span></a>
+            </li>
+        }
+
+        @*이전 n개 링크*@
+        @if (Model.PageNumber > Model.PagerButtonCount)
+        {
+            int prev = (Model.PageNumber - 1) / (int)Model.PagerButtonCount * Model.PagerButtonCount; // 이전 n개 페이지 번호 계산
+            <li class="page-item">
+                <a class="page-link prev btn" @onclick="@(() => PagerButtonClicked(prev))"><span style="font-size: 7pt;">-@Model.PagerButtonCount</span></a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link prev btn disabled"><span style="font-size: 7pt;">-@Model.PagerButtonCount</span></a>
+            </li>
+        }
+
+        @*이전 링크: 처음 페이지가 아니면 페이지 번호를 -1씩 감소*@
+        @if (Model.PageNumber > 1)
+        {
+            int prev = Model.PageNumber - 1; // 이전 페이지 번호 계산
+            <li class="page-item">
+                <a class="page-link prev btn" @onclick="@(() => PagerButtonClicked(prev))"><span style="font-size: 7pt;">PREV</span></a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link prev btn disabled"><span style="font-size: 7pt;">PREV</span></a>
+            </li>
+        }
+
+        @*페이지 수만큼 숫자 버튼 출력*@
+        @{
+            int i = 0; // 숫자 버튼, 다음 n개에서 사용
+            int start = Model.PageIndex / (int)Model.PagerButtonCount * Model.PagerButtonCount + 1; //[?]
+            int end = (Model.PageIndex / (int)Model.PagerButtonCount + 1) * Model.PagerButtonCount; //[?]
+        }
+
+        @for (i = start; i <= end; i++)
+        {
+            var currentNumber = i; // 현재 페이지 번호 임시 저장
+
+            // 페이지 수보다 크면 종료
+            if (i > Model.PageCount)
+            {
+                break;
+            }
+
+            // 현재 보고있는 페이지면 링크 제거
+            if (i == Model.PageNumber)
+            {
+                <li class="page-item active">
+                    <a class="page-link current btn disabled"><span style="font-size: 7pt;">@i</span></a>
+                </li>
+            }
+            else
+            {
+                <li class="page-item">
+                    <a class="page-link current btn" @onclick="@(() => PagerButtonClicked(currentNumber))"><span style="font-size: 7pt;">@i</span></a>
+                </li>
+            }
+        }
+
+        @*다음 링크: 마지막 페이지가 아니면 페이지 번호를 +1씩 증가*@
+        @if (Model.PageNumber < Model.PageCount)
+        {
+            int next = Model.PageNumber + 1; // 다음 페이지 번호 계산
+            <li class="page-item">
+                <a class="page-link next btn" @onclick="@(() => PagerButtonClicked(next))"><span style="font-size: 7pt;">NEXT</span></a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link next btn disabled"><span style="font-size: 7pt;">NEXT</span></a>
+            </li>
+        }
+
+        @*다음 n개 링크*@
+        @if (i <= Model.PageCount)
+        {
+            // 다음 n개 페이지 번호 계산
+            int next = Model.PageIndex / (int)Model.PagerButtonCount * Model.PagerButtonCount + Model.PagerButtonCount + 1; //[?]
+            <li class="page-item">
+                <a class="page-link next btn" @onclick="@(() => PagerButtonClicked(next))"><span style="font-size: 7pt;">@(Model.PagerButtonCount)+</span></a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link next btn disabled"><span style="font-size: 7pt;">@(Model.PagerButtonCount)+</span></a>
+            </li>
+        }
+
+        @*마지막 링크*@
+        @if (Model.PageNumber != Model.PageCount)
+        {
+            <li class="page-item">
+                <a class="page-link last btn" @onclick="@(() => PagerButtonClicked(Model.PageCount))"><span style="font-size: 7pt;">LAST</span></a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link last btn disabled"><span style="font-size: 7pt;">LAST</span></a>
+            </li>
+        }
+    </ul>
+
+</div>
+
+@code {
+    //[1] 부모로부터 모든 페이저 관련된 정보가 담김 PagerBase 개체 받음
+    [Parameter]
+    public PagerBase Model { get; set; }
+
+    //[2] Parameter가 넘어오면 자동으로 Pager.PageCount 계산
+    protected override Task OnParametersSetAsync()
+    {
+        Model.PageCount = Convert.ToInt32(Math.Ceiling(Model.RecordCount / (double)Model.PageSize));
+        return base.OnParametersSetAsync();
+    }
+
+    //[3] 부모의 콜백 메서드를 PageIndexChanged 대리자로 받음
+    [Parameter]
+    public EventCallback<int> PageIndexChanged { get; set; }
+
+    //[4] Pager 버튼 클릭할 때 현재 클릭한 페이지 번호를 받아서 부모에게 전달
+    private void PagerButtonClicked(int pageNumber)
+    {
+        Model.PageNumber = pageNumber;
+        Model.PageIndex = pageNumber - 1;
+
+        PageIndexChanged.InvokeAsync(pageNumber - 1); // PageIndex를 부모 창으로 전송
+    }
+}

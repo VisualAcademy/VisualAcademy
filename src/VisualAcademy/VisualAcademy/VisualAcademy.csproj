@@ -54,6 +54,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="DulPager" Version="1.0.2" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.0" />
@@ -65,6 +66,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\ArticleApp.Models\ArticleApp.Models.csproj" />
       <ProjectReference Include="..\VisualAcademy.Models\VisualAcademy.Models.csproj" />
     </ItemGroup>
 

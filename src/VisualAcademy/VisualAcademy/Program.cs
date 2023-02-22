@@ -1,3 +1,4 @@
+using ArticleApp.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -8,12 +9,9 @@ using VisualAcademy.Areas.Identity.Services;
 using VisualAcademy.Data;
 using VisualAcademy.Models.Candidates;
 
-namespace VisualAcademy
-{
-    public class Program
-    {
-        public static async Task Main(string[] args)
-        {
+namespace VisualAcademy {
+    public class Program {
+        public static async Task Main(string[] args) {
             var builder = WebApplication.CreateBuilder(args);
 
             //[!] ConfigureServices... Startup.cs 파일에서 ConfigureServices 메서드 영역: 
@@ -37,8 +35,7 @@ namespace VisualAcademy
             //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
             //builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(
-                options =>
-                {
+                options => {
                     options.SignIn.RequireConfirmedAccount = false;
                     options.SignIn.RequireConfirmedEmail = false;
 
@@ -48,8 +45,7 @@ namespace VisualAcademy
                 .AddDefaultTokenProviders();
 
             // Identity 옵션 설정
-            builder.Services.Configure<IdentityOptions>(options =>
-            {
+            builder.Services.Configure<IdentityOptions>(options => {
                 // 암호 설정
                 options.Password.RequiredLength = 8; // 암호는 최소 8자로 
                 options.Password.RequireDigit = true; // 숫자 반드시 포함
@@ -80,35 +76,47 @@ namespace VisualAcademy
             // 종속성 주입 추가 
             builder.Services.AddTransient<IEmailSender, EmailSender>();
 
+            AddDependencyInjectionContainerForArticles(builder);
+
+            #region ArticleApp
+            /// <summary>
+            /// 게시판(Articles) 관련 의존성(종속성) 주입 관련 코드만 따로 모아서 관리
+            /// </summary>
+            void AddDependencyInjectionContainerForArticles(WebApplicationBuilder builder) {
+                // ArticleAppDbContext.cs Inject: New DbContext Add
+                builder.Services.AddEntityFrameworkSqlServer().AddDbContext<ArticleAppDbContext>(options =>
+                    options.UseSqlServer(connectionString));
+
+                // IArticleRepository.cs Inject: DI Container에 서비스(리포지토리) 등록
+                builder.Services.AddTransient<IArticleRepository, ArticleRepository>();
+            } 
+            #endregion
+
             var app = builder.Build();
 
             //[!] Configure... Startup.cs 파일에서 Configure 메서드 영역: 
 
             // 개발 환경에서 Update-Database, Seed 데이터 추가
-            if (app.Environment.IsDevelopment())
-            {
+            if (app.Environment.IsDevelopment()) {
                 //await CheckCandidateDbMigrated(app.Services);
                 CandidateSeedData(app);
                 CandidateDbInitializer.Initialize(app);
             }
 
             #region SeedInitialData
-            using (var scope = app.Services.CreateScope())
-            {
+            using (var scope = app.Services.CreateScope()) {
                 var services = scope.ServiceProvider;
                 var ctx = services.GetRequiredService<ApplicationDbContext>();
                 //ctx.Database.Migrate();
 
-                if (app.Environment.IsDevelopment())
-                {
+                if (app.Environment.IsDevelopment()) {
                     ctx.SeedInitialData();
                 }
             }
             #endregion
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
+            if (app.Environment.IsDevelopment()) {
                 app.UseMigrationsEndPoint();
                 app.UseSwagger();
                 app.UseSwaggerUI();
@@ -116,8 +124,7 @@ namespace VisualAcademy
                 // 시스템 기본 제공 사용자 및 역할 만들기(처음 애플리케이션 가동할 때)
                 await CreateBuiltInUsersAndRoles(app);
             }
-            else
-            {
+            else {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
@@ -144,8 +151,7 @@ namespace VisualAcademy
         /// <summary>
         /// 내장 사용자 및 그룹(역할) 생성
         /// </summary>
-        private static async Task CreateBuiltInUsersAndRoles(WebApplication app)
-        {
+        private static async Task CreateBuiltInUsersAndRoles(WebApplication app) {
             using var serviceScope = app.Services.CreateScope();
 
             var serviceProvider = serviceScope.ServiceProvider;
@@ -155,8 +161,7 @@ namespace VisualAcademy
             dbContext.Database.EnsureCreated(); // 데이터베이스가 생성되어 있는지 확인 
 
             // 기본 내장 사용자 및 역할이 하나도 없으면(즉, 처음 데이터베이스 생성이라면)
-            if (!dbContext.Users.Any() && !dbContext.Roles.Any())
-            {
+            if (!dbContext.Users.Any() && !dbContext.Roles.Any()) {
                 string domainName = "visualacademy.com";
 
                 //[1] Groups(Roles)
@@ -175,47 +180,39 @@ namespace VisualAcademy
                 //    }
                 //}
                 //[1][1] Administrators
-                var administrators = new ApplicationRole
-                {
+                var administrators = new ApplicationRole {
                     Name = Dul.Roles.Administrators.ToString(),
                     NormalizedName = Dul.Roles.Administrators.ToString().ToUpper(),
                     Description = "응용 프로그램을 총 관리하는 관리 그룹 계정"
                 };
-                if (!(await roleManager.RoleExistsAsync(administrators.Name)))
-                {
+                if (!(await roleManager.RoleExistsAsync(administrators.Name))) {
                     await roleManager.CreateAsync(administrators);
                 }
                 //[1][2] Everyone
-                var everyone = new ApplicationRole
-                {
+                var everyone = new ApplicationRole {
                     Name = Dul.Roles.Everyone.ToString(),
                     NormalizedName = Dul.Roles.Everyone.ToString().ToUpper(),
                     Description = "응용 프로그램을 사용하는 모든 사용자 그룹 계정"
                 };
-                if (!(await roleManager.RoleExistsAsync(everyone.Name)))
-                {
+                if (!(await roleManager.RoleExistsAsync(everyone.Name))) {
                     await roleManager.CreateAsync(everyone);
                 }
                 //[1][3] Users
-                var users = new ApplicationRole
-                {
+                var users = new ApplicationRole {
                     Name = Dul.Roles.Users.ToString(),
                     NormalizedName = Dul.Roles.Users.ToString().ToUpper(),
                     Description = "일반 사용자 그룹 계정"
                 };
-                if (!(await roleManager.RoleExistsAsync(users.Name)))
-                {
+                if (!(await roleManager.RoleExistsAsync(users.Name))) {
                     await roleManager.CreateAsync(users);
                 }
                 //[1][4] Guests
-                var guests = new ApplicationRole
-                {
+                var guests = new ApplicationRole {
                     Name = Dul.Roles.Guests.ToString(),
                     NormalizedName = Dul.Roles.Guests.ToString().ToUpper(),
                     Description = "게스트 사용자 그룹 계정"
                 };
-                if (!(await roleManager.RoleExistsAsync(guests.Name)))
-                {
+                if (!(await roleManager.RoleExistsAsync(guests.Name))) {
                     await roleManager.CreateAsync(guests);
                 }
 
@@ -224,10 +221,8 @@ namespace VisualAcademy
                 //[2][1] Administrator
                 // ('Administrator', '관리자', 'User', '응용 프로그램을 총 관리하는 사용자 계정')
                 ApplicationUser? administrator = await userManager.FindByEmailAsync($"administrator@{domainName}");
-                if (administrator == null)
-                {
-                    administrator = new ApplicationUser()
-                    {
+                if (administrator == null) {
+                    administrator = new ApplicationUser() {
                         UserName = $"administrator@{domainName}",
                         Email = $"administrator@{domainName}",
                         EmailConfirmed = true, // 기본 템플릿에는 이메일 인증 과정을 거치기때문에 EmailConfirmed 속성을 true로 설정해야 함.
@@ -238,10 +233,8 @@ namespace VisualAcademy
                 //[2][2] Guest
                 // ('Guest', '게스트 사용자', 'User', '게스트 사용자 계정')
                 ApplicationUser? guest = await userManager.FindByEmailAsync($"guest@{domainName}");
-                if (guest == null)
-                {
-                    guest = new ApplicationUser()
-                    {
+                if (guest == null) {
+                    guest = new ApplicationUser() {
                         UserName = "Guest",
                         Email = $"guest@{domainName}",
                         EmailConfirmed = false,
@@ -252,10 +245,8 @@ namespace VisualAcademy
                 //[2][3] Anonymous
                 // ('Anonymous', '익명 사용자', 'User', '익명 사용자 계정')
                 ApplicationUser? anonymous = await userManager.FindByEmailAsync($"anonymous@{domainName}");
-                if (anonymous == null)
-                {
-                    anonymous = new ApplicationUser()
-                    {
+                if (anonymous == null) {
+                    anonymous = new ApplicationUser() {
                         UserName = "Anonymous",
                         Email = $"anonymous@{domainName}",
                         EmailConfirmed = false,
@@ -274,19 +265,16 @@ namespace VisualAcademy
 
         #region CandidateSeedData: Candidates 테이블에 기본 데이터 입력
         // Candidates 테이블에 기본 데이터 입력
-        static void CandidateSeedData(WebApplication app)
-        {
+        static void CandidateSeedData(WebApplication app) {
             // https://docs.microsoft.com/ko-kr/aspnet/core/fundamentals/dependency-injection
             // ?view=aspnetcore-6.0#resolve-a-service-at-app-start-up
-            using (var serviceScope = app.Services.CreateScope())
-            {
+            using (var serviceScope = app.Services.CreateScope()) {
                 var services = serviceScope.ServiceProvider;
 
                 var candidateDbContext = services.GetRequiredService<CandidateAppDbContext>();
 
                 // Candidates 테이블에 데이터가 없을 때에만 데이터 입력
-                if (!candidateDbContext.Candidates.Any())
-                {
+                if (!candidateDbContext.Candidates.Any()) {
                     candidateDbContext.Candidates.Add(
                         new Candidate { FirstName = "길동", LastName = "홍", IsEnrollment = false });
                     candidateDbContext.Candidates.Add(
@@ -300,12 +288,10 @@ namespace VisualAcademy
 
         #region CheckCandidateDbMigrated: 데이터베이스 마이그레이션 진행
         // 데이터베이스 마이그레이션 진행
-        async Task CheckCandidateDbMigrated(IServiceProvider services)
-        {
+        async Task CheckCandidateDbMigrated(IServiceProvider services) {
             using var scope = services.CreateScope();
             using var candidateContext = scope.ServiceProvider.GetService<CandidateAppDbContext>();
-            if (candidateContext is not null)
-            {
+            if (candidateContext is not null) {
                 await candidateContext.Database.MigrateAsync();
             }
         }

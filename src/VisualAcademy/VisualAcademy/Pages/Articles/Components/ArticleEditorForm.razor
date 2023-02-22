@@ -1,0 +1,72 @@
+﻿@inject IArticleRepository ArticleRepository
+@inject IJSRuntime JSRuntime
+
+<div class="modal " tabindex="-1" role="dialog" id="articleEditDialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@EditorFormTitle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <EditForm Model="Model" OnValidSubmit="btnSubmit_Click">
+                    <DataAnnotationsValidator></DataAnnotationsValidator>
+                    <ValidationSummary></ValidationSummary>
+                    <input type="hidden" @bind-value="@Model.Id" />
+                    <div class="form-group">
+                        <label for="txtTitle">Title</label>
+                        <InputText id="txtTitle" class="form-control" placeholder="Enter Title"
+                                   @bind-Value="@Model.Title"></InputText>
+                        <ValidationMessage For="@(() => Model.Title)" class="form-text text-muted"></ValidationMessage>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtContent">Content</label>
+                        <InputTextArea id="txtContext" class="form-control" placeholder="Enter Content"
+                                       @bind-Value="@Model.Content"></InputTextArea>
+                        <ValidationMessage For="@(() => Model.Content)" class="form-text text-muted"></ValidationMessage>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </EditForm>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment EditorFormTitle { get; set; }
+
+    [Parameter]
+    public Article Model { get; set; }
+
+    [Parameter]
+    public Action SaveOrUpdated { get; set; }
+
+    /// <summary>
+    /// 저장 또는 수정 로직
+    /// </summary>
+    private async void btnSubmit_Click()
+    {
+        if (Model.Id == 0)
+        {
+            // 저장
+            await ArticleRepository.AddArticleAsync(Model); 
+        }
+        else
+        {
+            // 수정
+            await ArticleRepository.EditArticleAsync(Model); 
+        }
+
+        await JSRuntime.InvokeAsync<object>("closeModal", "articleEditDialog"); // _Host.cshtml
+
+        SaveOrUpdated?.Invoke(); // 넘어온 함수 참조(포인터)를 실행
+    }
+}
