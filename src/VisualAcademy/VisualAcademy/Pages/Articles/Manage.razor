@@ -1,0 +1,95 @@
+﻿@page "/Articles/Manage"
+
+@namespace ArticleApp.Pages.Articles
+
+@using VisualAcademy.Pages.Articles.Components
+
+<h3>Manage</h3>
+
+<div>
+    <a href="/Articles/Create" class="btn btn-primary">Create(Page)</a>
+    <input type="button" value="Create(Modal)" class="btn btn-primary" 
+           data-toggle="modal" data-target="#articleEditDialog" @onclick="btnCreate_Click" />
+</div>
+
+@if (articles == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Created</th>
+                <th>&nbsp;</th>
+                <th>IsPinned</th>
+                <th>&nbsp;</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var article in articles)
+            {
+            <tr>
+                <td>@article.Id</td>
+                <td>@article.Title</td>
+                <td>@article.Created.ToShortTimeString()</td>
+                <td>
+                    <a href="/Articles/Details/@article.Id" class="btn btn-light">Details</a>
+                    <a href="/Articles/Edit/@article.Id" class="btn btn-light">Edit</a>
+                    <a href="/Articles/Delete/@article.Id" class="btn btn-light">Delete</a>
+                </td>
+                <td>@(article.IsPinned ? "공지" : "")</td>
+                <td>
+                    <input type="button" value="공지글로 올리기" class="btn btn-light" @onclick="@(() => PinnedBy(article))" />
+                </td>
+                <td>
+                    <input type="button" value="Edit" class="btn btn-danger" data-toggle="modal" data-target="#articleEditDialog"
+                           @onclick="(() => EditBy(article))" />
+                </td>
+                <td>
+                    <input type="button" value="Delete" class="btn btn-danger" data-toggle="modal" data-target="#articleDeleteDialog"
+                           @onclick="(() => DeleteBy(article))" />
+                    <input type="button" value="Delete(BS5)" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#articleDeleteDialog"
+                           @onclick="(() => DeleteBy(article))" />
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<DulPagerComponent Model="pager" PageIndexChanged="PageIndexChanged"></DulPagerComponent>
+
+<ArticleDeleteDialog OnClick="btnDelete_Click"></ArticleDeleteDialog>
+
+<ArticleEditorForm Model="@_article" SaveOrUpdated="SaveOrUpdated">
+    <EditorFormTitle>@editorFormTitle</EditorFormTitle>
+</ArticleEditorForm>
+
+@if (isShow)
+{
+    <div class="modal fade show d-block" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">공지글로 올리기</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="btnClose_Click">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>@(_article.Id)번 글을 공지글로 설정할까요?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @onclick="btnTogglePinned_Click">설정</button>
+                    <button type="button" class="btn btn-secondary" @onclick="btnClose_Click">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

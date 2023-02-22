@@ -3,20 +3,20 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <Name>VisualAcademy.SqlServer</Name>
+    <Name>ArticleApp.SqlServer</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{f04f2328-b2c2-42ef-9739-ca346c4628a8}</ProjectGuid>
+    <ProjectGuid>{aba9a0e8-ae72-495a-9c99-304400593a74}</ProjectGuid>
     <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
-    <RootNamespace>VisualAcademy.SqlServer</RootNamespace>
-    <AssemblyName>VisualAcademy.SqlServer</AssemblyName>
+    <RootNamespace>ArticleApp.SqlServer</RootNamespace>
+    <AssemblyName>ArticleApp.SqlServer</AssemblyName>
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
@@ -58,27 +58,11 @@
     <Folder Include="Properties" />
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
-    <Folder Include="Scripts" />
-    <Folder Include="dbo\Tables\Identity" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="dbo\Tables\Broths.sql" />
-    <Build Include="dbo\Tables\Candidates.sql" />
-    <Build Include="dbo\Tables\CandidatesIncomes.sql" />
-    <Build Include="dbo\Tables\CandidatesNames.sql" />
-    <Build Include="dbo\Tables\Garnishes.sql" />
-    <Build Include="dbo\Tables\Noodles.sql" />
-    <None Include="Scripts\CandidatesAppDbContext.sql" />
     <Build Include="dbo\Tables\Articles.sql" />
-    <None Include="dbo\Tables\Identity\__EFMigrationsHistory.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="dbo\Tables\Identity\AspNetRoleClaims.sql" />
-    <None Include="dbo\Tables\Identity\AspNetRoles.sql" />
-    <None Include="dbo\Tables\Identity\AspNetUserClaims.sql" />
-    <None Include="dbo\Tables\Identity\AspNetUserLogins.sql" />
-    <None Include="dbo\Tables\Identity\AspNetUserRoles.sql" />
-    <None Include="dbo\Tables\Identity\AspNetUsers.sql" />
-    <None Include="dbo\Tables\Identity\AspNetUserTokens.sql" />
+    <None Include="ArticleApp.SqlServer.publish.xml" />
   </ItemGroup>
 </Project>
