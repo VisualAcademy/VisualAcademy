@@ -29,7 +29,6 @@ namespace ArticleApp.Models
         // 상세
         public async Task<Article> GetArticleByIdAsync(int id)
         {
-            //return await _context.Articles.FindAsync(id);
             return await _context.Articles.Where(m => m.Id == id).SingleOrDefaultAsync();
         }
 
@@ -44,7 +43,6 @@ namespace ArticleApp.Models
         // 삭제
         public async Task DeleteArticleAsync(int id)
         {
-            //var model = await _context.Articles.FindAsync(id);
             var model = await _context.Articles.Where(m => m.Id == id).SingleOrDefaultAsync();
             if (model != null)
             {
