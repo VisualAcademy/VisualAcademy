@@ -24,10 +24,7 @@ namespace ArticleApp.Models
         }
 
         // 출력 
-        public async Task<List<Article>> GetArticlesAsync()
-        {
-            return await _context.Articles.OrderByDescending(m => m.Id).ToListAsync();
-        }
+        public async Task<List<Article>> GetArticlesAsync() => await _context.Articles.OrderByDescending(m => m.Id).ToListAsync();
 
         // 상세
         public async Task<Article> GetArticleByIdAsync(int id)
