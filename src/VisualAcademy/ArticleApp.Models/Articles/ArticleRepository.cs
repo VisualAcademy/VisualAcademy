@@ -13,10 +13,7 @@ namespace ArticleApp.Models
     {
         private readonly ArticleAppDbContext _context;
 
-        public ArticleRepository(ArticleAppDbContext context)
-        {
-            this._context = context;
-        }
+        public ArticleRepository(ArticleAppDbContext context) => this._context = context;
 
         // 입력
         public async Task<Article> AddArticleAsync(Article model)
