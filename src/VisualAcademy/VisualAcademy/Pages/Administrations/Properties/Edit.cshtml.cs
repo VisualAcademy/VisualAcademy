@@ -11,10 +11,7 @@ namespace VisualAcademy.Pages.Administrations.Properties
     {
         private readonly ApplicationDbContext _context;
 
-        public EditModel(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public EditModel(ApplicationDbContext context) => _context = context;
 
         [BindProperty]
         public Property Property { get; set; }
