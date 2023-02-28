@@ -10,10 +10,7 @@ namespace VisualAcademy.Pages.Administrations.Properties
     {
         private readonly ApplicationDbContext _context;
 
-        public IndexModel(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public IndexModel(ApplicationDbContext context) => _context = context;
 
         public IList<Property> Property { get; set; }
 
