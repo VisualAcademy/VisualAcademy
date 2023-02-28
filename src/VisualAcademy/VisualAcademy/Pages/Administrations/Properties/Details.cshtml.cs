@@ -11,10 +11,7 @@ namespace VisualAcademy.Pages.Administrations.Properties
     {
         private readonly ApplicationDbContext _context;
 
-        public DetailsModel(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        public DetailsModel(ApplicationDbContext context) => _context = context;
 
         public Property Property { get; set; }
 
