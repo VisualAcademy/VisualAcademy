@@ -62,9 +62,6 @@ namespace VisualAcademy.Pages.Administrations.Properties
             return RedirectToPage("./Index");
         }
 
-        private bool PropertyExists(int id)
-        {
-            return _context.Properties.Any(e => e.Id == id);
-        }
+        private bool PropertyExists(int id) => _context.Properties.Any(e => e.Id == id);
     }
 }
