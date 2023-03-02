@@ -1,0 +1,114 @@
+﻿@using RedPlus.Models
+@using RedPlus.Services
+@using Microsoft.AspNetCore.Components.Web
+
+@namespace RedPlus.Components 
+
+@inject RedPlus.Services.PortfolioServiceJsonFile PortfolioService
+
+<h2>Blazor Component 사용 출력</h2>
+<div class="row portfolio-list">
+    @foreach (var portfolio in PortfolioService.GetPortfolios())
+    {
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+            <div class="card h-100">
+                <div class="portfolio-item-image"
+                     style="background-image: url('@portfolio.Image');"></div>
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <a href="#">@portfolio.Title</a>
+                    </h4>
+                    <p class="card-text">@portfolio.Description</p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary"
+                            data-bs-toggle="modal" 
+                            data-bs-target="#portfolioModal"
+                            @onclick="() => SelectPortfolio(portfolio.Id)">
+                        Read More...
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<!-- /.row -->
+
+@if (selectedPortfolio != null)
+{
+    <!-- Modal -->
+    <div class="modal fade" id="portfolioModal" tabindex="-1" role="dialog" aria-labelledby="portfolioModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">@selectedPortfolio.Title</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card h-100">
+                        <div class="portfolio-item-image"
+                             style="background-image: url('@selectedPortfolio.Image');"></div>
+                        <div class="card-body">
+                            <p class="card-text">@selectedPortfolio.Description</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @if (voteCount == 0)
+                    {
+                        <span>투표하세요!</span>
+                    }
+                    else
+                    {
+                        <span>@voteCount @voteLabel</span>
+                    }
+                    @for (int i = 1; i < 6; i++)
+                    {
+                        var currentStar = i;
+                        if (i <= currentRating)
+                        {
+                            <span style="cursor: pointer;"
+                                @onclick="() => HandleClick(currentStar)">★</span>
+                        }
+                        else
+                        {
+                            <span style="cursor: pointer;"
+                                @onclick="() => HandleClick(currentStar)">☆</span>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    Portfolio selectedPortfolio = new Portfolio();
+    int currentRating = 0;
+    int voteCount = 0;
+    string voteLabel;
+    void SelectPortfolio(int portfolioId)
+    {
+        selectedPortfolio = PortfolioService.GetPortfolios().First(p => p.Id == portfolioId);
+
+        if (selectedPortfolio.Ratings == null)
+        {
+            currentRating = 0;
+            voteCount = 0;
+        }
+        else
+        {
+            voteCount = selectedPortfolio.Ratings.Count();
+            voteLabel = (voteCount > 1) ? "Votes" : "Vote";
+            currentRating = selectedPortfolio.Ratings.Sum() / voteCount;
+        }
+    }
+
+    void HandleClick(int rating)
+    {
+        PortfolioService.AddRating(selectedPortfolio.Id, rating);
+        SelectPortfolio(selectedPortfolio.Id); 
+    }
+}
