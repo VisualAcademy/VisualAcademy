@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using RedPlus.Services;
 using VisualAcademy.Areas.Identity;
 using VisualAcademy.Areas.Identity.Models;
 using VisualAcademy.Areas.Identity.Services;
@@ -89,7 +90,11 @@ namespace VisualAcademy {
 
                 // IArticleRepository.cs Inject: DI Container에 서비스(리포지토리) 등록
                 builder.Services.AddTransient<IArticleRepository, ArticleRepository>();
-            } 
+            }
+            #endregion
+
+            #region ASP.NET Core Razor Pages 강의
+            builder.Services.AddTransient<PortfolioServiceJsonFile>(); // DI Container
             #endregion
 
             var app = builder.Build();
@@ -131,7 +136,10 @@ namespace VisualAcademy {
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+
+            // 미들웨어 추가 
+            app.UseStaticFiles(); // 정적인 HTML, CSS, JavaScript, ... 실행
+            //app.UseFileServer(); // "Microsoft Learn UseFileServer"
 
             app.UseRouting();
 

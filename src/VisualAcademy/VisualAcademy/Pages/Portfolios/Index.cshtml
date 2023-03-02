@@ -1,0 +1,55 @@
+﻿@page
+@model RedPlus.Pages.Portfolios.IndexModel
+@{
+    ViewData["Title"] = "Portfolio";
+    Layout = "_LayoutPortfolio";
+}
+
+@using RedPlus.Components
+
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Page Heading/Breadcrumbs -->
+    <h1 class="mt-4 mb-3">
+        Portfolio
+    </h1>
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a asp-page="/Index">Home</a>
+        </li>
+        <li class="breadcrumb-item active">Portfolio</li>
+    </ol>
+
+    <h2>Razor Page 사용 출력</h2>
+    <div class="row">
+        @foreach (var portfolio in Model.Portfolios)
+        {
+            <div class="col-lg-4 col-sm-6 portfolio-item">
+                <div class="card h-100">
+                    <div class="portfolio-item-image"
+                         style="background-image: url('@portfolio.Image');"></div>
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="#">@portfolio.Title</a>
+                        </h4>
+                        <p class="card-text">@portfolio.Description</p>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary">Read More...</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <!-- /.row -->
+
+    <hr />
+
+    <component type="typeof(PortfolioList)" render-mode="ServerPrerendered" />
+
+    @*<script src="_framework/blazor.server.js"></script>*@
+
+</div>
+<!-- /.container -->
