@@ -5,30 +5,29 @@ using Microsoft.EntityFrameworkCore;
 using VisualAcademy.Data;
 using VisualAcademy.Models;
 
-namespace VisualAcademy.Pages.Administrations.Properties
+namespace VisualAcademy.Pages.Administrations.Properties;
+
+public class DetailsModel : PageModel
 {
-    public class DetailsModel : PageModel
+    private readonly ApplicationDbContext _context;
+
+    public DetailsModel(ApplicationDbContext context) => _context = context;
+
+    public Property Property { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ApplicationDbContext _context;
-
-        public DetailsModel(ApplicationDbContext context) => _context = context;
-
-        public Property Property { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(int? id)
+        if (id == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Property = await _context.Properties.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (Property == null)
-            {
-                return NotFound();
-            }
-            return Page();
+            return NotFound();
         }
+
+        Property = await _context.Properties.FirstOrDefaultAsync(m => m.Id == id);
+
+        if (Property == null)
+        {
+            return NotFound();
+        }
+        return Page();
     }
 }
