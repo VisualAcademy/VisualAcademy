@@ -2,8 +2,6 @@
 
 namespace VisualAcademy.Controllers {
     public class BlazorDemoController : Controller {
-        public IActionResult Index() {
-            return View();
-        }
+        public IActionResult Index() => View();
     }
 }
