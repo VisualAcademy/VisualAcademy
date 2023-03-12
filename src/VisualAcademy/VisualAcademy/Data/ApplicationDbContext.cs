@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 using VisualAcademy.Areas.Identity.Models;
+using VisualAcademy.Models;
 using VisualAcademy.Models.Buffets;
+using VisualAcademy.Models.Tenants;
 
 namespace VisualAcademy.Data;
 
@@ -32,7 +35,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
 
         builder.Entity<Noodle>().HasData(
             new Noodle { Id = 1, Name = "콩국수", BrothId = 1 },
-            new Noodle { Id = 2, Name = "잔치국수", BrothId = 2 });
+        new Noodle { Id = 2, Name = "잔치국수", BrothId = 2 });
+
+        builder.Entity<TenantModel>().ToTable("Tenants");
+        builder.Entity<AppointmentTypeModel>().ToTable("AppointmentsTypes");
     }
 
     #region SeedRoles: 기본 역할(Role)들을 생성하는 코드 중 하나 
@@ -89,4 +95,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<VisualAcademy.Models.Property> Properties { get; set; } = null!;
 
     public DbSet<VisualAcademy.Models.TenantModel> Tenants { get; set; }
+    public DbSet<AppointmentTypeModel> AppointmentsTypes { get; set; }
 }
