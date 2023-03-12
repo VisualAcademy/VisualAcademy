@@ -1,0 +1,34 @@
+﻿@page "{id}"
+@model VisualAcademy.Pages.AppointmentsTypes.DetailsModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Appointment Type Name</th>
+            <th>Is Active</th>
+            <th>Date Created</th>
+            <th>Tenant</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.AppointmentType.Id</td>
+            <td>@Model.AppointmentType.AppointmentTypeName</td>
+            <td>@Model.AppointmentType.IsActive</td>
+            <td>@Model.AppointmentType.DateCreated.ToString("yyyy-MM-dd HH:mm:ss")</td>
+            <td>@Model.AppointmentType.Tenant?.Name</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="form-group">
+    <a asp-page="./Edit" asp-route-id="@Model.AppointmentType.Id">Edit</a> |
+    <a asp-page="./Delete" asp-route-id="@Model.AppointmentType.Id">Delete</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
