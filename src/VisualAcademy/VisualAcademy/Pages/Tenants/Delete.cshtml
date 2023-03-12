@@ -1,0 +1,69 @@
+﻿@page "{id}"
+@model VisualAcademy.Pages.Tenants.DeleteModel
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TenantModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TenantModel.ConnectionString)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TenantModel.ConnectionString)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TenantModel.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TenantModel.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TenantModel.AuthenticationHeader)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TenantModel.AuthenticationHeader)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TenantModel.AccountID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TenantModel.AccountID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TenantModel.GSConnectionString)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TenantModel.GSConnectionString)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TenantModel.ReportWriterURL)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TenantModel.ReportWriterURL)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TenantModel.BadgePhotoType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TenantModel.BadgePhotoType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TenantModel.PortalName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TenantModel.PortalName)
+        </dd>
+    </dl>
+
+    <form asp-page-handler="Delete" method="post">
+        <input type="hidden" asp-for="TenantModel.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index" class="btn btn-default">Back to List</a>
+    </form>
+</div>
