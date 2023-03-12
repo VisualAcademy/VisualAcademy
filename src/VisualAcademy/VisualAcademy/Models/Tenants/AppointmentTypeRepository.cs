@@ -1,40 +1,39 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using VisualAcademy.Data;
 using VisualAcademy.Models.Tenants;
 
 namespace VisualAcademy.Repositories.Tenants {
     public class AppointmentTypeRepository : IAppointmentTypeRepository {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _dbContext;
 
-        public AppointmentTypeRepository(ApplicationDbContext context) {
-            _context = context;
+        public AppointmentTypeRepository(ApplicationDbContext dbContext) {
+            _dbContext = dbContext;
         }
 
-        public async Task<List<AppointmentTypeModel>> GetAllAsync() {
-            return await _context.AppointmentsTypes.ToListAsync();
+        public async Task<List<AppointmentTypeModel>> GetAllAsync(long tenantId) {
+            return await _dbContext.AppointmentsTypes.Where(a => a.TenantId == tenantId).ToListAsync();
         }
 
-        public async Task<AppointmentTypeModel> GetByIdAsync(long id) {
-            return await _context.AppointmentsTypes.FindAsync(id);
+        public async Task<AppointmentTypeModel> GetByIdAsync(long id, long tenantId) {
+            return await _dbContext.AppointmentsTypes.Where(a => a.Id == id && a.TenantId == tenantId).FirstOrDefaultAsync();
         }
 
         public async Task CreateAsync(AppointmentTypeModel appointmentType) {
-            _context.Add(appointmentType);
-            await _context.SaveChangesAsync();
+            _dbContext.Add(appointmentType);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(AppointmentTypeModel appointmentType) {
-            _context.Update(appointmentType);
-            await _context.SaveChangesAsync();
+            _dbContext.Entry(appointmentType).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(long id) {
-            var appointmentType = await _context.AppointmentsTypes.FindAsync(id);
-            _context.Remove(appointmentType);
-            await _context.SaveChangesAsync();
+        public async Task DeleteAsync(long id, long tenantId) {
+            var appointmentType = await GetByIdAsync(id, tenantId);
+            if (appointmentType != null) {
+                _dbContext.Remove(appointmentType);
+                await _dbContext.SaveChangesAsync();
+            }
         }
     }
 }

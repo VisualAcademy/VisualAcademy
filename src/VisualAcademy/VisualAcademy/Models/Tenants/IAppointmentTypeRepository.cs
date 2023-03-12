@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using VisualAcademy.Models.Tenants;
+﻿using VisualAcademy.Models.Tenants;
 
-namespace VisualAcademy.Models.Tenants {
+namespace VisualAcademy.Repositories.Tenants {
     public interface IAppointmentTypeRepository {
-        Task<List<AppointmentTypeModel>> GetAllAsync();
-        Task<AppointmentTypeModel> GetByIdAsync(long id);
+        Task<List<AppointmentTypeModel>> GetAllAsync(long tenantId);
+        Task<AppointmentTypeModel> GetByIdAsync(long id, long tenantId);
         Task CreateAsync(AppointmentTypeModel appointmentType);
         Task UpdateAsync(AppointmentTypeModel appointmentType);
-        Task DeleteAsync(long id);
+        Task DeleteAsync(long id, long tenantId);
     }
 }
