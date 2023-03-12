@@ -9,6 +9,7 @@ using VisualAcademy.Areas.Identity.Models;
 using VisualAcademy.Areas.Identity.Services;
 using VisualAcademy.Data;
 using VisualAcademy.Models.Candidates;
+using VisualAcademy.Repositories.Tenants;
 
 namespace VisualAcademy {
     public class Program {
@@ -98,6 +99,8 @@ namespace VisualAcademy {
             #region ASP.NET Core Razor Pages °­ÀÇ
             builder.Services.AddTransient<PortfolioServiceJsonFile>(); // DI Container
             #endregion
+
+            builder.Services.AddTransient<IAppointmentTypeRepository, AppointmentTypeRepository>();
 
             // ¾Û ºôµå
             var app = builder.Build();

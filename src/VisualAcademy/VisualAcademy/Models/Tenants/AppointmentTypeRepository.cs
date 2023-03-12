@@ -18,7 +18,7 @@ namespace VisualAcademy.Repositories.Tenants {
             return await _dbContext.AppointmentsTypes.Where(a => a.Id == id && a.TenantId == tenantId).FirstOrDefaultAsync();
         }
 
-        public async Task CreateAsync(AppointmentTypeModel appointmentType) {
+        public async Task AddAsync(AppointmentTypeModel appointmentType) {
             _dbContext.Add(appointmentType);
             await _dbContext.SaveChangesAsync();
         }

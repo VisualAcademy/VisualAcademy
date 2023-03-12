@@ -13,13 +13,13 @@ namespace VisualAcademy.Models.Tenants {
         [Required]
         public bool IsActive { get; set; } = true;
 
-        [Required]
+        //[Required]
         [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
         [Display(Name = "Tenant")]
-        public long? TenantId { get; set; }
+        public long? TenantId { get; set; } = null!;
 
-        public TenantModel Tenant { get; set; }
+        public TenantModel? Tenant { get; set; } = null!;
     }
 }
