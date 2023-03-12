@@ -1,0 +1,62 @@
+﻿@page "{id}"
+@model VisualAcademy.Pages.Tenants.EditModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>TenantModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-page-handler="Edit" method="post">
+            <input type="hidden" asp-for="TenantModel.Id" />
+
+            <div class="form-group">
+                <label asp-for="TenantModel.ConnectionString" class="control-label"></label>
+                <input asp-for="TenantModel.ConnectionString" class="form-control" />
+                <span asp-validation-for="TenantModel.ConnectionString" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenantModel.Name" class="control-label"></label>
+                <input asp-for="TenantModel.Name" class="form-control" />
+                <span asp-validation-for="TenantModel.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenantModel.AuthenticationHeader" class="control-label"></label>
+                <input asp-for="TenantModel.AuthenticationHeader" class="form-control" />
+                <span asp-validation-for="TenantModel.AuthenticationHeader" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenantModel.AccountID" class="control-label"></label>
+                <input asp-for="TenantModel.AccountID" class="form-control" />
+                <span asp-validation-for="TenantModel.AccountID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenantModel.GSConnectionString" class="control-label"></label>
+                <input asp-for="TenantModel.GSConnectionString" class="form-control" />
+                <span asp-validation-for="TenantModel.GSConnectionString" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenantModel.ReportWriterURL" class="control-label"></label>
+                <input asp-for="TenantModel.ReportWriterURL" class="form-control" />
+                <span asp-validation-for="TenantModel.ReportWriterURL" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenantModel.BadgePhotoType" class="control-label"></label>
+                <input asp-for="TenantModel.BadgePhotoType" class="form-control" />
+                <span asp-validation-for="TenantModel.BadgePhotoType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenantModel.PortalName" class="control-label"></label>
+                <input asp-for="TenantModel.PortalName" class="form-control" />
+                <span asp-validation-for="TenantModel.PortalName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a asp-page="./Details" asp-route-id="@Model.TenantModel.Id" class="btn btn-default">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
