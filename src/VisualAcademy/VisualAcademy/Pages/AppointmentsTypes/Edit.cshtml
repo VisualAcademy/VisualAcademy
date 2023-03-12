@@ -1,0 +1,32 @@
+﻿@page "{id:int}"
+@model VisualAcademy.Pages.AppointmentsTypes.EditModel
+@{
+    ViewData["Title"] = "Edit Appointment Type";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="AppointmentType.Id" />
+
+    <div class="form-group">
+        <label asp-for="AppointmentType.AppointmentTypeName" class="control-label"></label>
+        <input asp-for="AppointmentType.AppointmentTypeName" class="form-control" />
+        <span asp-validation-for="AppointmentType.AppointmentTypeName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <div class="checkbox">
+            <label>
+                <input asp-for="AppointmentType.IsActive" /> @Html.DisplayNameFor(model => model.AppointmentType.IsActive)
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
