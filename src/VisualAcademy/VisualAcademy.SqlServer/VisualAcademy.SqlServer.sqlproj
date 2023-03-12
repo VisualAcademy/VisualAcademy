@@ -71,6 +71,7 @@
     <None Include="Scripts\CandidatesAppDbContext.sql" />
     <Build Include="dbo\Tables\Articles.sql" />
     <None Include="dbo\Tables\Identity\__EFMigrationsHistory.sql" />
+    <Build Include="dbo\Tables\Tenants.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\Identity\AspNetRoleClaims.sql" />
