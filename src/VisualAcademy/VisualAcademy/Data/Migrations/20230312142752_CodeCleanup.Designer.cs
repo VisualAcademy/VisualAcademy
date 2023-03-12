@@ -12,8 +12,8 @@ using VisualAcademy.Data;
 namespace VisualAcademy.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230116052123_IdentityUserToApplicationUser")]
-    partial class IdentityUserToApplicationUser
+    [Migration("20230312142752_CodeCleanup")]
+    partial class CodeCleanup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,6 +169,9 @@ namespace VisualAcademy.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -181,6 +184,9 @@ namespace VisualAcademy.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
@@ -235,6 +241,166 @@ namespace VisualAcademy.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("VisualAcademy.Models.Buffets.Broth", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsVegan")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Broths");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            IsVegan = true,
+                            Name = "콩국물"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsVegan = false,
+                            Name = "멸치국물"
+                        });
+                });
+
+            modelBuilder.Entity("VisualAcademy.Models.Buffets.Garnish", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<int?>("NoodleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NoodleId");
+
+                    b.ToTable("Garnishes");
+                });
+
+            modelBuilder.Entity("VisualAcademy.Models.Buffets.Noodle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BrothId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BrothId");
+
+                    b.ToTable("Noodles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BrothId = 1,
+                            Name = "콩국수"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BrothId = 2,
+                            Name = "잔치국수"
+                        });
+                });
+
+            modelBuilder.Entity("VisualAcademy.Models.Property", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Property");
+                });
+
+            modelBuilder.Entity("VisualAcademy.Models.TenantModel", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("AccountID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AuthenticationHeader")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BadgePhotoType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConnectionString")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("GSConnectionString")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PortalName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReportWriterURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tenants");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("VisualAcademy.Areas.Identity.Models.ApplicationRole", null)
@@ -284,6 +450,31 @@ namespace VisualAcademy.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("VisualAcademy.Models.Buffets.Garnish", b =>
+                {
+                    b.HasOne("VisualAcademy.Models.Buffets.Noodle", "Noodle")
+                        .WithMany()
+                        .HasForeignKey("NoodleId");
+
+                    b.Navigation("Noodle");
+                });
+
+            modelBuilder.Entity("VisualAcademy.Models.Buffets.Noodle", b =>
+                {
+                    b.HasOne("VisualAcademy.Models.Buffets.Broth", "Broth")
+                        .WithMany("Noodles")
+                        .HasForeignKey("BrothId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Broth");
+                });
+
+            modelBuilder.Entity("VisualAcademy.Models.Buffets.Broth", b =>
+                {
+                    b.Navigation("Noodles");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,77 @@
+﻿@page
+@model VisualAcademy.Pages.Tenants.IndexModel
+@{
+    ViewData["Title"] = "Tenants";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenantModel[0].ConnectionString)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenantModel[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenantModel[0].AuthenticationHeader)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenantModel[0].AccountID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenantModel[0].GSConnectionString)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenantModel[0].ReportWriterURL)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenantModel[0].BadgePhotoType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenantModel[0].PortalName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TenantModel) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConnectionString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuthenticationHeader)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccountID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GSConnectionString)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReportWriterURL)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BadgePhotoType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PortalName)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
