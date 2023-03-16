@@ -31,10 +31,7 @@ namespace VisualAcademy.Apis
 
         // GET api/cities
         [HttpGet]
-        public ActionResult<IEnumerable<City>> GetCities()
-        {
-            return _cities;
-        }
+        public ActionResult<IEnumerable<City>> GetCities() => _cities;
 
         // GET api/cities/5
         [HttpGet("{id}")]
