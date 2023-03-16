@@ -2,10 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using VisualAcademy.Data;
 using VisualAcademy.Models;
-using System.Threading.Tasks;
 
-namespace VisualAcademy.Pages.Tenants {
-    public class CreateModel : PageModel {
+namespace VisualAcademy.Pages.Tenants
+{
+    public class CreateModel : PageModel
+    {
         private readonly ApplicationDbContext _context;
 
         public CreateModel(ApplicationDbContext context) => _context = context;
@@ -15,8 +16,10 @@ namespace VisualAcademy.Pages.Tenants {
         [BindProperty]
         public TenantModel TenantModel { get; set; }
 
-        public async Task<IActionResult> OnPostAsync() {
-            if (!ModelState.IsValid) {
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
                 return Page();
             }
 
