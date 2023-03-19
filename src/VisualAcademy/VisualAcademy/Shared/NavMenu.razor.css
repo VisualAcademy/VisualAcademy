@@ -66,3 +66,52 @@
         overflow-y: auto;
     }
 }
+
+.nav-scrollable {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/*서브 메뉴 추가*/
+
+.nav-item {
+    position: relative;
+}
+
+    .nav-item .collapse {
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: max-content;
+        background-color: #343a40;
+        border-left: 1px solid #495057;
+        z-index: 10;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: none;
+    }
+
+        .nav-item .collapse.show {
+            display: block;
+        }
+
+.submenu-chevron {
+    margin-left: auto;
+    transition: transform 0.3s ease;
+    transform-origin: left;
+    font-size: 0.8em;
+    position: relative; 
+    top: 1px; 
+}
+
+    .submenu-chevron.collapsed {
+        transform: rotate(0);
+    }
+
+    .submenu-chevron.expanded {
+        transform: rotate(90deg);
+    }
+
+.nav-link {
+    user-select: none;
+    cursor: pointer; 
+}

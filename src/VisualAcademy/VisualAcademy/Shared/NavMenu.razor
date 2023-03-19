@@ -24,31 +24,79 @@
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
             </NavLink>
         </div>
+
+        <!-- 서브 메뉴 구현 -->
         <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Candidates" Match="NavLinkMatch.Prefix">
-                <span class="oi oi-list" aria-hidden="true"></span> Candidates
-            </NavLink>
+            <a class="nav-link" @onclick="@(() => ToggleSubMenu("blazorApp"))" @onclick:stopPropagation>
+                <span class="oi oi-list" aria-hidden="true"></span> Blazor App
+                <span class="oi @(collapseSubMenus["blazorApp"] ? "oi-chevron-right" : "oi-chevron-right") submenu-chevron @(collapseSubMenus["blazorApp"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+            </a>
+            <div class="@(collapseSubMenus["blazorApp"] ? "collapse" : null)">
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("todoListInMemory"))" @onclick:stopPropagation>
+                        <span class="oi oi-list" aria-hidden="true"></span> TodoList
+                        <span class="oi @(collapseSubMenus["todoListInMemory"] ? "oi-chevron-right" : "oi-chevron-right") submenu-chevron @(collapseSubMenus["todoListInMemory"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["todoListInMemory"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/TodoListInMemory">
+                            <span class="oi oi-list" aria-hidden="true"></span> TodoListInMemory
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/TodoListInMemory">
+                            <span class="oi oi-list" aria-hidden="true"></span> TodoListInMemory
+                        </NavLink>
+                    </div>
+                </div>
+                <NavLink class="nav-link ms-3" href="/Bonus">
+                    <span class="oi oi-list" aria-hidden="true"></span> Bonus
+                </NavLink>
+            </div>
         </div>
+
+
+        <!-- 서브 메뉴 구현 -->
         <div class="nav-item px-3">
-            <NavLink class="nav-link ms-3" href="/Candidates/CandidatesNames/Manage" Match="NavLinkMatch.All">
-                <span class="oi oi-list" aria-hidden="true"></span> CandidatesNames
-            </NavLink>
+            <a class="nav-link" @onclick="@(() => ToggleSubMenu("blazorFundamentals"))" @onclick:stopPropagation>
+                <span class="oi oi-list" aria-hidden="true"></span> Fundamentals
+                <span class="oi @(collapseSubMenus["blazorFundamentals"] ? "oi-chevron-right" : "oi-chevron-right") submenu-chevron @(collapseSubMenus["blazorFundamentals"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+            </a>
+            <div class="@(collapseSubMenus["blazorFundamentals"] ? "collapse" : null)">
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("fundamentals"))" @onclick:stopPropagation>
+                        <span class="oi oi-list" aria-hidden="true"></span> Candidates
+                        <span class="oi @(collapseSubMenus["fundamentals"] ? "oi-chevron-right" : "oi-chevron-right") submenu-chevron @(collapseSubMenus["fundamentals"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["fundamentals"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/Candidates">
+                            <span class="oi oi-list" aria-hidden="true"></span> Candidates
+                        </NavLink>
+                        <a class="nav-link ms-3" href="https://github.com/VisualAcademy/Buffet" target="_blank">
+                            <span class="oi oi-list" aria-hidden="true"></span> 강의 소스 GitHub
+                        </a>
+                    </div>
+                </div>
+                <div class="nav-item ms-3">
+                    <NavLink class="nav-link" href="/Candidates/CandidatesNames/Manage">
+                        <span class="oi oi-list" aria-hidden="true"></span> CandidatesNames
+                    </NavLink>
+                </div>
+                <div class="nav-item ms-3">
+                    <NavLink class="nav-link" href="/Candidates/CandidatesIncomes/Manage">
+                        <span class="oi oi-list" aria-hidden="true"></span> CandidatesIncomes
+                    </NavLink>
+                </div>
+                <div class="nav-item ms-3">
+                    <NavLink class="nav-link" href="/Buffets/Noodles">
+                        <span class="oi oi-list" aria-hidden="true"></span> Noodles
+                    </NavLink>
+                </div>
+                <div class="nav-item ms-3">
+                    <NavLink class="nav-link" href="/Buffets/Noodles/Create">
+                        <span class="oi oi-plus" aria-hidden="true"></span> Add Noodle
+                    </NavLink>
+                </div>
+            </div>
         </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link ms-3" href="/Candidates/CandidatesIncomes/Manage" Match="NavLinkMatch.All">
-                <span class="oi oi-list" aria-hidden="true"></span> CandidatesIncomes
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Buffets/Noodles">
-                <span class="oi oi-list" aria-hidden="true"></span> Noodles
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="/Buffets/Noodles/Create">
-                <span class="oi oi-plus" aria-hidden="true"></span> Add Noodle
-            </NavLink>
-        </div>
+
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="/Articles">
                 <span class="oi oi-pencil" aria-hidden="true"></span> 게시판(Articles)
@@ -65,5 +113,21 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private Dictionary<string, bool> collapseSubMenus = new Dictionary<string, bool>
+    {
+        { "blazorApp", true },
+        { "todoListInMemory", true },
+        { "blazorFundamentals", true },
+        { "fundamentals", true },
+    };
+
+    private void ToggleSubMenu(string key)
+    {
+        if (collapseSubMenus.ContainsKey(key))
+        {
+            collapseSubMenus[key] = !collapseSubMenus[key];
+        }
     }
 }

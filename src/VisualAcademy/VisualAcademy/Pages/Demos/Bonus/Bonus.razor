@@ -1,0 +1,70 @@
+﻿@page "/Bonus"
+@inject IJSRuntime JS
+
+<style>
+    .budget {
+        width: 100%;
+        display: grid;
+        grid-template-columns: min-content 6rem 1fr;
+        white-space: nowrap;
+        grid-gap: 10px;
+    }
+
+    button:disabled {
+        opacity: 0.6;
+    }
+</style>
+
+<h3>용돈 나누기</h3>
+
+<div class="budget">
+    @foreach (var item in budgetItems)
+    {
+        <span>@item.Name: </span>
+        <span>@item.Amount.ToString("c0")</span>
+
+        @*<input type="range" max="@totalBudget" step="1000" @bind="@item.Amount" @bind:event="oninput" />*@
+        <input type="range" max="@(item.Amount + Remaining)" step="1000" @bind="@item.Amount" @bind:event="oninput"
+           style="width: @(100 * (item.Amount + Remaining) / totalBudget)%" />
+    }
+    <span>아빠: </span>
+    <span>@Remaining.ToString("c0")</span>
+</div>
+
+<button class="btn btn-primary" disabled="@(Remaining > 0)" @onclick="btnSave_Click">완료</button>
+
+@code {
+    // 총 예산
+    decimal totalBudget = 1_000_000;
+
+    // 남은 양
+    public decimal Remaining => totalBudget - budgetItems.Sum(b => b.Amount); // C# LINQ 장점
+
+    // 예산 항목
+    List<BudgetItem> budgetItems = new List<BudgetItem>
+    {
+        new BudgetItem { Name = "아내" },
+        new BudgetItem { Name = "아들" },
+        new BudgetItem { Name = "공주" },
+    };
+
+    // 완료 메시지 출력
+    void btnSave_Click()
+    {
+        JS.InvokeAsync<object>("alert", "용돈 나누기 완료");
+    }
+}
+
+<hr />
+
+<BudgetEditor Items="budgetItems" TotalBudget="totalBudget" Step="1000" Remaining="Remaining" RemainingChanged="RemainingChanged"></BudgetEditor>
+
+<button class="btn btn-primary" disabled="@(_remaining > 0)" @onclick="btnSave_Click">완료</button>
+
+@code {
+    decimal _remaining;
+    void RemainingChanged(decimal remaining)
+    {
+        _remaining = remaining;
+    }
+}
