@@ -1,0 +1,106 @@
+﻿@page "/DulDropDownListServerFiltering"
+
+<h3>DulDropDownListServerFiltering</h3>
+
+<div class="form-group">
+    <label for="lstAppointmentType">Employee</label>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle d-flex justify-content-between align-items-center" type="button" id="employeeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%; border-color: #ced4da;">
+                    <div class="text-start">
+                        @if (ModelEdit.EmployeeId != 0)
+                        {
+                            var selectedEmployee = FilteredEmployees.FirstOrDefault(e => e.Id == ModelEdit.EmployeeId);
+                            if (selectedEmployee != null)
+                            {
+                                @($"{selectedEmployee.FirstName} {selectedEmployee.LastName}")
+                            }
+                            else
+                            {
+                                @("Select Employee")
+                            }
+                        }
+                        else
+                        {
+                            @("Select Employee")
+                        }
+                    </div>
+                    <i class="bi bi-chevron-down"></i>
+                </button>
+
+                <div class="dropdown-menu" aria-labelledby="employeeDropdown" style="width: 100%;">
+                    <div class="input-group mb-3">
+                        <input type="search" placeholder="Search Employee" class="form-control" @bind="EmployeeSearchText" @oninput="FilterEmployees" />
+                    </div>
+                    <div style="max-height: 200px; overflow-y: auto;">
+                        @foreach (var emp in FilteredEmployees)
+                        {
+                            <button type="button" class="dropdown-item" @onclick="() => SelectEmployee(emp)">@($"{emp.FirstName} {emp.LastName}")</button>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    public Appointment ModelEdit { get; set; } = new Appointment();
+
+    public IEnumerable<Employee> Employees { get; set; } = new List<Employee>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        // 샘플로 20개 데이터 채우기
+        Employees = Enumerable.Range(1, 20).Select(i => new Employee { Id = i, FirstName = $"First Name {i}", LastName = $"Last Name {i}" });
+        FilteredEmployees = Employees;
+    }
+
+    public string EmployeeSearchText { get; set; }
+
+    public IEnumerable<Employee> FilteredEmployees { get; set; } = new List<Employee>();
+
+    private void FilterEmployees(ChangeEventArgs e)
+    {
+        if (e != null)
+        {
+            EmployeeSearchText = e.Value.ToString();
+        }
+
+        if (string.IsNullOrEmpty(EmployeeSearchText))
+        {
+            FilteredEmployees = Employees;
+        }
+        else
+        {
+            FilteredEmployees = Employees.Where(e => e.FirstName.Contains(EmployeeSearchText, StringComparison.OrdinalIgnoreCase) || e.LastName.Contains(EmployeeSearchText, StringComparison.OrdinalIgnoreCase));
+        }
+    }
+
+    private void SelectEmployee(Employee emp)
+    {
+        ModelEdit.EmployeeId = emp.Id;
+        StateHasChanged(); // 선택한 직원을 적용하고 UI를 갱신합니다.
+    }
+
+    public class Employee
+    {
+        public long Id { get; set; }
+
+        public string? FirstName { get; set; }
+
+        public string? LastName { get; set; }
+    }
+
+    public class Appointment
+    {
+        public long Id { get; set; }
+
+        public long EmployeeId { get; set; }
+
+        public virtual Employee? Employee { get; set; }
+    }
+}
