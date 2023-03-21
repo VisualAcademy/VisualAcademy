@@ -55,7 +55,7 @@
     protected override async Task OnInitializedAsync()
     {
         // 샘플로 20개 데이터 채우기
-        Employees = Enumerable.Range(1, 20).Select(i => new Employee { Id = i, FirstName = $"First Name {i}", LastName = $"Last Name {i}" });
+        Employees = Enumerable.Range(1, 20).Select(i => new Employee { Id = i, FirstName = $"비주얼아카데미 {i}", LastName = $"데브렉 {i}" });
         FilteredEmployees = Employees;
     }
 
