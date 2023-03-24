@@ -14,10 +14,7 @@ public class CreateModel : PageModel
         _appointmentTypeRepository = appointmentTypeRepository;
     }
 
-    public IActionResult OnGet()
-    {
-        return Page();
-    }
+    public IActionResult OnGet() => Page();
 
     [BindProperty]
     public AppointmentTypeModel AppointmentType { get; set; }
