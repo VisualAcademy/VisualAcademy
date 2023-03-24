@@ -8,9 +8,7 @@ namespace VisualAcademy.Pages.AppointmentsTypes {
     public class EditModel : PageModel {
         private readonly IAppointmentTypeRepository _appointmentTypeRepository;
 
-        public EditModel(IAppointmentTypeRepository appointmentTypeRepository) {
-            _appointmentTypeRepository = appointmentTypeRepository;
-        }
+        public EditModel(IAppointmentTypeRepository appointmentTypeRepository) => _appointmentTypeRepository = appointmentTypeRepository;
 
         [BindProperty]
         public AppointmentTypeModel AppointmentType { get; set; }
