@@ -1,6 +1,5 @@
 ﻿using ArticleApp.Models;
 using Microsoft.AspNetCore.Components;
-using System.Threading.Tasks;
 
 namespace ArticleApp.Pages.Articles
 {
