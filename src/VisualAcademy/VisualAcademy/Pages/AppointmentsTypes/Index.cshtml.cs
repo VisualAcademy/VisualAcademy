@@ -6,9 +6,7 @@ namespace VisualAcademy.Pages.AppointmentsTypes;
 public class IndexModel : PageModel {
     private readonly IAppointmentTypeRepository _appointmentTypeRepository;
 
-    public IndexModel(IAppointmentTypeRepository appointmentTypeRepository) {
-        _appointmentTypeRepository = appointmentTypeRepository;
-    }
+    public IndexModel(IAppointmentTypeRepository appointmentTypeRepository) => _appointmentTypeRepository = appointmentTypeRepository;
 
     public IList<AppointmentTypeModel> AppointmentTypes { get; set; }
 
