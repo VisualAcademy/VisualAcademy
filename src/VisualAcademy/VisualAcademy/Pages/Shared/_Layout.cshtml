@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/VisualAcademy.styles.css" asp-append-version="true" />
+    <style>
+        .nav-item.active > .nav-link {
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -63,6 +69,24 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <script src="/_framework/blazor.server.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var currentPageUrl = window.location.pathname;
+            var navItems = document.querySelectorAll(".nav-item");
+
+            navItems.forEach(function (navItem) {
+                var navLink = navItem.querySelector(".nav-link");
+
+                if (navLink.getAttribute("href") === currentPageUrl) {
+                    navItem.classList.add("active");
+                }
+                else {
+                    navItem.classList.remove("active");
+                }
+            });
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
