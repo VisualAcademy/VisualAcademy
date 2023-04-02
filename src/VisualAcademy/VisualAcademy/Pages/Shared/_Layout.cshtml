@@ -71,17 +71,25 @@
     <script src="/_framework/blazor.server.js"></script>
 
     <script>
+        // DOMContentLoaded 이벤트 리스너를 등록하여 문서 로드가 완료되면 실행
         document.addEventListener("DOMContentLoaded", function () {
+            // 현재 페이지의 URL 경로를 가져옴
             var currentPageUrl = window.location.pathname;
+            // 모든 .nav-item 요소를 선택
             var navItems = document.querySelectorAll(".nav-item");
 
+            // navItems의 각 요소에 대해 반복
             navItems.forEach(function (navItem) {
+                // .nav-link 요소를 찾음
                 var navLink = navItem.querySelector(".nav-link");
 
+                // navLink의 href 속성 값이 현재 페이지 URL과 일치하는지 확인
                 if (navLink.getAttribute("href") === currentPageUrl) {
+                    // 일치한다면, 해당 navItem에 'active' 클래스를 추가
                     navItem.classList.add("active");
                 }
                 else {
+                    // 일치하지 않는다면, 해당 navItem에서 'active' 클래스를 제거
                     navItem.classList.remove("active");
                 }
             });
