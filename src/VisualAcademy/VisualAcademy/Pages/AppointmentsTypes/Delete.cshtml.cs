@@ -7,9 +7,7 @@ namespace VisualAcademy.Pages.AppointmentsTypes {
     public class DeleteModel : PageModel {
         private readonly IAppointmentTypeRepository _appointmentTypeRepository;
 
-        public DeleteModel(IAppointmentTypeRepository appointmentTypeRepository) {
-            _appointmentTypeRepository = appointmentTypeRepository;
-        }
+        public DeleteModel(IAppointmentTypeRepository appointmentTypeRepository) => _appointmentTypeRepository = appointmentTypeRepository;
 
         [BindProperty]
         public AppointmentTypeModel AppointmentType { get; set; }
