@@ -9,10 +9,7 @@ public class CreateModel : PageModel
 {
     private readonly IAppointmentTypeRepository _appointmentTypeRepository;
 
-    public CreateModel(IAppointmentTypeRepository appointmentTypeRepository)
-    {
-        _appointmentTypeRepository = appointmentTypeRepository;
-    }
+    public CreateModel(IAppointmentTypeRepository appointmentTypeRepository) => _appointmentTypeRepository = appointmentTypeRepository;
 
     public IActionResult OnGet() => Page();
 
