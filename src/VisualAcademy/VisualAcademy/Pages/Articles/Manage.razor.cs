@@ -57,10 +57,7 @@ namespace ArticleApp.Pages.Articles
             StateHasChanged();
         }
 
-        private void DeleteBy(Article article)
-        {
-            _article = article;
-        }
+        private void DeleteBy(Article article) => _article = article;
 
         /* Notice Modal */
         private Article _article = new Article(); // 선택한 항목 관리
