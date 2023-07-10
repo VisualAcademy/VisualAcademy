@@ -70,4 +70,8 @@
       <ProjectReference Include="..\VisualAcademy.Models\VisualAcademy.Models.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Data\Migrations\" />
+    </ItemGroup>
+
 </Project>

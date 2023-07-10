@@ -134,8 +134,13 @@ namespace VisualAcademy {
                 app.UseSwagger();
                 app.UseSwaggerUI();
 
-                // 시스템 기본 제공 사용자 및 역할 만들기(처음 애플리케이션 가동할 때)
-                await CreateBuiltInUsersAndRoles(app);
+                #region 시스템 기본 제공 사용자 및 역할 만들기(처음 애플리케이션 가동할 때)
+                //[old] 시스템 기본 제공 사용자 및 역할 만들기(처음 애플리케이션 가동할 때)
+                //await CreateBuiltInUsersAndRoles(app);
+                //[new] 시스템 기본 제공 사용자 및 역할 만들기(처음 애플리케이션 가동할 때)
+                var initializer = new UserAndRoleInitializer(app.Services);
+                await initializer.CreateBuiltInUsersAndRoles();
+                #endregion            
             }
             else {
                 // 운영 환경에서는 예외 처리 미들웨어와 HSTS 미들웨어를 사용한다.
