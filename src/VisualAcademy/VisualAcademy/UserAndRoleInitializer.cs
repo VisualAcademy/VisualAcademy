@@ -91,6 +91,7 @@ namespace VisualAcademy
                         UserName = $"administrator@{domainName}",
                         Email = $"administrator@{domainName}",
                         EmailConfirmed = true,
+                        LockoutEnd = null, 
                     };
                     await userManager.CreateAsync(administrator, "Pa$$w0rd");
                 }
@@ -104,6 +105,7 @@ namespace VisualAcademy
                         UserName = "Guest",
                         Email = $"guest@{domainName}",
                         EmailConfirmed = false,
+                        LockoutEnd = DateTime.UtcNow.AddYears(1000),
                     };
                     await userManager.CreateAsync(guest, "Pa$$w0rd");
                 }
@@ -117,6 +119,7 @@ namespace VisualAcademy
                         UserName = "Anonymous",
                         Email = $"anonymous@{domainName}",
                         EmailConfirmed = false,
+                        LockoutEnd = DateTime.UtcNow.AddYears(1000),
                     };
                     await userManager.CreateAsync(anonymous, "Pa$$w0rd");
                 }
