@@ -2,12 +2,16 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Startup.ConfigureServices
+// This method gets called by the runtime. Use this method to add services to the container.
 // Add services to the container.
 //builder.Services.AddMvc();
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+// Startup.Configure
+// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 #region HTTP
 // C# 11.0 버전의 원시 문자열 리터럴(Raw string literals)
 string htmlTag = """
