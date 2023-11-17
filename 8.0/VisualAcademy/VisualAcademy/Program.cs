@@ -1,6 +1,15 @@
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-app.MapGet("/", () => Results.Content("<h1>Hello World!</h1>", "text/html"));
+// C# 11.0 버전의 원시 문자열 리터럴(Raw string literals)
+string htmlTag = """
+<html lang="ko">
+<body>
+    <h1>Hello ASP.NET Core 8.0</h1>
+</body>
+</html>
+""";
+
+app.MapGet("/", () => Results.Content(htmlTag, "text/html"));
 
 app.Run();
