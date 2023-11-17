@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualAcademy", "VisualAcademy\VisualAcademy.csproj", "{D6010070-421B-442E-883C-AF6A007006AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisualAcademy", "VisualAcademy\VisualAcademy.csproj", "{D6010070-421B-442E-883C-AF6A007006AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MVC", "MVC", "{8643B77C-59A2-4C4F-8466-3AB2A86DDC9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetNote", "DotNetNote\DotNetNote.csproj", "{5AE09260-71CF-4213-AFE3-5EBBA5300EDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +19,16 @@ Global
 		{D6010070-421B-442E-883C-AF6A007006AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6010070-421B-442E-883C-AF6A007006AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6010070-421B-442E-883C-AF6A007006AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AE09260-71CF-4213-AFE3-5EBBA5300EDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AE09260-71CF-4213-AFE3-5EBBA5300EDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AE09260-71CF-4213-AFE3-5EBBA5300EDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AE09260-71CF-4213-AFE3-5EBBA5300EDE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5AE09260-71CF-4213-AFE3-5EBBA5300EDE} = {8643B77C-59A2-4C4F-8466-3AB2A86DDC9A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8CE7475B-F37B-451F-9F10-A951F5432ECA}
