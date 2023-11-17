@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddMvc();
+// Add services to the container.
+//builder.Services.AddMvc();
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -20,18 +22,21 @@ app.MapGet("/html-content-rendering", () => Results.Content(htmlTag, "text/html"
 #endregion
 
 #region HTML
-app.UseDefaultFiles();
+// app.UseDefaultFiles();
 app.UseStaticFiles(); 
 #endregion
 
 app.UseRouting();
 
-app.MapDefaultControllerRoute();
+//app.MapDefaultControllerRoute();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
 
 #region MVC
-// /Mvc/Hello
+// ~/Mvc/Hello
 public class MvcController : Controller
 {
     public string Hello() => "Hello, MVC";
