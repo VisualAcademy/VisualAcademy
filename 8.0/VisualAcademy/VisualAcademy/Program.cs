@@ -12,4 +12,6 @@ string htmlTag = """
 
 app.MapGet("/html-content-rendering", () => Results.Content(htmlTag, "text/html"));
 
+app.UseStaticFiles();
+
 app.Run();
