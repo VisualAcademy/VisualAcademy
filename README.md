@@ -2,6 +2,12 @@
 
 비주얼아카데미 채널에 오신 걸 환영합니다.
 
+## ASP.NET Core 8.0 시작하기 
+
+**ASP.NET Core 8.0 시작하기** 강좌가 다음 링크를 통해서 준비되고 있습니다.
+
+https://www.memoengine.com/labs/aspnet-core-8-0-getting-started
+
 ## Blazor Server 7.0 Fundamentals 
 
 😄 Blazor Server 7.0 기초 강좌가 오픈되었습니다.
