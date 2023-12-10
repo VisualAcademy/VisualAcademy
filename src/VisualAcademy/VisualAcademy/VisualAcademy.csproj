@@ -8,6 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Data\Migrations\**" />
+      <Content Remove="Data\Migrations\**" />
+      <EmbeddedResource Remove="Data\Migrations\**" />
+      <None Remove="Data\Migrations\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <None Include="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
         <None Include="Areas\Identity\Pages\Account\ConfirmEmail.cshtml" />
         <None Include="Areas\Identity\Pages\Account\ConfirmEmailChange.cshtml" />
@@ -68,10 +75,6 @@
     <ItemGroup>
       <ProjectReference Include="..\ArticleApp.Models\ArticleApp.Models.csproj" />
       <ProjectReference Include="..\VisualAcademy.Models\VisualAcademy.Models.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Data\Migrations\" />
     </ItemGroup>
 
 </Project>
