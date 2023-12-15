@@ -108,6 +108,16 @@ namespace VisualAcademy
 
             builder.Services.AddTransient<IAppointmentTypeRepository, AppointmentTypeRepository>();
 
+            // 데이터베이스 초기화 및 마이그레이션
+            try
+            {
+                await DatabaseHelper.AddOrUpdateRegistrationDate(connectionString);
+            }
+            catch (Exception)
+            {
+
+            }
+
             // 앱 빌드
             var app = builder.Build();
 

@@ -14,6 +14,11 @@
     [LockoutEnd]           DATETIMEOFFSET (7) NULL,
     [LockoutEnabled]       BIT                NOT NULL,
     [AccessFailedCount]    INT                NOT NULL,
+
+    [TenantName]               NVARCHAR (MAX)     Default('VisualAcademy'),
+
+    RegistrationDate DATETIMEOFFSET  NULL DEFAULT (SYSDATETIMEOFFSET()),
+
     CONSTRAINT [PK_AspNetUsers] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
@@ -26,4 +31,3 @@ CREATE NONCLUSTERED INDEX [EmailIndex]
 GO
 CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex]
     ON [dbo].[AspNetUsers]([NormalizedUserName] ASC) WHERE ([NormalizedUserName] IS NOT NULL);
-
