@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VisualAcademy.Models {
-    public class TenantModel {
+namespace VisualAcademy.Models
+{
+    public class TenantModel
+    {
         public long Id { get; set; }
 
         //[Required]
