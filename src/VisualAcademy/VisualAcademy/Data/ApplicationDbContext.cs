@@ -15,6 +15,10 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     {
     }
 
+    // Users 속성을 통해 AspNetUsers 테이블에 접근
+    // public DbSet<ApplicationUser> Users { get; set; } 이 부분은 필요 없습니다.
+    // IdentityDbContext<ApplicationUser>가 이미 Users 속성을 제공합니다.
+
     public DbSet<Broth> Broths { get; set; }
 
     public DbSet<Noodle> Noodles { get; set; }
