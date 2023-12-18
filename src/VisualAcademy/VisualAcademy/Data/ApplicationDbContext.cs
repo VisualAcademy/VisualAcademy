@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 using VisualAcademy.Areas.Identity.Models;
 using VisualAcademy.Models;
 using VisualAcademy.Models.Buffets;
@@ -88,11 +87,11 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         //        Description = "게스트 사용자 그룹 계정"
         //    }
         //);
-    } 
+    }
     #endregion
 
     public void SeedInitialData()
-    { 
+    {
         // Empty
     }
 
@@ -100,4 +99,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
 
     public DbSet<VisualAcademy.Models.TenantModel> Tenants { get; set; }
     public DbSet<AppointmentTypeModel> AppointmentsTypes { get; set; }
+
+    public DbSet<VisualAcademy.Models.Movie> Movie { get; set; } = default!;
 }
