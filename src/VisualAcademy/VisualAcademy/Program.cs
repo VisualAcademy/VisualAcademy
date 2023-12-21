@@ -7,6 +7,7 @@ using RedPlus.Services;
 using VisualAcademy.Areas.Identity;
 using VisualAcademy.Areas.Identity.Models;
 using VisualAcademy.Areas.Identity.Services;
+using VisualAcademy.Components.Pages.ApplicantsTransfers;
 using VisualAcademy.Data;
 using VisualAcademy.Models.Candidates;
 using VisualAcademy.Repositories.Tenants;
@@ -119,6 +120,8 @@ namespace VisualAcademy
             {
 
             }
+
+            builder.Services.AddScoped<ApplicantUploadService>();
 
             // ¾Û ºôµå
             var app = builder.Build();

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using VisualAcademy.Areas.Identity.Models;
+using VisualAcademy.Components.Pages.ApplicantsTransfers;
 using VisualAcademy.Models;
 using VisualAcademy.Models.Buffets;
 using VisualAcademy.Models.Tenants;
@@ -23,6 +24,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<Noodle> Noodles { get; set; }
 
     public DbSet<Garnish> Garnishes { get; set; }
+
+    public DbSet<ApplicantTransfer> ApplicantsTransfers { get; set; }
 
     /// <summary>
     /// 모델(테이블)이 생성될 때 처음 실행 
