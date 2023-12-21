@@ -249,6 +249,7 @@
             }
 
             await JSRuntime.InvokeVoidAsync("alert", "Data and file successfully saved.");
+            StateHasChanged(); // Refresh the UI
         }
     }
 
