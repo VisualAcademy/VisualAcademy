@@ -15,6 +15,8 @@
 
 @rendermode InteractiveServer
 
+@inject NavigationManager NavigationManager
+
 <h3>Applicant Data Upload</h3>
 
 <div class="container mt-3">
@@ -248,8 +250,12 @@
                 await SaveFileToServer(uploadedFile);
             }
 
+
+            // Navigate to the same page (or another page)
+            NavigationManager.NavigateTo("/ApplicantsTransfers/ApplicantUpload", forceLoad: true);
+
             await JSRuntime.InvokeVoidAsync("alert", "Data and file successfully saved.");
-            StateHasChanged(); // Refresh the UI
+            //StateHasChanged(); // Refresh the UI
         }
     }
 
