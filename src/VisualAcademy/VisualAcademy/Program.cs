@@ -187,10 +187,16 @@ namespace VisualAcademy
             // 인증과 권한 미들웨어를 사용한다.
             app.UseAuthorization();
 
+            app.UseAntiforgery();
+
             // 컨트롤러 및 Razor 페이지 미들웨어를 사용한다.
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}"); // MVC 라우팅
+
+            // Add additional endpoints required by the Identity /Account Razor components.
+            app.MapAdditionalIdentityEndpoints();
+
             app.MapRazorPages();
             app.MapBlazorHub();
             app.MapFallbackToPage("/_Host");

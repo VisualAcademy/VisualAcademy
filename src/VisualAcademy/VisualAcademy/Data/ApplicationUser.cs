@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace VisualAcademy.Areas.Identity.Models;
+namespace VisualAcademy.Data;
 
 public class ApplicationUser : IdentityUser
 {

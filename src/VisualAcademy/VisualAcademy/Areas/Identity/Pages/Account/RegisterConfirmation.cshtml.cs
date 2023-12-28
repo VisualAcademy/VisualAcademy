@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
-using VisualAcademy.Areas.Identity.Models;
+using VisualAcademy.Data;
 
 namespace VisualAcademy.Areas.Identity.Pages.Account;
 

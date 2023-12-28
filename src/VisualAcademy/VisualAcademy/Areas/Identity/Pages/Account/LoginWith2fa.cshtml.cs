@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using VisualAcademy.Areas.Identity.Models;
+using VisualAcademy.Data;
 
 namespace VisualAcademy.Areas.Identity.Pages.Account;
 

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using VisualAcademy.Areas.Identity.Models;
+using VisualAcademy.Data;
 
 namespace VisualAcademy.Pages.Candidates.CandidatesIncomes;
 

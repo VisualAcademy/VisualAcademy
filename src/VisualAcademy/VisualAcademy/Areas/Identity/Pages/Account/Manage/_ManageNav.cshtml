@@ -1,4 +1,6 @@
-﻿@inject SignInManager<ApplicationUser> SignInManager
+﻿@using VisualAcademy.Data
+
+@inject SignInManager<ApplicationUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

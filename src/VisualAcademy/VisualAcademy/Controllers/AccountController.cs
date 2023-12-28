@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using VisualAcademy.Areas.Identity.Models;
+using VisualAcademy.Data;
 using VisualAcademy.Models.AccountViewModels;
 using VisualAcademy.Services;
 

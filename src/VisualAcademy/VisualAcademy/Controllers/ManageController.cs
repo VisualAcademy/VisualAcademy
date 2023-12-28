@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Encodings.Web;
-using VisualAcademy.Areas.Identity.Models;
+using VisualAcademy.Data;
 using VisualAcademy.Models.ManageViewModels;
 using VisualAcademy.Services;
 

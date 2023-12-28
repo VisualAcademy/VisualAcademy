@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Text;
 using System.Text.Encodings.Web;
-using VisualAcademy.Areas.Identity.Models;
+using VisualAcademy.Data;
 
 namespace VisualAcademy.Areas.Identity.Pages.Account.Manage;
 
