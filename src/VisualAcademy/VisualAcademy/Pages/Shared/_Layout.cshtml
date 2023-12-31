@@ -18,6 +18,27 @@
             color: #495057;
         }
     </style>
+
+    <style>
+        .dropdown-submenu {
+            position: relative; /* 상대적 위치 설정으로, 절대 위치를 가진 자식 요소들의 기준점을 설정합니다. */
+        }
+
+            .dropdown-submenu a::after {
+                transform: rotate(-90deg); /* 가상 요소(대개 화살표)를 -90도 회전시킵니다. */
+                position: absolute; /* 가상 요소를 상대적 위치를 가진 부모 요소 내에서 절대 위치로 설정합니다. */
+                right: 6px; /* 부모 요소의 오른쪽 가장자리에서 6px 떨어진 곳에 위치시킵니다. */
+                top: .8em; /* 부모 요소의 상단에서 .8em 떨어진 곳에 위치시킵니다. */
+            }
+
+            .dropdown-submenu .dropdown-menu {
+                top: 0; /* 서브메뉴의 상단을 부모 메뉴의 상단과 맞춥니다. */
+                left: 100%; /* 서브메뉴를 부모 메뉴의 바로 오른쪽에 위치시킵니다. */
+                margin-left: .1rem; /* 부모 메뉴와의 간격을 위해 왼쪽 여백을 조금 추가합니다. */
+                margin-right: .1rem; /* 일관된 간격을 위해 오른쪽 여백을 조금 추가합니다. */
+            }
+    </style>
+
 </head>
 <body>
     <header>
@@ -50,6 +71,35 @@
                             </ul>
                         </li>
 
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#"
+                               id="navbarBooks" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Courses
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarBooks">
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle text-dark" href="#">DevLec</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">C#</a></li>
+                                        <li><a class="dropdown-item" href="#">ASP.NET Core</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle text-dark" href="#">VisualAcademy</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Youtube</a></li>
+                                        <li class="dropdown-submenu">
+                                            <a class="dropdown-item dropdown-toggle text-dark" href="#">JavaCampus</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="#">Java</a></li>
+                                                <li><a class="dropdown-item" href="#">Spring Boot</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -64,7 +114,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - @Configuration["TenantName"] - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2024 - @Configuration["TenantName"] - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 
@@ -97,6 +147,68 @@
                     navItem.classList.remove("active");
                 }
             });
+        });
+    </script>
+
+    <script>
+        // 문서가 완전히 로드되었을 때 스크립트가 실행되도록 합니다.
+        document.addEventListener('DOMContentLoaded', function () {
+            // 모든 드롭다운 토글 요소를 선택합니다.
+            var dropdownToggleElements = document.querySelectorAll('.dropdown-submenu .dropdown-toggle');
+
+            // 각 토글 요소에 대한 이벤트 리스너를 설정합니다.
+            dropdownToggleElements.forEach(function (dropdownToggle) {
+                dropdownToggle.addEventListener('click', function (event) {
+                    event.preventDefault(); // 클릭에 의한 기본 동작을 방지합니다.
+                    event.stopPropagation(); // 이벤트가 상위로 전파되는 것을 방지합니다.
+
+                    // 클릭된 토글 바로 다음에 오는 서브 메뉴를 선택합니다.
+                    var currentSubMenu = this.nextElementSibling;
+                    // 현재 서브 메뉴가 보이는 상태인지 확인합니다.
+                    var isCurrentlyShown = currentSubMenu.classList.contains('show');
+                    // 현재 토글의 상위 메뉴를 찾습니다.
+                    var parentMenu = this.parentElement.parentElement.closest('.dropdown-submenu');
+
+                    // 만약 상위 메뉴가 있고 현재 서브 메뉴가 열려 있다면, 서브 메뉴를 닫습니다.
+                    if (parentMenu && isCurrentlyShown) {
+                        closeSubMenu(currentSubMenu);
+                        return; // 추가 실행을 중단합니다.
+                    }
+
+                    // 상위 메뉴를 클릭했을 때, 다른 모든 서브 메뉴를 닫고 현재 메뉴의 상태를 토글합니다.
+                    if (!parentMenu) {
+                        closeAllSubMenus(this); // 다른 모든 서브 메뉴를 닫습니다.
+                        if (!isCurrentlyShown) {
+                            currentSubMenu.classList.add('show'); // 현재 메뉴를 엽니다.
+                        }
+                    } else {
+                        // 하위 메뉴를 클릭했을 때 현재 메뉴의 상태에 따라 토글합니다.
+                        if (!isCurrentlyShown) {
+                            currentSubMenu.classList.add('show'); // 현재 메뉴를 엽니다.
+                        } else {
+                            closeSubMenu(currentSubMenu); // 현재 메뉴를 닫습니다.
+                        }
+                    }
+                });
+            });
+
+            // 지정된 요소를 제외한 모든 서브 메뉴를 닫는 함수입니다.
+            function closeAllSubMenus(exceptThis) {
+                document.querySelectorAll('.dropdown-submenu .dropdown-menu').forEach(function (menu) {
+                    if (!exceptThis.contains(menu)) {
+                        closeSubMenu(menu); // 서브 메뉴를 닫습니다.
+                    }
+                });
+            }
+
+            // 지정된 메뉴와 그 하위 메뉴를 닫는 함수입니다.
+            function closeSubMenu(menu) {
+                menu.classList.remove('show'); // 메뉴를 닫습니다.
+                var subMenus = menu.querySelectorAll('.dropdown-menu');
+                subMenus.forEach(function (subMenu) {
+                    subMenu.classList.remove('show'); // 하위 메뉴를 닫습니다.
+                });
+            }
         });
     </script>
 
