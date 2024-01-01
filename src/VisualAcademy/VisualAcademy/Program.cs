@@ -47,7 +47,7 @@ namespace VisualAcademy
 
 
 
-            builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(
+            builder.Services.AddIdentityCore<ApplicationUser>(
                 options =>
                 {
                     options.SignIn.RequireConfirmedAccount = false; // 계정 확인을 요구하지 않음
@@ -56,6 +56,7 @@ namespace VisualAcademy
                     // 비밀번호 정책 설정 (예: 숫자 포함 여부)
                     // options.Password.RequireDigit = false; 
                 })
+                .AddRoles<ApplicationRole>() 
                 .AddEntityFrameworkStores<ApplicationDbContext>() // Identity를 위한 EF Core 저장소 지정
                 .AddSignInManager()
                 .AddDefaultTokenProviders(); // 토큰 생성을 위한 기본 제공자 사용

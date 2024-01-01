@@ -30,7 +30,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(
+builder.Services.AddIdentityCore<ApplicationUser>(
     options =>
     {
         options.SignIn.RequireConfirmedAccount = false; // 계정 확인을 요구하지 않음
@@ -39,6 +39,7 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(
         // 비밀번호 정책 설정 (예: 숫자 포함 여부)
         // options.Password.RequireDigit = false; 
     })
+    .AddRoles<ApplicationRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddSignInManager()
     .AddDefaultTokenProviders();
