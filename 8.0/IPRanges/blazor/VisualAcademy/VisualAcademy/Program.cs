@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using VisualAcademy.Components;
 using VisualAcademy.Components.Account;
 using VisualAcademy.Data;
+using VisualAcademy.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,4 +74,26 @@ app.MapDefaultControllerRoute();
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
 
+// 데이터베이스 초기화
+InitializeDatabase(app);
+
 app.Run();
+
+void InitializeDatabase(IApplicationBuilder app)
+{
+    using (var scope = app.ApplicationServices.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        var context = services.GetRequiredService<ApplicationDbContext>();
+
+        // 테넌트 데이터 확인 및 초기화
+        if (!context.Tenants.Any())
+        {
+            context.Tenants.AddRange(
+                new TenantModel { Name = "Tenant 1" },
+                new TenantModel { Name = "Tenant 2" }
+            );
+            context.SaveChanges();
+        }
+    }
+}
