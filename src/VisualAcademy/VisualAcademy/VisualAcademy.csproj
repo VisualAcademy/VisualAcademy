@@ -127,4 +127,8 @@
       <ProjectReference Include="..\VisualAcademy.Models\VisualAcademy.Models.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Areas\Identity\Models\" />
+    </ItemGroup>
+
 </Project>
