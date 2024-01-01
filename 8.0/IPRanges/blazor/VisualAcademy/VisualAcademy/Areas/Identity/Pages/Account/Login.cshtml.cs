@@ -184,7 +184,7 @@ namespace VisualAcademy.Areas.Identity.Pages.Account
                     if (!isAllowed)
                     {
                         // 허용되지 않은 IP 주소인 경우, RestrictedAccess 뷰로 리디렉션
-                        return RedirectToAction("RestrictedAccess");
+                        return RedirectToPage("/RestrictedAccess");
                     }
 
                     // 허용된 IP 주소인 경우, Home/Index로 리디렉션
