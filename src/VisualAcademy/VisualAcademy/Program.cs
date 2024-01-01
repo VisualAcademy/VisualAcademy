@@ -57,6 +57,7 @@ namespace VisualAcademy
                     // options.Password.RequireDigit = false; 
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>() // Identity를 위한 EF Core 저장소 지정
+                .AddSignInManager()
                 .AddDefaultTokenProviders(); // 토큰 생성을 위한 기본 제공자 사용
 
 

@@ -20,4 +20,6 @@ public class ApplicationUser : IdentityUser
     /// 성별
     /// </summary>
     public string? Gender { get; set; }
+
+    public long TenantId { get; set; }
 }
