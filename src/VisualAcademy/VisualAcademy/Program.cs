@@ -44,16 +44,22 @@ namespace VisualAcademy
 
             //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
             //builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(
                 options =>
                 {
-                    options.SignIn.RequireConfirmedAccount = false;
-                    options.SignIn.RequireConfirmedEmail = false;
+                    options.SignIn.RequireConfirmedAccount = false; // 계정 확인을 요구하지 않음
+                    options.SignIn.RequireConfirmedEmail = false; // 이메일 확인을 요구하지 않음
 
+                    // 비밀번호 정책 설정 (예: 숫자 포함 여부)
                     // options.Password.RequireDigit = false; 
                 })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<ApplicationDbContext>() // Identity를 위한 EF Core 저장소 지정
+                .AddDefaultTokenProviders(); // 토큰 생성을 위한 기본 제공자 사용
+
+
 
             // Identity 옵션 설정
             builder.Services.Configure<IdentityOptions>(options =>
@@ -76,10 +82,11 @@ namespace VisualAcademy
             //builder.Services.AddAuthentication();
 
             builder.Services.AddRazorPages(); // Razor Pages
+            builder.Services.AddControllersWithViews(); // MVC
+
             builder.Services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
             builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             builder.Services.AddSingleton<WeatherForecastService>();
-            builder.Services.AddControllersWithViews(); // MVC
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -197,7 +204,9 @@ namespace VisualAcademy
             // Add additional endpoints required by the Identity /Account Razor components.
             app.MapAdditionalIdentityEndpoints();
 
-            app.MapRazorPages();
+            app.MapRazorPages(); // Razor Pages
+            app.MapDefaultControllerRoute(); // MVC
+
             app.MapBlazorHub();
             app.MapFallbackToPage("/_Host");
 
