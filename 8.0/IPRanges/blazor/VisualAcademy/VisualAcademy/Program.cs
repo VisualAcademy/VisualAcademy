@@ -5,6 +5,7 @@ using VisualAcademy.Components;
 using VisualAcademy.Components.Account;
 using VisualAcademy.Data;
 using VisualAcademy.Models;
+using VisualAcademy.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,8 @@ builder.Services.AddIdentityCore<ApplicationUser>(
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
+builder.Services.AddTransient<Microsoft.AspNetCore.Identity.UI.Services.IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
