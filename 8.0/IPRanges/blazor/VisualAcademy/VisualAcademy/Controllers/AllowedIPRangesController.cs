@@ -12,19 +12,12 @@ using VisualAcademy.Models;
 namespace VisualAcademy.Controllers;
 
 [Authorize(Roles = "Administrators")]
-public class AllowedIPRangesController : Controller
+public class AllowedIPRangesController(ApplicationDbContext context) : Controller
 {
-    private readonly ApplicationDbContext _context;
-
-    public AllowedIPRangesController(ApplicationDbContext context)
-    {
-        _context = context;
-    }
-
     // GET: AllowedIPRanges
     public async Task<IActionResult> Index()
     {
-        return View(await _context.AllowedIPRanges.ToListAsync());
+        return View(await context.AllowedIPRanges.ToListAsync());
     }
 
     // GET: AllowedIPRanges/Details/5
@@ -35,7 +28,7 @@ public class AllowedIPRangesController : Controller
             return NotFound();
         }
 
-        var allowedIPRange = await _context.AllowedIPRanges
+        var allowedIPRange = await context.AllowedIPRanges
             .FirstOrDefaultAsync(m => m.Id == id);
         if (allowedIPRange == null)
         {
@@ -60,8 +53,8 @@ public class AllowedIPRangesController : Controller
     {
         if (ModelState.IsValid)
         {
-            _context.Add(allowedIPRange);
-            await _context.SaveChangesAsync();
+            context.Add(allowedIPRange);
+            await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
         return View(allowedIPRange);
@@ -75,7 +68,7 @@ public class AllowedIPRangesController : Controller
             return NotFound();
         }
 
-        var allowedIPRange = await _context.AllowedIPRanges.FindAsync(id);
+        var allowedIPRange = await context.AllowedIPRanges.FindAsync(id);
         if (allowedIPRange == null)
         {
             return NotFound();
@@ -99,8 +92,8 @@ public class AllowedIPRangesController : Controller
         {
             try
             {
-                _context.Update(allowedIPRange);
-                await _context.SaveChangesAsync();
+                context.Update(allowedIPRange);
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -126,7 +119,7 @@ public class AllowedIPRangesController : Controller
             return NotFound();
         }
 
-        var allowedIPRange = await _context.AllowedIPRanges
+        var allowedIPRange = await context.AllowedIPRanges
             .FirstOrDefaultAsync(m => m.Id == id);
         if (allowedIPRange == null)
         {
@@ -141,18 +134,18 @@ public class AllowedIPRangesController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var allowedIPRange = await _context.AllowedIPRanges.FindAsync(id);
+        var allowedIPRange = await context.AllowedIPRanges.FindAsync(id);
         if (allowedIPRange != null)
         {
-            _context.AllowedIPRanges.Remove(allowedIPRange);
+            context.AllowedIPRanges.Remove(allowedIPRange);
         }
 
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
     private bool AllowedIPRangeExists(int id)
     {
-        return _context.AllowedIPRanges.Any(e => e.Id == id);
+        return context.AllowedIPRanges.Any(e => e.Id == id);
     }
 }
