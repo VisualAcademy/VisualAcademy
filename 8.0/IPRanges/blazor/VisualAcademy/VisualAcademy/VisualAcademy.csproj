@@ -18,4 +18,34 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\TenantAllowedIPRanges\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\TenantAllowedIPRanges\Create.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\TenantAllowedIPRanges\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\TenantAllowedIPRanges\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\TenantAllowedIPRanges\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\TenantAllowedIPRanges\Edit.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\TenantAllowedIPRanges\Delete.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\TenantAllowedIPRanges\Details.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\TenantAllowedIPRanges\Edit.cshtml" />
+  </ItemGroup>
+
 </Project>
