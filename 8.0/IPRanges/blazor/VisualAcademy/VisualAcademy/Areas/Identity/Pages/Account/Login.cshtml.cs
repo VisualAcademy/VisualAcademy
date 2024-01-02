@@ -27,13 +27,15 @@ namespace VisualAcademy.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public LoginModel(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ILogger<LoginModel> logger, ApplicationDbContext context)
+        public LoginModel(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, ILogger<LoginModel> logger, ApplicationDbContext context, IConfiguration configuration)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
             _context = context;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -117,6 +119,10 @@ namespace VisualAcademy.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                // 구성에서 IP 수집 및 제한 설정을 읽어옵니다.
+                bool enableIPRestriction = _configuration.GetValue<bool>("IPRestriction:EnableIPRestriction");
+                bool collectLoginIP = _configuration.GetValue<bool>("IPRestriction:CollectLoginIP");
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
@@ -134,64 +140,68 @@ namespace VisualAcademy.Areas.Identity.Pages.Account
                         currentIP = "127.0.0.1";
                     }
 
-                    // 로그인 메서드 내에 추가할 코드
-                    try
+                    // IP 수집이 활성화된 경우, 현재 IP를 수집합니다.
+                    if (collectLoginIP)
                     {
-                        var ipParts = currentIP.Split('.');
-                        if (ipParts.Length == 4) // IPv4 주소인지 확인
+                        try
                         {
-                            // 마지막 옥텟을 1로 설정하여 StartIPRange 계산
-                            ipParts[3] = "1";
-                            string startIPRange = string.Join(".", ipParts);
-
-                            // 마지막 옥텟을 255로 설정하여 EndIPRange 계산
-                            ipParts[3] = "255";
-                            string endIPRange = string.Join(".", ipParts);
-
-                            // 사용자 이메일에서 도메인 부분만 추출
-                            string emailDomain = Input.Email.Substring(Input.Email.IndexOf('@') + 1);
-
-                            // 동일한 StartIPRange와 EndIPRange를 가진 엔트리가 이미 있는지 확인
-                            var existingIPRange = await _context.AllowedIPRanges
-                                .FirstOrDefaultAsync(ip => ip.StartIPRange == startIPRange && ip.EndIPRange == endIPRange && ip.TenantId == user.TenantId);
-
-                            // 동일한 범위가 존재하지 않는 경우에만 새 범위 추가
-                            if (existingIPRange == null)
+                            var ipParts = currentIP.Split('.');
+                            if (ipParts.Length == 4) // IPv4 주소인지 확인
                             {
-                                var newIPRange = new AllowedIPRange
+                                // 마지막 옥텟을 1로 설정하여 StartIPRange 계산
+                                ipParts[3] = "1";
+                                string startIPRange = string.Join(".", ipParts);
+
+                                // 마지막 옥텟을 255로 설정하여 EndIPRange 계산
+                                ipParts[3] = "255";
+                                string endIPRange = string.Join(".", ipParts);
+
+                                // 사용자 이메일에서 도메인 부분만 추출
+                                string emailDomain = Input.Email.Substring(Input.Email.IndexOf('@') + 1);
+
+                                // 동일한 StartIPRange와 EndIPRange를 가진 엔트리가 이미 있는지 확인
+                                var existingIPRange = await _context.AllowedIPRanges
+                                    .FirstOrDefaultAsync(ip => ip.StartIPRange == startIPRange && ip.EndIPRange == endIPRange && ip.TenantId == user.TenantId);
+
+                                // 동일한 범위가 존재하지 않는 경우에만 새 범위 추가
+                                if (existingIPRange == null)
                                 {
-                                    StartIPRange = startIPRange,
-                                    EndIPRange = endIPRange,
-                                    Description = emailDomain, // 사용자 이메일 도메인으로 설명 설정
-                                    CreateDate = DateTime.Now,
-                                    TenantId = user.TenantId // 현재 로그인한 사용자의 TenantId 사용
-                                };
-                                _context.AllowedIPRanges.Add(newIPRange);
-                                await _context.SaveChangesAsync();
+                                    var newIPRange = new AllowedIPRange
+                                    {
+                                        StartIPRange = startIPRange,
+                                        EndIPRange = endIPRange,
+                                        Description = emailDomain, // 사용자 이메일 도메인으로 설명 설정
+                                        CreateDate = DateTime.Now,
+                                        TenantId = user.TenantId // 현재 로그인한 사용자의 TenantId 사용
+                                    };
+                                    _context.AllowedIPRanges.Add(newIPRange);
+                                    await _context.SaveChangesAsync();
+                                }
                             }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        // 예외 로깅 또는 사용자에게 친절한 에러 메시지 표시
-                        // 예: _logger.LogError("An error occurred: {0}", ex.ToString());
-                        // 사용자에게는 특정 에러 메시지를 반환하거나, 에러 페이지로 리디렉션할 수 있습니다.
-                    }
-
-                    // IP 주소 허용 검사
-                    bool isAllowed = await CheckIPAllowed(TenantId, currentIP);
-
-                    if (!isAllowed)
-                    {
-                        // 허용되지 않은 IP 주소인 경우, RestrictedAccess 뷰로 리디렉션
-                        return RedirectToPage("/RestrictedAccess");
+                        catch (Exception ex)
+                        {
+                            // 예외 로깅 또는 사용자에게 친절한 에러 메시지 표시
+                            // 예: _logger.LogError("An error occurred: {0}", ex.ToString());
+                            // 사용자에게는 특정 에러 메시지를 반환하거나, 에러 페이지로 리디렉션할 수 있습니다.
+                        }
                     }
 
-                    // 허용된 IP 주소인 경우, Home/Index로 리디렉션
-                    // return RedirectToAction("Index", "Home");
+                    // IP 제한이 활성화된 경우, 현재 IP 주소를 검사합니다.
+                    if (enableIPRestriction)
+                    { 
+                        // IP 주소 허용 검사
+                        bool isAllowed = await CheckIPAllowed(TenantId, currentIP);
+
+                        if (!isAllowed)
+                        {
+                            // 허용되지 않은 IP 주소인 경우, RestrictedAccess 뷰로 리디렉션
+                            return RedirectToPage("/RestrictedAccess");
+                        }
+                    }
 
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    return LocalRedirect(returnUrl ?? Url.Content("~/"));
                 }
                 if (result.RequiresTwoFactor)
                 {
