@@ -15,6 +15,12 @@
     [LockoutEnabled]       BIT                NOT NULL,
     [AccessFailedCount]    INT                NOT NULL,
 
+    [Address]              NVARCHAR (MAX)     NULL,
+    [FirstName]            NVARCHAR (MAX)     NULL,
+    [Gender]               NVARCHAR (MAX)     NULL,
+    [LastName]             NVARCHAR (MAX)     NULL,
+    [TenantId]             BIGINT             DEFAULT (CONVERT([bigint],(0))) NOT NULL,
+
     [TenantName]               NVARCHAR (MAX)     Default('VisualAcademy'),
 
     RegistrationDate DATETIMEOFFSET  NULL DEFAULT (SYSDATETIMEOFFSET()),
