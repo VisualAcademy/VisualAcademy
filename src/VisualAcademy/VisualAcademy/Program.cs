@@ -9,6 +9,7 @@ using VisualAcademy.Areas.Identity.Models;
 using VisualAcademy.Areas.Identity.Services;
 using VisualAcademy.Components.Pages.ApplicantsTransfers;
 using VisualAcademy.Data;
+using VisualAcademy.Models;
 using VisualAcademy.Models.Candidates;
 using VisualAcademy.Repositories.Tenants;
 
@@ -24,6 +25,9 @@ namespace VisualAcademy
             //[!] ConfigureServices... Startup.cs 파일에서 ConfigureServices 메서드 영역: 
 
             // Add services to the container.
+            builder.Services.AddRazorPages(); // Razor Pages
+            builder.Services.AddControllersWithViews(); // MVC
+
             // 컨테이너에 서비스를 추가한다.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -47,6 +51,7 @@ namespace VisualAcademy
 
 
 
+            #region AddIdentityCore
             builder.Services.AddIdentityCore<ApplicationUser>(
                 options =>
                 {
@@ -56,10 +61,11 @@ namespace VisualAcademy
                     // 비밀번호 정책 설정 (예: 숫자 포함 여부)
                     // options.Password.RequireDigit = false; 
                 })
-                .AddRoles<ApplicationRole>() 
+                .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>() // Identity를 위한 EF Core 저장소 지정
                 .AddSignInManager()
-                .AddDefaultTokenProviders(); // 토큰 생성을 위한 기본 제공자 사용
+                .AddDefaultTokenProviders(); // 토큰 생성을 위한 기본 제공자 사용 
+            #endregion
 
 
 
@@ -82,9 +88,6 @@ namespace VisualAcademy
 
             // Google, Microsoft, GitHub Authentication
             //builder.Services.AddAuthentication();
-
-            builder.Services.AddRazorPages(); // Razor Pages
-            builder.Services.AddControllersWithViews(); // MVC
 
             builder.Services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
             builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
@@ -212,8 +215,30 @@ namespace VisualAcademy
             app.MapBlazorHub();
             app.MapFallbackToPage("/_Host");
 
+            // 데이터베이스 초기화
+            InitializeDatabase(app);
+
             // 앱 실행
             app.Run();
+        }
+
+        static void InitializeDatabase(IApplicationBuilder app)
+        {
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<ApplicationDbContext>();
+
+                // 테넌트 데이터 확인 및 초기화
+                if (!context.Tenants.Any())
+                {
+                    context.Tenants.AddRange(
+                        new TenantModel { Name = "Tenant 1" },
+                        new TenantModel { Name = "Tenant 2" }
+                    );
+                    context.SaveChanges();
+                }
+            }
         }
 
         #region Create BuiltIn Users and Roles 

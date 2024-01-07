@@ -103,6 +103,16 @@
         <None Include="Components\Pages\MoviePages\Edit.razor" />
         <None Include="Components\Pages\MoviePages\Index.razor" />
         <None Include="Pages\Candidates\CandidatesLanguages\Manage.razor" />
+        <None Include="Views\AllowedIPRanges\Create.cshtml" />
+        <None Include="Views\AllowedIPRanges\Delete.cshtml" />
+        <None Include="Views\AllowedIPRanges\Details.cshtml" />
+        <None Include="Views\AllowedIPRanges\Edit.cshtml" />
+        <None Include="Views\AllowedIPRanges\Index.cshtml" />
+        <None Include="Views\TenantAllowedIPRanges\Create.cshtml" />
+        <None Include="Views\TenantAllowedIPRanges\Delete.cshtml" />
+        <None Include="Views\TenantAllowedIPRanges\Details.cshtml" />
+        <None Include="Views\TenantAllowedIPRanges\Edit.cshtml" />
+        <None Include="Views\TenantAllowedIPRanges\Index.cshtml" />
         <None Include="wwwroot\js\site.js" />
         <None Include="wwwroot\templates\ApplicantsTransfers\ApplicantsTransfers.xlsx" />
     </ItemGroup>
