@@ -70,18 +70,18 @@
     <Build Include="dbo\Tables\Noodles.sql" />
     <None Include="Scripts\CandidatesAppDbContext.sql" />
     <Build Include="dbo\Tables\Articles.sql" />
-    <None Include="dbo\Tables\Identity\__EFMigrationsHistory.sql" />
+    <Build Include="dbo\Tables\Identity\__EFMigrationsHistory.sql" />
     <Build Include="dbo\Tables\Tenants.sql" />
     <Build Include="dbo\Tables\AppointmentsTypes.sql" />
     <Build Include="dbo\Tables\AllowedIPRanges.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="dbo\Tables\Identity\AspNetRoleClaims.sql" />
-    <None Include="dbo\Tables\Identity\AspNetRoles.sql" />
-    <None Include="dbo\Tables\Identity\AspNetUserClaims.sql" />
-    <None Include="dbo\Tables\Identity\AspNetUserLogins.sql" />
-    <None Include="dbo\Tables\Identity\AspNetUserRoles.sql" />
-    <None Include="dbo\Tables\Identity\AspNetUsers.sql" />
-    <None Include="dbo\Tables\Identity\AspNetUserTokens.sql" />
+    <Build Include="dbo\Tables\Identity\AspNetRoleClaims.sql" />
+    <Build Include="dbo\Tables\Identity\AspNetRoles.sql" />
+    <Build Include="dbo\Tables\Identity\AspNetUserClaims.sql" />
+    <Build Include="dbo\Tables\Identity\AspNetUserLogins.sql" />
+    <Build Include="dbo\Tables\Identity\AspNetUserRoles.sql" />
+    <Build Include="dbo\Tables\Identity\AspNetUsers.sql" />
+    <Build Include="dbo\Tables\Identity\AspNetUserTokens.sql" />
   </ItemGroup>
 </Project>

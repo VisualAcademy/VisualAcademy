@@ -25,6 +25,8 @@
 
     RegistrationDate DATETIMEOFFSET  NULL DEFAULT (SYSDATETIMEOFFSET()),
 
+    [Timezone]             NVARCHAR (MAX)     NULL,
+
     CONSTRAINT [PK_AspNetUsers] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
