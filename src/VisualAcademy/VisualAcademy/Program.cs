@@ -24,6 +24,9 @@ namespace VisualAcademy
             //[!] ConfigureServices... Startup.cs 파일에서 ConfigureServices 메서드 영역: 
 
             // Add services to the container.
+            builder.Services.AddRazorPages(); // Razor Pages
+            builder.Services.AddControllersWithViews(); // MVC
+
             // 컨테이너에 서비스를 추가한다.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -82,9 +85,6 @@ namespace VisualAcademy
 
             // Google, Microsoft, GitHub Authentication
             //builder.Services.AddAuthentication();
-
-            builder.Services.AddRazorPages(); // Razor Pages
-            builder.Services.AddControllersWithViews(); // MVC
 
             builder.Services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
             builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
