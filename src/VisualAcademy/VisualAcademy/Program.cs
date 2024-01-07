@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using RedPlus.Services;
 using VisualAcademy.Areas.Identity;
-using VisualAcademy.Areas.Identity.Models;
 using VisualAcademy.Areas.Identity.Services;
 using VisualAcademy.Components.Pages.ApplicantsTransfers;
 using VisualAcademy.Data;
