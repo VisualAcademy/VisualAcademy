@@ -4,7 +4,7 @@ using VisualAcademy.Models;
 
 namespace VisualAcademy.Data
 {
-    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : IdentityDbContext<ApplicationUser, ApplicationRole, string>(options)
     {
         public DbSet<TenantModel> Tenants { get; set; }
