@@ -8,13 +8,8 @@ using VisualAcademy.Models.Tenants;
 
 namespace VisualAcademy.Data;
 
-public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser, ApplicationRole, string>(options)
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
-    {
-    }
-
     // Users 속성을 통해 AspNetUsers 테이블에 접근
     // public DbSet<ApplicationUser> Users { get; set; } 이 부분은 필요 없습니다.
     // IdentityDbContext<ApplicationUser>가 이미 Users 속성을 제공합니다.
