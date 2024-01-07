@@ -113,6 +113,7 @@
         <None Include="Views\TenantAllowedIPRanges\Details.cshtml" />
         <None Include="Views\TenantAllowedIPRanges\Edit.cshtml" />
         <None Include="Views\TenantAllowedIPRanges\Index.cshtml" />
+        <None Include="wwwroot\bootstrap\bootstrap.min.css.map" />
         <None Include="wwwroot\js\site.js" />
         <None Include="wwwroot\templates\ApplicantsTransfers\ApplicantsTransfers.xlsx" />
     </ItemGroup>
