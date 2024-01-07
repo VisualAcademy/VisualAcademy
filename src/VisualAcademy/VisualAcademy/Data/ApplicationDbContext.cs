@@ -40,6 +40,12 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
         builder.Entity<TenantModel>().ToTable("Tenants");
         builder.Entity<AppointmentTypeModel>().ToTable("AppointmentsTypes");
+
+        //// 테넌트 초기 데이터 설정
+        //builder.Entity<TenantModel>().HasData(
+        //    new TenantModel { Id = 1, Name = "Tenant 1" },
+        //    new TenantModel { Id = 2, Name = "Tenant 2" }
+        //);
     }
 
     #region SeedRoles: 기본 역할(Role)들을 생성하는 코드 중 하나 
@@ -99,4 +105,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<AppointmentTypeModel> AppointmentsTypes { get; set; }
 
     public DbSet<VisualAcademy.Models.Movie> Movie { get; set; } = default!;
+
+    public DbSet<AllowedIPRange> AllowedIPRanges { get; set; }
 }

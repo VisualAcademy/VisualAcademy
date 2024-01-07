@@ -73,6 +73,7 @@
     <None Include="dbo\Tables\Identity\__EFMigrationsHistory.sql" />
     <Build Include="dbo\Tables\Tenants.sql" />
     <Build Include="dbo\Tables\AppointmentsTypes.sql" />
+    <Build Include="dbo\Tables\AllowedIPRanges.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dbo\Tables\Identity\AspNetRoleClaims.sql" />
