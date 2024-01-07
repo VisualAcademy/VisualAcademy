@@ -50,6 +50,7 @@ namespace VisualAcademy
 
 
 
+            #region AddIdentityCore
             builder.Services.AddIdentityCore<ApplicationUser>(
                 options =>
                 {
@@ -59,10 +60,11 @@ namespace VisualAcademy
                     // 비밀번호 정책 설정 (예: 숫자 포함 여부)
                     // options.Password.RequireDigit = false; 
                 })
-                .AddRoles<ApplicationRole>() 
+                .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>() // Identity를 위한 EF Core 저장소 지정
                 .AddSignInManager()
-                .AddDefaultTokenProviders(); // 토큰 생성을 위한 기본 제공자 사용
+                .AddDefaultTokenProviders(); // 토큰 생성을 위한 기본 제공자 사용 
+            #endregion
 
 
 
