@@ -9,6 +9,7 @@ using VisualAcademy.Areas.Identity.Models;
 using VisualAcademy.Areas.Identity.Services;
 using VisualAcademy.Components.Pages.ApplicantsTransfers;
 using VisualAcademy.Data;
+using VisualAcademy.Models;
 using VisualAcademy.Models.Candidates;
 using VisualAcademy.Repositories.Tenants;
 
@@ -214,8 +215,30 @@ namespace VisualAcademy
             app.MapBlazorHub();
             app.MapFallbackToPage("/_Host");
 
+            // 데이터베이스 초기화
+            InitializeDatabase(app);
+
             // 앱 실행
             app.Run();
+        }
+
+        static void InitializeDatabase(IApplicationBuilder app)
+        {
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<ApplicationDbContext>();
+
+                // 테넌트 데이터 확인 및 초기화
+                if (!context.Tenants.Any())
+                {
+                    context.Tenants.AddRange(
+                        new TenantModel { Name = "Tenant 1" },
+                        new TenantModel { Name = "Tenant 2" }
+                    );
+                    context.SaveChanges();
+                }
+            }
         }
 
         #region Create BuiltIn Users and Roles 
