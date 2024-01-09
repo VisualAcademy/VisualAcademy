@@ -4,29 +4,25 @@ using VisualAcademy.Models.Candidates;
 
 namespace VisualAcademy.Controllers;
 
-public class CandidateController : Controller
+public class CandidateController(CandidateAppDbContext context) : Controller
 {
-    private readonly CandidateAppDbContext _context;
-
-    public CandidateController(CandidateAppDbContext context) => _context = context;
-
     // GET: Candidate
     public async Task<IActionResult> Index()
     {
-        return _context.Candidates != null ?
-                    View(await _context.Candidates.ToListAsync()) :
+        return context.Candidates != null ?
+                    View(await context.Candidates.ToListAsync()) :
                     Problem("Entity set 'CandidateAppDbContext.Candidates'  is null.");
     }
 
     // GET: Candidate/Details/5
     public async Task<IActionResult> Details(int? id)
     {
-        if (id == null || _context.Candidates == null)
+        if (id == null || context.Candidates == null)
         {
             return NotFound();
         }
 
-        var candidate = await _context.Candidates
+        var candidate = await context.Candidates
             .FirstOrDefaultAsync(m => m.Id == id);
         if (candidate == null)
         {
@@ -48,8 +44,8 @@ public class CandidateController : Controller
     {
         if (ModelState.IsValid)
         {
-            _context.Add(candidate);
-            await _context.SaveChangesAsync();
+            context.Add(candidate);
+            await context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
         return View(candidate);
@@ -58,12 +54,12 @@ public class CandidateController : Controller
     // GET: Candidate/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
-        if (id == null || _context.Candidates == null)
+        if (id == null || context.Candidates == null)
         {
             return NotFound();
         }
 
-        var candidate = await _context.Candidates.FindAsync(id);
+        var candidate = await context.Candidates.FindAsync(id);
         if (candidate == null)
         {
             return NotFound();
@@ -87,8 +83,8 @@ public class CandidateController : Controller
         {
             try
             {
-                _context.Update(candidate);
-                await _context.SaveChangesAsync();
+                context.Update(candidate);
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -109,12 +105,12 @@ public class CandidateController : Controller
     // GET: Candidate/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
-        if (id == null || _context.Candidates == null)
+        if (id == null || context.Candidates == null)
         {
             return NotFound();
         }
 
-        var candidate = await _context.Candidates
+        var candidate = await context.Candidates
             .FirstOrDefaultAsync(m => m.Id == id);
         if (candidate == null)
         {
@@ -129,19 +125,19 @@ public class CandidateController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        if (_context.Candidates == null)
+        if (context.Candidates == null)
         {
             return Problem("Entity set 'CandidateAppDbContext.Candidates'  is null.");
         }
-        var candidate = await _context.Candidates.FindAsync(id);
+        var candidate = await context.Candidates.FindAsync(id);
         if (candidate != null)
         {
-            _context.Candidates.Remove(candidate);
+            context.Candidates.Remove(candidate);
         }
 
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
-    private bool CandidateExists(int id) => (_context.Candidates?.Any(e => e.Id == id)).GetValueOrDefault();
+    private bool CandidateExists(int id) => (context.Candidates?.Any(e => e.Id == id)).GetValueOrDefault();
 }
