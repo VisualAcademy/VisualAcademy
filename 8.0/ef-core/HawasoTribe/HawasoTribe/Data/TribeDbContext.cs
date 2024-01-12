@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HawasoTribe.Data;
 
-public class TribeDbContext(DbContextOptions<TribeDbContext> options) : DbContext(options)
+public class TribeDbContext : DbContext
 {
     public DbSet<State> States { get; set; } = null!;
     public DbSet<Tribe> Tribes { get; set; } = null!;
