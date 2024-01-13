@@ -14,17 +14,8 @@ using VisualAcademy.Data;
 
 namespace VisualAcademy.Areas.Identity.Pages.Account;
 
-public class ForgotPasswordModel : PageModel
+public class ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender) : PageModel
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IEmailSender _emailSender;
-
-    public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
-    {
-        _userManager = userManager;
-        _emailSender = emailSender;
-    }
-
     /// <summary>
     ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
     ///     directly from your code. This API may change or be removed in future releases.
@@ -51,8 +42,8 @@ public class ForgotPasswordModel : PageModel
     {
         if (ModelState.IsValid)
         {
-            var user = await _userManager.FindByEmailAsync(Input.Email);
-            if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+            var user = await userManager.FindByEmailAsync(Input.Email);
+            if (user == null || !(await userManager.IsEmailConfirmedAsync(user)))
             {
                 // Don't reveal that the user does not exist or is not confirmed
                 return RedirectToPage("./ForgotPasswordConfirmation");
@@ -60,7 +51,7 @@ public class ForgotPasswordModel : PageModel
 
             // For more information on how to enable account confirmation and password reset please
             // visit https://go.microsoft.com/fwlink/?LinkID=532713
-            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var code = await userManager.GeneratePasswordResetTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             var callbackUrl = Url.Page(
                 "/Account/ResetPassword",
@@ -68,7 +59,7 @@ public class ForgotPasswordModel : PageModel
                 values: new { area = "Identity", code },
                 protocol: Request.Scheme);
 
-            await _emailSender.SendEmailAsync(
+            await emailSender.SendEmailAsync(
                 Input.Email,
                 "Reset Password",
                 $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
