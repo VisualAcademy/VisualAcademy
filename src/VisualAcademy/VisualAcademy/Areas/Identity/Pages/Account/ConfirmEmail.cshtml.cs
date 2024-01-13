@@ -11,12 +11,8 @@ using VisualAcademy.Data;
 
 namespace VisualAcademy.Areas.Identity.Pages.Account;
 
-public class ConfirmEmailModel : PageModel
+public class ConfirmEmailModel(UserManager<ApplicationUser> userManager) : PageModel
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-
-    public ConfirmEmailModel(UserManager<ApplicationUser> userManager) => _userManager = userManager;
-
     /// <summary>
     ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
     ///     directly from your code. This API may change or be removed in future releases.
@@ -30,14 +26,14 @@ public class ConfirmEmailModel : PageModel
             return RedirectToPage("/Index");
         }
 
-        var user = await _userManager.FindByIdAsync(userId);
+        var user = await userManager.FindByIdAsync(userId);
         if (user == null)
         {
             return NotFound($"Unable to load user with ID '{userId}'.");
         }
 
         code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
-        var result = await _userManager.ConfirmEmailAsync(user, code);
+        var result = await userManager.ConfirmEmailAsync(user, code);
         StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
         return Page();
     }
