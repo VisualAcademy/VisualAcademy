@@ -13,24 +13,13 @@ namespace VisualAcademy.Controllers;
 
 [Authorize(Roles = "Administrators")] // 강의 참고용 소스는 포함, 실행은 금지
 [Route("[controller]/[action]")]
-public class AccountController : Controller
+public class AccountController(
+    UserManager<ApplicationUser> userManager,
+    SignInManager<ApplicationUser> signInManager,
+    IEmailSender emailSender,
+    ILogger<AccountController> logger) : Controller
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly IEmailSender _emailSender;
-    private readonly ILogger _logger;
-
-    public AccountController(
-        UserManager<ApplicationUser> userManager,
-        SignInManager<ApplicationUser> signInManager,
-        IEmailSender emailSender,
-        ILogger<AccountController> logger)
-    {
-        _userManager = userManager;
-        _signInManager = signInManager;
-        _emailSender = emailSender;
-        _logger = logger;
-    }
+    private readonly ILogger _logger = logger;
 
     [TempData]
     public string ErrorMessage { get; set; }
@@ -56,7 +45,7 @@ public class AccountController : Controller
         {
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+            var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
                 _logger.LogInformation("User logged in.");
@@ -87,7 +76,7 @@ public class AccountController : Controller
     public async Task<IActionResult> LoginWith2fa(bool rememberMe, string returnUrl = null)
     {
         // Ensure the user has gone through the username & password screen first
-        var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+        var user = await signInManager.GetTwoFactorAuthenticationUserAsync();
 
         if (user == null)
         {
@@ -110,15 +99,15 @@ public class AccountController : Controller
             return View(model);
         }
 
-        var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+        var user = await signInManager.GetTwoFactorAuthenticationUserAsync();
         if (user == null)
         {
-            throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            throw new ApplicationException($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
 
         var authenticatorCode = model.TwoFactorCode.Replace(" ", string.Empty).Replace("-", string.Empty);
 
-        var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, model.RememberMachine);
+        var result = await signInManager.TwoFactorAuthenticatorSignInAsync(authenticatorCode, rememberMe, model.RememberMachine);
 
         if (result.Succeeded)
         {
@@ -143,7 +132,7 @@ public class AccountController : Controller
     public async Task<IActionResult> LoginWithRecoveryCode(string returnUrl = null)
     {
         // Ensure the user has gone through the username & password screen first
-        var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+        var user = await signInManager.GetTwoFactorAuthenticationUserAsync();
         if (user == null)
         {
             throw new ApplicationException($"Unable to load two-factor authentication user.");
@@ -164,7 +153,7 @@ public class AccountController : Controller
             return View(model);
         }
 
-        var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+        var user = await signInManager.GetTwoFactorAuthenticationUserAsync();
         if (user == null)
         {
             throw new ApplicationException($"Unable to load two-factor authentication user.");
@@ -172,7 +161,7 @@ public class AccountController : Controller
 
         var recoveryCode = model.RecoveryCode.Replace(" ", string.Empty);
 
-        var result = await _signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
+        var result = await signInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
 
         if (result.Succeeded)
         {
@@ -213,16 +202,16 @@ public class AccountController : Controller
         if (ModelState.IsValid)
         {
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-            var result = await _userManager.CreateAsync(user, model.Password);
+            var result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {
                 _logger.LogInformation("User created a new account with password.");
 
-                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
                 var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-                await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                await emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-                await _signInManager.SignInAsync(user, isPersistent: false);
+                await signInManager.SignInAsync(user, isPersistent: false);
                 _logger.LogInformation("User created a new account with password.");
                 return RedirectToLocal(returnUrl);
             }
@@ -237,7 +226,7 @@ public class AccountController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
     {
-        await _signInManager.SignOutAsync();
+        await signInManager.SignOutAsync();
         _logger.LogInformation("User logged out.");
         return RedirectToAction(nameof(HomeController.Index), "Home");
     }
@@ -249,7 +238,7 @@ public class AccountController : Controller
     {
         // Request a redirect to the external login provider.
         var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
-        var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+        var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
         return Challenge(properties, provider);
     }
 
@@ -262,14 +251,14 @@ public class AccountController : Controller
             ErrorMessage = $"Error from external provider: {remoteError}";
             return RedirectToAction(nameof(Login));
         }
-        var info = await _signInManager.GetExternalLoginInfoAsync();
+        var info = await signInManager.GetExternalLoginInfoAsync();
         if (info == null)
         {
             return RedirectToAction(nameof(Login));
         }
 
         // Sign in the user with this external login provider if the user already has a login.
-        var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
+        var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
         if (result.Succeeded)
         {
             _logger.LogInformation("User logged in with {Name} provider.", info.LoginProvider);
@@ -297,19 +286,19 @@ public class AccountController : Controller
         if (ModelState.IsValid)
         {
             // Get the information about the user from the external login provider
-            var info = await _signInManager.GetExternalLoginInfoAsync();
+            var info = await signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
                 throw new ApplicationException("Error loading external login information during confirmation.");
             }
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-            var result = await _userManager.CreateAsync(user);
+            var result = await userManager.CreateAsync(user);
             if (result.Succeeded)
             {
-                result = await _userManager.AddLoginAsync(user, info);
+                result = await userManager.AddLoginAsync(user, info);
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    await signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
                     return RedirectToLocal(returnUrl);
                 }
@@ -329,12 +318,12 @@ public class AccountController : Controller
         {
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
-        var user = await _userManager.FindByIdAsync(userId);
+        var user = await userManager.FindByIdAsync(userId);
         if (user == null)
         {
             throw new ApplicationException($"Unable to load user with ID '{userId}'.");
         }
-        var result = await _userManager.ConfirmEmailAsync(user, code);
+        var result = await userManager.ConfirmEmailAsync(user, code);
         return View(result.Succeeded ? "ConfirmEmail" : "Error");
     }
 
@@ -349,8 +338,8 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+            var user = await userManager.FindByEmailAsync(model.Email);
+            if (user == null || !(await userManager.IsEmailConfirmedAsync(user)))
             {
                 // Don't reveal that the user does not exist or is not confirmed
                 return RedirectToAction(nameof(ForgotPasswordConfirmation));
@@ -358,9 +347,9 @@ public class AccountController : Controller
 
             // For more information on how to enable account confirmation and password reset please
             // visit https://go.microsoft.com/fwlink/?LinkID=532713
-            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var code = await userManager.GeneratePasswordResetTokenAsync(user);
             var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
-            await _emailSender.SendEmailAsync(model.Email, "Reset Password",
+            await emailSender.SendEmailAsync(model.Email, "Reset Password",
                $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
             return RedirectToAction(nameof(ForgotPasswordConfirmation));
         }
@@ -394,13 +383,13 @@ public class AccountController : Controller
         {
             return View(model);
         }
-        var user = await _userManager.FindByEmailAsync(model.Email);
+        var user = await userManager.FindByEmailAsync(model.Email);
         if (user == null)
         {
             // Don't reveal that the user does not exist
             return RedirectToAction(nameof(ResetPasswordConfirmation));
         }
-        var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+        var result = await userManager.ResetPasswordAsync(user, model.Code, model.Password);
         if (result.Succeeded)
         {
             return RedirectToAction(nameof(ResetPasswordConfirmation));
