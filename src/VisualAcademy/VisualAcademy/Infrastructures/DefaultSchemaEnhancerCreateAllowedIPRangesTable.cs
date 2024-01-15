@@ -1,39 +1,39 @@
 ﻿using System;
 using Microsoft.Data.SqlClient;
 
-namespace VisualAcademy.Infrastructures
+namespace VisualAcademy.Infrastructures;
+
+public class DefaultSchemaEnhancerCreateAllowedIPRangesTable
 {
-    public class DefaultSchemaEnhancerCreateAllowedIPRangesTable
+    private string _defaultConnectionString;
+
+    public DefaultSchemaEnhancerCreateAllowedIPRangesTable(string defaultConnectionString)
     {
-        private string _defaultConnectionString;
+        _defaultConnectionString = defaultConnectionString;
+    }
 
-        public DefaultSchemaEnhancerCreateAllowedIPRangesTable(string defaultConnectionString)
+    public void EnhanceDefaultDatabase()
+    {
+        CreateAllowedIPRangesTableIfNotExists();
+    }
+
+    private void CreateAllowedIPRangesTableIfNotExists()
+    {
+        using (SqlConnection connection = new SqlConnection(_defaultConnectionString))
         {
-            _defaultConnectionString = defaultConnectionString;
-        }
+            connection.Open();
 
-        public void EnhanceDefaultDatabase()
-        {
-            CreateAllowedIPRangesTableIfNotExists();
-        }
-
-        private void CreateAllowedIPRangesTableIfNotExists()
-        {
-            using (SqlConnection connection = new SqlConnection(_defaultConnectionString))
-            {
-                connection.Open();
-
-                SqlCommand cmdCheck = new SqlCommand(@"
+            SqlCommand cmdCheck = new SqlCommand(@"
                     SELECT COUNT(*) 
                     FROM INFORMATION_SCHEMA.TABLES 
                     WHERE TABLE_SCHEMA = 'dbo' 
                     AND TABLE_NAME = 'AllowedIPRanges'", connection);
 
-                int tableCount = (int)cmdCheck.ExecuteScalar();
+            int tableCount = (int)cmdCheck.ExecuteScalar();
 
-                if (tableCount == 0)
-                {
-                    SqlCommand cmdCreateTable = new SqlCommand(@"
+            if (tableCount == 0)
+            {
+                SqlCommand cmdCreateTable = new SqlCommand(@"
                         CREATE TABLE AllowedIPRanges (
                             ID INT PRIMARY KEY IDENTITY(1,1),
                             StartIPRange VARCHAR(15),
@@ -43,11 +43,10 @@ namespace VisualAcademy.Infrastructures
                             TenantId BIGINT
                         )", connection);
 
-                    cmdCreateTable.ExecuteNonQuery();
-                }
-
-                connection.Close();
+                cmdCreateTable.ExecuteNonQuery();
             }
+
+            connection.Close();
         }
     }
 }
