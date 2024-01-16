@@ -4,14 +4,9 @@ using VisualAcademy.Data;
 
 namespace VisualAcademy
 {
-    public class UserAndRoleInitializer
+    public class UserAndRoleInitializer(IServiceProvider serviceProvider)
     {
-        private readonly IServiceProvider _serviceProvider;
-
-        public UserAndRoleInitializer(IServiceProvider serviceProvider)
-        {
-            _serviceProvider = serviceProvider;
-        }
+        private readonly IServiceProvider _serviceProvider = serviceProvider;
 
         public async Task CreateBuiltInUsersAndRoles()
         {
