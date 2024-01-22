@@ -36,4 +36,7 @@ public class TenantModel
 
     //[Display(Name = "Portal Name")]
     public string? PortalName { get; set; }
+
+    [Display(Name = "Screening Partner Name")]
+    public string? ScreeningPartnerName { get; set; }
 }

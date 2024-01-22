@@ -8,6 +8,7 @@ using VisualAcademy.Areas.Identity;
 using VisualAcademy.Areas.Identity.Services;
 using VisualAcademy.Components.Pages.ApplicantsTransfers;
 using VisualAcademy.Data;
+using VisualAcademy.Infrastructures;
 using VisualAcademy.Models;
 using VisualAcademy.Models.Candidates;
 using VisualAcademy.Repositories.Tenants;
@@ -133,6 +134,16 @@ namespace VisualAcademy
             }
 
             builder.Services.AddScoped<ApplicantUploadService>();
+
+            try
+            {
+                var schemaEnhancer = new DefaultSchemaEnhancerAddColumns(connectionString);
+                schemaEnhancer.EnhanceDefaultDatabase();
+            }
+            catch (Exception)
+            {
+
+            }
 
             // ¾Û ºôµå
             var app = builder.Build();
