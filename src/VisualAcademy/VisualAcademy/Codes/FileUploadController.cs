@@ -9,7 +9,9 @@ namespace VisualAcademy.Codes;
 
 [ApiController]
 [Route("[controller]")]
-public class FileUploadController(IWebHostEnvironment environment, IConfiguration configuration) : ControllerBase
+public class FileUploadController(
+    IWebHostEnvironment environment,
+    IConfiguration configuration) : ControllerBase
 {
     private readonly string _containerName = "files";
 
@@ -31,7 +33,10 @@ public class FileUploadController(IWebHostEnvironment environment, IConfiguratio
 
     private async Task UploadFilesToBlobAsync(string localPath)
     {
-        var connectionString = $"DefaultEndpointsProtocol=https;AccountName={configuration["AppKeys:AzureStorageAccount"]};AccountKey={configuration["AppKeys:AzureStorageAccessKey"]};EndpointSuffix=core.windows.net";
+        var connectionString = $"DefaultEndpointsProtocol=https;AccountName=" +
+            $"{configuration["AppKeys:AzureStorageAccount"]};AccountKey=" +
+            $"{configuration["AppKeys:AzureStorageAccessKey"]};" +
+            $"EndpointSuffix=core.windows.net";
         var blobServiceClient = new BlobServiceClient(connectionString);
         var containerClient = blobServiceClient.GetBlobContainerClient(_containerName);
         await containerClient.CreateIfNotExistsAsync();
@@ -51,7 +56,10 @@ public class FileUploadController(IWebHostEnvironment environment, IConfiguratio
 
     private async Task DownloadFilesFromBlobAsync(string localPath)
     {
-        var connectionString = $"DefaultEndpointsProtocol=https;AccountName={configuration["AppKeys:AzureStorageAccount"]};AccountKey={configuration["AppKeys:AzureStorageAccessKey"]};EndpointSuffix=core.windows.net";
+        var connectionString = $"DefaultEndpointsProtocol=https;AccountName=" +
+            $"{configuration["AppKeys:AzureStorageAccount"]};AccountKey=" +
+            $"{configuration["AppKeys:AzureStorageAccessKey"]};" +
+            $"EndpointSuffix=core.windows.net";
         var blobServiceClient = new BlobServiceClient(connectionString);
         var containerClient = blobServiceClient.GetBlobContainerClient(_containerName);
 
