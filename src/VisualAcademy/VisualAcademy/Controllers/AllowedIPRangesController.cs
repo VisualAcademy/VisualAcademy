@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace VisualAcademy.Controllers;
+﻿namespace VisualAcademy.Controllers;
 
 [Authorize(Roles = "Administrators")]
 public class AllowedIPRangesController(ApplicationDbContext context) : Controller
