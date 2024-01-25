@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using VisualAcademy.Models;
-
 namespace VisualAcademy.Controllers;
 
 [ApiController]

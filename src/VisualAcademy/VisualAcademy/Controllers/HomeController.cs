@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using VisualAcademy.Models;
-
-namespace VisualAcademy.Controllers;
+﻿namespace VisualAcademy.Controllers;
 
 public class HomeController(ILogger<HomeController> logger) : Controller
 {

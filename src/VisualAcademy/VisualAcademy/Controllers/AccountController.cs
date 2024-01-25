@@ -1,14 +1,4 @@
 ﻿#nullable disable
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using VisualAcademy.Data;
-using VisualAcademy.Models.AccountViewModels;
-using VisualAcademy.Services;
-
 namespace VisualAcademy.Controllers;
 
 [Authorize(Roles = "Administrators")] // 강의 참고용 소스는 포함, 실행은 금지
