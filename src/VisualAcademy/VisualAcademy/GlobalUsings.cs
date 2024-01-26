@@ -6,6 +6,8 @@ global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
 global using System.Diagnostics;
 global using System.Security.Claims;
+global using System.Text;
+global using System.Text.Encodings.Web;
 global using VisualAcademy.Data;
 global using VisualAcademy.Models;
 global using VisualAcademy.Models.AccountViewModels;

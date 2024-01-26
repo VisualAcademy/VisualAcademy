@@ -1,6 +1,4 @@
 ﻿#nullable disable
-using System.Text;
-using System.Text.Encodings.Web;
 using VisualAcademy.Models.ManageViewModels;
 
 namespace VisualAcademy.Controllers;
