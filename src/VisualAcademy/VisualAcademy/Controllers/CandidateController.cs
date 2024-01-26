@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using VisualAcademy.Models.Candidates;
+﻿using VisualAcademy.Models.Candidates;
 
 namespace VisualAcademy.Controllers;
 
