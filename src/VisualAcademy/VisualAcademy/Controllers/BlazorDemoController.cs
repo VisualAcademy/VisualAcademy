@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace VisualAcademy.Controllers;
+﻿namespace VisualAcademy.Controllers;
 
 public class BlazorDemoController : Controller
 {
