@@ -1,11 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using VisualAcademy.Data;
-using VisualAcademy.Models;
-
-namespace VisualAcademy.Controllers;
+﻿namespace VisualAcademy.Controllers;
 
 [Authorize] // 로그인된 사용자만 접근 가능
 public class TenantAllowedIPRangesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager) : Controller
