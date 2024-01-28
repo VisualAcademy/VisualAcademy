@@ -1,7 +1,4 @@
 ﻿#nullable disable
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
 namespace VisualAcademy.Apis;
 
 public class City
