@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace VisualAcademy.Apis;
+﻿namespace VisualAcademy.Apis;
 
 [Route("api/backgroundchecks")]
 public class BackgroundChecksController : ControllerBase
