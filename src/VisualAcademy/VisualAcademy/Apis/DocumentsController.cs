@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace VisualAcademy.Apis;
+﻿namespace VisualAcademy.Apis;
 
 [Route("api/[controller]")]
 [ApiController]
