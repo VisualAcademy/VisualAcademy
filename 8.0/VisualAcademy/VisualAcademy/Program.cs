@@ -6,9 +6,21 @@ var builder = WebApplication.CreateBuilder(args);
 // This method gets called by the runtime. Use this method to add services to the container.
 // Add services to the container.
 //builder.Services.AddMvc();
-builder.Services.AddControllersWithViews();
+//builder.Services.AddControllers(); // Web API
+builder.Services.AddControllersWithViews(); // MVC + Web API
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 // Startup.Configure
 // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,6 +45,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 //app.MapDefaultControllerRoute();
+//app.MapControllers(); // Web API
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
