@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Identity.UI.Services;
-using System.Text.Encodings.Web;
-
 namespace VisualAcademy.Services;
 
 public static class EmailSenderExtensions
