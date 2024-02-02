@@ -2,15 +2,8 @@
 
 namespace VisualAcademy.Infrastructures;
 
-public class DefaultSchemaEnhancerAddColumns
+public class DefaultSchemaEnhancerAddColumns(string defaultConnectionString)
 {
-    private string _defaultConnectionString;
-
-    public DefaultSchemaEnhancerAddColumns(string defaultConnectionString)
-    {
-        _defaultConnectionString = defaultConnectionString;
-    }
-
     public void EnhanceDefaultDatabase()
     {
         AddColumnIfNotExists("Tenants", "PortalName", "nvarchar(max) NULL DEFAULT ('VisualAcademy')");
@@ -19,7 +12,7 @@ public class DefaultSchemaEnhancerAddColumns
 
     private void AddColumnIfNotExists(string tableName, string columnName, string columnDefinition)
     {
-        using (SqlConnection connection = new SqlConnection(_defaultConnectionString))
+        using (SqlConnection connection = new SqlConnection(defaultConnectionString))
         {
             connection.Open();
 
