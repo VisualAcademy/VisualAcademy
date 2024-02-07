@@ -4,10 +4,7 @@
 public class AllowedIPRangesController(ApplicationDbContext context) : Controller
 {
     // GET: AllowedIPRanges
-    public async Task<IActionResult> Index()
-    {
-        return View(await context.AllowedIPRanges.ToListAsync());
-    }
+    public async Task<IActionResult> Index() => View(await context.AllowedIPRanges.ToListAsync());
 
     // GET: AllowedIPRanges/Details/5
     public async Task<IActionResult> Details(int? id)
