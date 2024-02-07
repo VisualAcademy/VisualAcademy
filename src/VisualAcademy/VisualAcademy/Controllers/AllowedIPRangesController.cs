@@ -25,10 +25,7 @@ public class AllowedIPRangesController(ApplicationDbContext context) : Controlle
     }
 
     // GET: AllowedIPRanges/Create
-    public IActionResult Create()
-    {
-        return View();
-    }
+    public IActionResult Create() => View();
 
     // POST: AllowedIPRanges/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
