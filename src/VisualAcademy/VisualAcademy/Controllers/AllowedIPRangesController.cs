@@ -127,8 +127,5 @@ public class AllowedIPRangesController(ApplicationDbContext context) : Controlle
         return RedirectToAction(nameof(Index));
     }
 
-    private bool AllowedIPRangeExists(int id)
-    {
-        return context.AllowedIPRanges.Any(e => e.Id == id);
-    }
+    private bool AllowedIPRangeExists(int id) => context.AllowedIPRanges.Any(e => e.Id == id);
 }
