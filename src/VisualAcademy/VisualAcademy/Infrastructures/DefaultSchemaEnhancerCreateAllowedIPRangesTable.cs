@@ -3,15 +3,8 @@ using Microsoft.Data.SqlClient;
 
 namespace VisualAcademy.Infrastructures;
 
-public class DefaultSchemaEnhancerCreateAllowedIPRangesTable
+public class DefaultSchemaEnhancerCreateAllowedIPRangesTable(string defaultConnectionString)
 {
-    private string _defaultConnectionString;
-
-    public DefaultSchemaEnhancerCreateAllowedIPRangesTable(string defaultConnectionString)
-    {
-        _defaultConnectionString = defaultConnectionString;
-    }
-
     public void EnhanceDefaultDatabase()
     {
         CreateAllowedIPRangesTableIfNotExists();
@@ -19,7 +12,7 @@ public class DefaultSchemaEnhancerCreateAllowedIPRangesTable
 
     private void CreateAllowedIPRangesTableIfNotExists()
     {
-        using (SqlConnection connection = new SqlConnection(_defaultConnectionString))
+        using (SqlConnection connection = new SqlConnection(defaultConnectionString))
         {
             connection.Open();
 
