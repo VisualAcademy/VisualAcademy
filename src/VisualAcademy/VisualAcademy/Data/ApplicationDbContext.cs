@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using VisualAcademy.Models;
 using VisualAcademy.Components.Pages.ApplicantsTransfers;
 using VisualAcademy.Models.Buffets;
 using VisualAcademy.Models.Tenants;
