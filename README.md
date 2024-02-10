@@ -8,11 +8,15 @@
 
 https://www.memoengine.com/labs/aspnet-core-8-0-getting-started
 
+동영상 강좌와 텍스트 강좌를 함께 보면서 ASP.NET Core를 시작하세요.
+
 ## Blazor Server 7.0 Fundamentals 
 
 😄 Blazor Server 7.0 기초 강좌가 오픈되었습니다.
 
 [데브렉 Blazor Server 7.0](http://www.devlec.com/?_pageVariable=strdown_v4&code=PT001TB4349&method=S&relation=PT001TB4349_BlazorServer)
+
+Blazor Server 8.0 횐경에서도 동일하게 진행하세요.
 
 ## ASP.NET Core 7.0 Minimal APIs
 
