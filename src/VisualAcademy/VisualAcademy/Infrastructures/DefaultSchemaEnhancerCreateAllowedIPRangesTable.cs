@@ -4,10 +4,7 @@ namespace VisualAcademy.Infrastructures;
 
 public class DefaultSchemaEnhancerCreateAllowedIPRangesTable(string defaultConnectionString)
 {
-    public void EnhanceDefaultDatabase()
-    {
-        CreateAllowedIPRangesTableIfNotExists();
-    }
+    public void EnhanceDefaultDatabase() => CreateAllowedIPRangesTableIfNotExists();
 
     private void CreateAllowedIPRangesTableIfNotExists()
     {
