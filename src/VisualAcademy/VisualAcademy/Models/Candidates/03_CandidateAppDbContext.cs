@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using VisualAcademy.Models.Candidates.CandidatesIncomes;
+﻿using VisualAcademy.Models.Candidates.CandidatesIncomes;
 using VisualAcademy.Models.Candidates.CandidatesNames;
 
 namespace VisualAcademy.Models.Candidates;
