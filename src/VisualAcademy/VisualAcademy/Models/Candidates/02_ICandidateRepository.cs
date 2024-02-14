@@ -1,7 +1,6 @@
-﻿namespace VisualAcademy.Models.Candidates
-{
-    public interface ICandidateRepository
-    {
+﻿namespace VisualAcademy.Models.Candidates;
 
-    }
+public interface ICandidateRepository
+{
+
 }
