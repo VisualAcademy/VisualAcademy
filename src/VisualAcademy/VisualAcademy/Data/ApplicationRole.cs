@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace VisualAcademy.Models;
+﻿namespace VisualAcademy.Models;
 
 /// <summary>
 /// 사용자의 역할과 관련된 정보를 정의합니다.
