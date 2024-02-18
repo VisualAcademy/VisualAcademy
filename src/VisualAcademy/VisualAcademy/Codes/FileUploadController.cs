@@ -1,9 +1,4 @@
 ﻿using Azure.Storage.Blobs;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace VisualAcademy.Codes;
 
