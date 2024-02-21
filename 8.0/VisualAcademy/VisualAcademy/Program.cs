@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddMvc();
 //builder.Services.AddControllers(); // Web API
 builder.Services.AddControllersWithViews(); // MVC + Web API
+builder.Services.AddRazorPages(); // Razor Pages
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -49,6 +50,7 @@ app.UseRouting();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapRazorPages(); // Razor Pages
 
 app.Run();
 
