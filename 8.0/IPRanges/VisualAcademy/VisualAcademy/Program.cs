@@ -9,9 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
+    .AddInteractiveServerComponents(); // Blazor Server
+builder.Services.AddControllersWithViews(); // MVC
+builder.Services.AddRazorPages(); // Razor Page
 
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
@@ -51,6 +51,7 @@ else
     app.UseHsts();
 }
 
+// 미들웨어 추가: 순서 중요
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
@@ -60,11 +61,11 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-app.MapDefaultControllerRoute();
+app.MapDefaultControllerRoute(); // MVC
 
 // Add additional endpoints required by the Identity /Account Razor components.
 app.MapAdditionalIdentityEndpoints();
 
-app.MapRazorPages();
+app.MapRazorPages(); // Razor Pages
 
 app.Run();
