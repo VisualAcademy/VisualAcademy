@@ -1,7 +1,6 @@
-﻿namespace VisualAcademy.Models.Documents
-{
-    public class DocumentRepository : IDocumentRepository
-    {
+﻿namespace VisualAcademy.Models.Documents;
 
-    }
+public class DocumentRepository : IDocumentRepository
+{
+
 }
