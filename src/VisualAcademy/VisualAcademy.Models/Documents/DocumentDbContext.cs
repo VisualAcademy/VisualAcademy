@@ -1,7 +1,6 @@
-﻿namespace VisualAcademy.Models.Documents
-{
-    public class DocumentDbContext
-    {
+﻿namespace VisualAcademy.Models.Documents;
 
-    }
+public class DocumentDbContext
+{
+
 }
