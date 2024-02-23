@@ -1,6 +1,5 @@
-﻿namespace VisualAcademy.Models.Documents
+﻿namespace VisualAcademy.Models.Documents;
+
+public interface IDocumentRepository
 {
-    public interface IDocumentRepository
-    {
-    }
 }
