@@ -1,9 +1,8 @@
-﻿namespace VisualAcademy.Models
+﻿namespace VisualAcademy.Models;
+
+public class TodoItem
 {
-    public class TodoItem
-    {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public bool IsDone { get; set; }
-    }
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public bool IsDone { get; set; }
 }
