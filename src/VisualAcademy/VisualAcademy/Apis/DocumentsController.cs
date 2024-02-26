@@ -16,15 +16,12 @@ public class DocumentsController : ControllerBase
         {
             new { Id = 1, Name = "VisualAcademy" },
             new { Id = 2, Name = "DevLec" }
-        }); 
+        });
     #endregion
 
     // GET: api/<DocumentsController>
     [HttpGet]
-    public IEnumerable<string> Get()
-    {
-        return new string[] { "value1", "value2" };
-    }
+    public IEnumerable<string> Get() => new string[] { "value1", "value2" };
 
     // GET api/<DocumentsController>/5
     [HttpGet("{id}")]
