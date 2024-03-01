@@ -1,0 +1,12 @@
+@DotNetNoteApi_HostAddress = http://localhost:5273
+
+GET {{DotNetNoteApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET https://localhost:7215/WeatherForecast
+Accept: application/json
+Authorization: Basic QWRtaW5pc3RyYXRvcjpQYSQkdzByZA==
+
+###
