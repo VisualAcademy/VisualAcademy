@@ -1,24 +1,30 @@
 ﻿using RedPlus.Models;
 using System.Text.Json;
 
-namespace RedPlus.Services {
-    public class PortfolioServiceJsonFile {
+namespace RedPlus.Services
+{
+    public class PortfolioServiceJsonFile
+    {
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public PortfolioServiceJsonFile(IWebHostEnvironment webHostEnvironment) {
+        public PortfolioServiceJsonFile(IWebHostEnvironment webHostEnvironment)
+        {
             this._webHostEnvironment = webHostEnvironment;
         }
 
         /// <summary>
         /// wwwroot/Portfolios/portfolios.json 파일의 물리적인 경로 읽어오기 
         /// </summary>
-        private string JsonFileName {
-            get {
+        private string JsonFileName
+        {
+            get
+            {
                 return Path.Combine(_webHostEnvironment.WebRootPath, "Portfolios", "portfolios.json");
             }
         }
 
-        public IEnumerable<Portfolio> GetPortfolios() {
+        public IEnumerable<Portfolio> GetPortfolios()
+        {
             // Using 선언: https://docs.microsoft.com/ko-kr/dotnet/csharp/whats-new/csharp-8#using-declarations
             using var jsonFileReader = File.OpenText(JsonFileName);
             var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
@@ -26,13 +32,16 @@ namespace RedPlus.Services {
             return portfolios;
         }
 
-        public void AddRating(int portfolioId, int rating) {
+        public void AddRating(int portfolioId, int rating)
+        {
             var portfolios = GetPortfolios();
 
-            if (portfolios.First(p => p.Id == portfolioId).Ratings == null) {
+            if (portfolios.First(p => p.Id == portfolioId).Ratings == null)
+            {
                 portfolios.First(p => p.Id == portfolioId).Ratings = new int[] { rating };
             }
-            else {
+            else
+            {
                 var ratings = portfolios.First(p => p.Id == portfolioId).Ratings.ToList();
                 ratings.Add(rating);
                 portfolios.First(p => p.Id == portfolioId).Ratings = ratings.ToArray();
@@ -40,7 +49,8 @@ namespace RedPlus.Services {
 
             using var outputStream = File.OpenWrite(JsonFileName);
             JsonSerializer.Serialize<IEnumerable<Portfolio>>(
-                new Utf8JsonWriter(outputStream, new JsonWriterOptions {
+                new Utf8JsonWriter(outputStream, new JsonWriterOptions
+                {
                     SkipValidation = true,
                     Indented = true
                 }), portfolios);
