@@ -3,15 +3,8 @@ using System.Text.Json;
 
 namespace RedPlus.Services;
 
-public class PortfolioServiceJsonFile
+public class PortfolioServiceJsonFile(IWebHostEnvironment webHostEnvironment)
 {
-    private readonly IWebHostEnvironment _webHostEnvironment;
-
-    public PortfolioServiceJsonFile(IWebHostEnvironment webHostEnvironment)
-    {
-        this._webHostEnvironment = webHostEnvironment;
-    }
-
     /// <summary>
     /// wwwroot/Portfolios/portfolios.json 파일의 물리적인 경로 읽어오기 
     /// </summary>
@@ -19,7 +12,7 @@ public class PortfolioServiceJsonFile
     {
         get
         {
-            return Path.Combine(_webHostEnvironment.WebRootPath, "Portfolios", "portfolios.json");
+            return Path.Combine(webHostEnvironment.WebRootPath, "Portfolios", "portfolios.json");
         }
     }
 
