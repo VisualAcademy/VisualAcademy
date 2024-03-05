@@ -11,13 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetNote", "DotNetNote\Do
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetKorea", "DotNetKorea\DotNetKorea.csproj", "{41A9E93F-A248-42A0-8A9D-9E36DD80B83B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAPI", "WebAPI", "{BF0AAFCB-E77F-4427-9599-CEB538FEA984}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web API", "Web API", "{BF0AAFCB-E77F-4427-9599-CEB538FEA984}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisualAcademy.Apis", "VisualAcademy.Apis\VisualAcademy.Apis.csproj", "{86BC5C8D-6051-410B-BDE7-D729955CAC2B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Razor Pages", "Razor Pages", "{FAC82F3D-7253-474F-9073-E40574A7C594}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedPlus", "RedPlus\RedPlus.csproj", "{B49D6BCC-9979-429C-9B27-D29666C97741}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedPlus", "RedPlus\RedPlus.csproj", "{B49D6BCC-9979-429C-9B27-D29666C97741}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
