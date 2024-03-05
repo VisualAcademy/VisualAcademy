@@ -3,12 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace VisualAcademy.Pages.Administrations.Properties;
 
-public class CreateModel : PageModel
+public class CreateModel(ApplicationDbContext context) : PageModel
 {
-    private readonly ApplicationDbContext _context;
-
-    public CreateModel(ApplicationDbContext context) => _context = context;
-
     public IActionResult OnGet() => Page();
 
     [BindProperty]
@@ -22,8 +18,8 @@ public class CreateModel : PageModel
             return Page();
         }
 
-        _context.Properties.Add(Property);
-        await _context.SaveChangesAsync();
+        context.Properties.Add(Property);
+        await context.SaveChangesAsync();
 
         return RedirectToPage("./Index");
     }
