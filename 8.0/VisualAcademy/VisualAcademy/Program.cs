@@ -43,7 +43,7 @@ app.MapGet("/html-content-rendering", () => Results.Content(htmlTag, "text/html"
 app.UseStaticFiles(); // 정적인 HTML, CSS, JS, 이미지 파일 등을 제공하는 미들웨어
 #endregion
 
-app.UseRouting();
+app.UseRouting(); // 라우팅 미들웨어
 
 //app.MapDefaultControllerRoute();
 //app.MapControllers(); // Web API
