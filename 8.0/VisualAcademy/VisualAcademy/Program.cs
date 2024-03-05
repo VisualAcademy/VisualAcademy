@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using VisualAcademy.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddControllers(); // Web API
 builder.Services.AddControllersWithViews(); // MVC + Web API
 builder.Services.AddRazorPages(); // Razor Pages
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents(); // Blazor Server
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -45,12 +48,17 @@ app.UseStaticFiles(); // 정적인 HTML, CSS, JS, 이미지 파일 등을 제공하는 미들웨�
 
 app.UseRouting(); // 라우팅 미들웨어
 
+app.UseAntiforgery(); // CSRF(Cross-Site Request Forgery) 공격 방지
+
 //app.MapDefaultControllerRoute();
 //app.MapControllers(); // Web API
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages(); // Razor Pages
+
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode(); // Blazor Server
 
 app.Run();
 
