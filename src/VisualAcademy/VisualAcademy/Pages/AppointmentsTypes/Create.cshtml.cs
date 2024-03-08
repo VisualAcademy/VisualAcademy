@@ -5,12 +5,8 @@ using VisualAcademy.Repositories.Tenants;
 
 namespace VisualAcademy.Pages.AppointmentsTypes;
 
-public class CreateModel : PageModel
+public class CreateModel(IAppointmentTypeRepository appointmentTypeRepository) : PageModel
 {
-    private readonly IAppointmentTypeRepository _appointmentTypeRepository;
-
-    public CreateModel(IAppointmentTypeRepository appointmentTypeRepository) => _appointmentTypeRepository = appointmentTypeRepository;
-
     public IActionResult OnGet() => Page();
 
     [BindProperty]
@@ -26,7 +22,7 @@ public class CreateModel : PageModel
             return Page();
         }
 
-        await _appointmentTypeRepository.AddAsync(AppointmentType);
+        await appointmentTypeRepository.AddAsync(AppointmentType);
 
         return RedirectToPage("./Index");
     }
