@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using VisualAcademy.Models.Tenants;
 using VisualAcademy.Repositories.Tenants;
 
-namespace VisualAcademy.Pages.AppointmentsTypes {
+namespace VisualAcademy.Pages.AppointmentsTypes
+{
     public class DeleteModel : PageModel {
         private readonly IAppointmentTypeRepository _appointmentTypeRepository;
 
