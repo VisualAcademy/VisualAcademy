@@ -4,7 +4,8 @@ using VisualAcademy.Repositories.Tenants;
 
 namespace VisualAcademy.Pages.AppointmentsTypes
 {
-    public class DeleteModel : PageModel {
+    public class DeleteModel : PageModel
+    {
         private readonly IAppointmentTypeRepository _appointmentTypeRepository;
 
         public DeleteModel(IAppointmentTypeRepository appointmentTypeRepository) => _appointmentTypeRepository = appointmentTypeRepository;
@@ -14,18 +15,21 @@ namespace VisualAcademy.Pages.AppointmentsTypes
 
         public long TenantId { get; set; } = 1;
 
-        public async Task<IActionResult> OnGetAsync(long id) {
+        public async Task<IActionResult> OnGetAsync(long id)
+        {
             TenantId = 1;
             AppointmentType = await _appointmentTypeRepository.GetByIdAsync(id, TenantId);
 
-            if (AppointmentType == null) {
+            if (AppointmentType == null)
+            {
                 return NotFound();
             }
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(long id) {
+        public async Task<IActionResult> OnPostAsync(long id)
+        {
             TenantId = 1;
             await _appointmentTypeRepository.DeleteAsync(id, TenantId);
 
