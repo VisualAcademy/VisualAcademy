@@ -13,3 +13,4 @@ global using VisualAcademy.Data;
 global using VisualAcademy.Models;
 global using VisualAcademy.Models.AccountViewModels;
 global using VisualAcademy.Services;
+global using Microsoft.AspNetCore.Mvc.RazorPages;
