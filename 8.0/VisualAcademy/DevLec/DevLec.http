@@ -1,0 +1,24 @@
+@DevLec_HostAddress = http://localhost:5194
+
+GET {{DevLec_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET https://localhost:7039/hello
+
+###
+
+GET https://localhost:7039/helloworld
+
+###
+
+GET https://localhost:7039/old?age=20
+
+###
+
+GET https://localhost:7039/sayhello/John
+
+###
+
+GET https://localhost:7039/json
