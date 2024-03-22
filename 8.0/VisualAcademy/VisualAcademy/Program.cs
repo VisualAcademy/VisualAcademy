@@ -19,6 +19,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Startup.Configure
+// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -26,8 +28,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Startup.Configure
-// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 #region HTTP
 // C# 11.0 버전의 원시 문자열 리터럴(Raw string literals)
 string htmlTag = """
