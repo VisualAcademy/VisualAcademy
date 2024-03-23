@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Identity;
-using VisualAcademy.Data;
-
 namespace VisualAcademy.Components.Account
 {
     internal sealed class IdentityUserAccessor(UserManager<ApplicationUser> userManager, IdentityRedirectManager redirectManager)
