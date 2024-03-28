@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-
-namespace VisualAcademy.Infrastructures;
+﻿namespace VisualAcademy.Infrastructures;
 
 public class DefaultSchemaEnhancerCreateAllowedIPRangesTable(string defaultConnectionString)
 {
