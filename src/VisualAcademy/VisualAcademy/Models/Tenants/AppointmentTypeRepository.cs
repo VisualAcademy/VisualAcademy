@@ -1,8 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using VisualAcademy.Data;
-using VisualAcademy.Models.Tenants;
+﻿using VisualAcademy.Models.Tenants;
 
-namespace VisualAcademy.Repositories.Tenants {
+namespace VisualAcademy.Repositories.Tenants
+{
     public class AppointmentTypeRepository : IAppointmentTypeRepository {
         private readonly ApplicationDbContext _dbContext;
 
