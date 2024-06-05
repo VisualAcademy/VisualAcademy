@@ -18,6 +18,12 @@ https://www.memoengine.com/labs/aspnet-core-8-0-getting-started
 
 Blazor Server 8.0 횐경에서도 동일하게 진행하세요.
 
+## Blazor Server 게시판 프로젝트 
+
+01_01_ArticleApp_게시판 프로젝트 시작
+
+https://youtu.be/mDQ6GhjMXgU?si=9vR1B7hFqsVzyFlZ
+
 ## ASP.NET Core 7.0 Minimal APIs
 
 ### 01_ASP.NET Core Empty 프로젝트 템플릿을 사용하여 VisualAcademy.Todos 프로젝트 생성 및 실행
