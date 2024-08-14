@@ -5,27 +5,27 @@ using VisualAcademy.Data;
 using VisualAcademy.Models;
 using System.Threading.Tasks;
 
-namespace VisualAcademy.Pages.Tenants {
-    public class DetailsModel : PageModel {
-        private readonly ApplicationDbContext _context;
+namespace VisualAcademy.Pages.Tenants;
 
-        public DetailsModel(ApplicationDbContext context) {
-            _context = context;
+public class DetailsModel : PageModel {
+    private readonly ApplicationDbContext _context;
+
+    public DetailsModel(ApplicationDbContext context) {
+        _context = context;
+    }
+
+    public TenantModel TenantModel { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(long? id) {
+        if (id == null) {
+            return NotFound();
         }
 
-        public TenantModel TenantModel { get; set; }
+        TenantModel = await _context.Tenants.FirstOrDefaultAsync(m => m.Id == id);
 
-        public async Task<IActionResult> OnGetAsync(long? id) {
-            if (id == null) {
-                return NotFound();
-            }
-
-            TenantModel = await _context.Tenants.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (TenantModel == null) {
-                return NotFound();
-            }
-            return Page();
+        if (TenantModel == null) {
+            return NotFound();
         }
+        return Page();
     }
 }
