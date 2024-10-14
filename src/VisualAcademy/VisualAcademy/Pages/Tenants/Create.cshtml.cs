@@ -1,8 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using VisualAcademy.Data;
-using VisualAcademy.Models;
-
 namespace VisualAcademy.Pages.Tenants
 {
     public class CreateModel : PageModel
