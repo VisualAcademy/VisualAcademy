@@ -1,65 +1,64 @@
-namespace VisualAcademy.Pages.Tenants
-{
-    public class EditModel : PageModel
-    {
-        private readonly ApplicationDbContext _context;
+namespace VisualAcademy.Pages.Tenants;
 
-        public EditModel(ApplicationDbContext context)
+public class EditModel : PageModel
+{
+    private readonly ApplicationDbContext _context;
+
+    public EditModel(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    [BindProperty]
+    public TenantModel TenantModel { get; set; }
+
+    public async Task<IActionResult> OnGetAsync(long? id)
+    {
+        if (id == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        [BindProperty]
-        public TenantModel TenantModel { get; set; }
+        TenantModel = await _context.Tenants.FirstOrDefaultAsync(m => m.Id == id);
 
-        public async Task<IActionResult> OnGetAsync(long? id)
+        if (TenantModel == null)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return NotFound();
+        }
 
-            TenantModel = await _context.Tenants.FirstOrDefaultAsync(m => m.Id == id);
+        return Page();
+    }
 
-            if (TenantModel == null)
-            {
-                return NotFound();
-            }
-
+    public async Task<IActionResult> OnPostAsync()
+    {
+        if (!ModelState.IsValid)
+        {
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        _context.Attach(TenantModel).State = EntityState.Modified;
+
+        try
         {
-            if (!ModelState.IsValid)
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!TenantModelExists(TenantModel.Id))
             {
-                return Page();
+                return NotFound();
             }
-
-            _context.Attach(TenantModel).State = EntityState.Modified;
-
-            try
+            else
             {
-                await _context.SaveChangesAsync();
+                throw;
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TenantModelExists(TenantModel.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
         }
 
-        private bool TenantModelExists(long id)
-        {
-            return _context.Tenants.Any(e => e.Id == id);
-        }
+        return RedirectToPage("./Index");
+    }
+
+    private bool TenantModelExists(long id)
+    {
+        return _context.Tenants.Any(e => e.Id == id);
     }
 }
