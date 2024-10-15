@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Dul" Version="1.3.3" />
+  </ItemGroup>
+
 </Project>
