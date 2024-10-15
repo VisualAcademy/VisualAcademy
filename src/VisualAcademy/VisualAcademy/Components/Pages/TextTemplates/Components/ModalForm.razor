@@ -2,38 +2,36 @@
 
 @if (IsShow)
 {
-    <div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal fade show d-block" tabindex="-1" role="dialog" style="display: block;">
         <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">@EditorFormTitle</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="Hide">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" aria-label="Close" @onclick="Hide"></button>
                 </div>
                 <div class="modal-body">
                     @if (ModelEdit.Id != 0)
                     {
-                        <div class="form-group">
-                            <label for="id">Id: </label> @ModelEdit.Id
+                        <div class="mb-3">
+                            <label for="id" class="form-label">Id: </label> @ModelEdit.Id
                             <input type="hidden" @bind-value="@ModelEdit.Id" />
                         </div>
                     }
-                    <div class="form-group">
-                        <label for="txtName">Title</label>
-                        <input type="text" @bind="@ModelEdit.Title" class="form-control" placeholder="Enter Title" />
+                    <div class="mb-3">
+                        <label for="txtName" class="form-label">Title</label>
+                        <input type="text" id="txtName" @bind="@ModelEdit.Title" class="form-control" placeholder="Enter Title" />
                     </div>
-                    <div class="form-group">
-                        <label for="txtName">Message</label>
-                        <input type="text" @bind="@ModelEdit.Message" class="form-control" placeholder="Enter Message" />
+                    <div class="mb-3">
+                        <label for="txtMessage" class="form-label">Message</label>
+                        <input type="text" id="txtMessage" @bind="@ModelEdit.Message" class="form-control" placeholder="Enter Message" />
                     </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary" @onclick="CreateOrEditClick">Submit</button>
-                        <button type="button" class="btn btn-secondary" @onclick="Hide">Cancel</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @onclick="CreateOrEditClick">Submit</button>
+                    <button type="button" class="btn btn-secondary" @onclick="Hide">Cancel</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal-backdrop show"></div>
+    <div class="modal-backdrop fade show"></div>
 }
