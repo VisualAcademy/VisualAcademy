@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using RedPlus.Services;
+using System.Configuration;
 using VisualAcademy.Areas.Identity;
 using VisualAcademy.Areas.Identity.Services;
 using VisualAcademy.Components.Pages.ApplicantsTransfers;
@@ -12,6 +13,7 @@ using VisualAcademy.Infrastructures;
 using VisualAcademy.Models;
 using VisualAcademy.Models.Candidates;
 using VisualAcademy.Repositories.Tenants;
+using VisualAcademy.Models.TextTemplates;
 
 namespace VisualAcademy
 {
@@ -144,6 +146,9 @@ namespace VisualAcademy
             {
 
             }
+
+            // 텍스트템플릿 관리: 기본 CRUD 교과서 코드
+            builder.Services.AddDependencyInjectionContainerForTextTemplateApp(connectionString);
 
             // 앱 빌드
             var app = builder.Build();
