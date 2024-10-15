@@ -139,6 +139,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ArticleApp.Models\ArticleApp.Models.csproj" />
+      <ProjectReference Include="..\VisualAcademy.Models.TextTemplates\VisualAcademy.Models.TextTemplates.csproj" />
       <ProjectReference Include="..\VisualAcademy.Models\VisualAcademy.Models.csproj" />
     </ItemGroup>
 
