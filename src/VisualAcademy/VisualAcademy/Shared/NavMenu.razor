@@ -49,6 +49,17 @@
                 <NavLink class="nav-link ms-3" href="/Bonus">
                     <span class="oi oi-list" aria-hidden="true"></span> Bonus
                 </NavLink>
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("crud"))" @onclick:stopPropagation>
+                        <span class="oi oi-list" aria-hidden="true"></span> CRUD
+                        <span class="oi @(collapseSubMenus["crud"] ? "oi-chevron-right" : "oi-chevron-right") submenu-chevron @(collapseSubMenus["crud"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["crud"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/TextTemplates">
+                            <span class="oi oi-list" aria-hidden="true"></span> TextTemplates
+                        </NavLink>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -136,6 +147,7 @@
         { "blazorFundamentals", true },
         { "fundamentals", true },
         { "components", true },
+        { "crud", true },
     };
 
     private void ToggleSubMenu(string key)
