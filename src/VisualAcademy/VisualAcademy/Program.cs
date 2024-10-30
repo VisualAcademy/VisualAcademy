@@ -150,6 +150,10 @@ namespace VisualAcademy
             // 텍스트템플릿 관리: 기본 CRUD 교과서 코드
             builder.Services.AddDependencyInjectionContainerForTextTemplateApp(connectionString);
 
+            // HttpClient 등록
+            // HttpClient 인스턴스를 DI(Dependency Injection) 컨테이너에 등록하여 재사용성을 높임
+            builder.Services.AddHttpClient();
+
             // 앱 빌드
             var app = builder.Build();
 
