@@ -56,5 +56,5 @@ public class TranslatorController(IHttpClientFactory httpClientFactory) : Contro
 
 public class TranslationRequest
 {
-    public string Text { get; set; }
+    public required string Text { get; set; }
 }
