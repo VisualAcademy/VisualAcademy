@@ -2,18 +2,12 @@
 
 [ApiController]
 [Route("api/[controller]")]
-public class TranslatorController : ControllerBase
+public class TranslatorController(IHttpClientFactory httpClientFactory) : ControllerBase
 {
-    private readonly IHttpClientFactory _httpClientFactory;
     private const string SubscriptionKey = "YOUR_AZURE_SUBSCRIPTION_KEY";
     private const string Endpoint = "https://api.cognitive.microsofttranslator.com/";
     private const string Region = "koreacentral"; // 예: "koreacentral"
     private const string Route = "/translate?api-version=3.0&to=es";
-
-    public TranslatorController(IHttpClientFactory httpClientFactory)
-    {
-        _httpClientFactory = httpClientFactory;
-    }
 
     [HttpPost]
     public async Task<IActionResult> Translate([FromBody] TranslationRequest request)
@@ -31,7 +25,7 @@ public class TranslatorController : ControllerBase
 
     private async Task<string> TranslateTextAsync(string input)
     {
-        var client = _httpClientFactory.CreateClient();
+        var client = httpClientFactory.CreateClient();
         client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", SubscriptionKey);
         client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Region", Region);
 
