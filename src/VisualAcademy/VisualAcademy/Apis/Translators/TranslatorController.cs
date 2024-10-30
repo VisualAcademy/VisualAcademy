@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-
-namespace VisualAcademy.Apis.Translators
+﻿namespace VisualAcademy.Apis.Translators
 {
     [ApiController]
     [Route("api/[controller]")]
