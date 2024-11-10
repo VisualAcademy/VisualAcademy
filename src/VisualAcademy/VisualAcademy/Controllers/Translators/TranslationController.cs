@@ -5,16 +5,9 @@ using VisualAcademy.ViewModels.Translators;
 namespace VisualAcademy.Controllers.Translators;
 
 [Authorize(Roles = "Administrators")]
-public class TranslationController : Controller
+public class TranslationController(IHttpClientFactory httpClientFactory, IOptions<AzureTranslatorSettings> translatorSettings) : Controller
 {
-    private readonly IHttpClientFactory _httpClientFactory;
-    private readonly AzureTranslatorSettings _translatorSettings;
-
-    public TranslationController(IHttpClientFactory httpClientFactory, IOptions<AzureTranslatorSettings> translatorSettings)
-    {
-        _httpClientFactory = httpClientFactory;
-        _translatorSettings = translatorSettings.Value;
-    }
+    private readonly AzureTranslatorSettings _translatorSettings = translatorSettings.Value;
 
     [HttpGet]
     public IActionResult Translate()
@@ -46,7 +39,7 @@ public class TranslationController : Controller
 
     private async Task<string> TranslateTextAsync(string input)
     {
-        var client = _httpClientFactory.CreateClient();
+        var client = httpClientFactory.CreateClient();
         client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _translatorSettings.SubscriptionKey);
         client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Region", _translatorSettings.Region);
 
