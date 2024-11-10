@@ -5,7 +5,7 @@ using VisualAcademy.ViewModels.Translators;
 
 namespace VisualAcademy.Controllers.Translators
 {
-    //[Authorize(Roles = "Administrators")]
+    [Authorize(Roles = "Administrators")]
     public class TranslationController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
