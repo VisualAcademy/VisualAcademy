@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using VisualAcademy.Settings.Translators;
 using VisualAcademy.ViewModels.Translators;
 
