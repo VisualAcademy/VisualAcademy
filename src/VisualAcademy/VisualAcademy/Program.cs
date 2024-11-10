@@ -1,19 +1,15 @@
 using ArticleApp.Models;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.EntityFrameworkCore;
 using RedPlus.Services;
-using System.Configuration;
 using VisualAcademy.Areas.Identity;
 using VisualAcademy.Areas.Identity.Services;
 using VisualAcademy.Components.Pages.ApplicantsTransfers;
-using VisualAcademy.Data;
 using VisualAcademy.Infrastructures;
-using VisualAcademy.Models;
 using VisualAcademy.Models.Candidates;
 using VisualAcademy.Repositories.Tenants;
 using VisualAcademy.Models.TextTemplates;
+using Microsoft.Extensions.Options;
+using VisualAcademy.Settings.Translators;
 
 namespace VisualAcademy
 {
@@ -153,6 +149,10 @@ namespace VisualAcademy
             // HttpClient 등록
             // HttpClient 인스턴스를 DI(Dependency Injection) 컨테이너에 등록하여 재사용성을 높임
             builder.Services.AddHttpClient();
+
+            // Azure Translator 설정 바인딩
+            builder.Services.Configure<AzureTranslatorSettings>(builder.Configuration.GetSection("AzureTranslator"));
+            builder.Services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<AzureTranslatorSettings>>().Value);
 
             // 앱 빌드
             var app = builder.Build();
