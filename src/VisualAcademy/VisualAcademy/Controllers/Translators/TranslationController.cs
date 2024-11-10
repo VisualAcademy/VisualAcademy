@@ -10,10 +10,7 @@ public class TranslationController(IHttpClientFactory httpClientFactory, IOption
     private readonly AzureTranslatorSettings _translatorSettings = translatorSettings.Value;
 
     [HttpGet]
-    public IActionResult Translate()
-    {
-        return View(new TranslationRequestModel());
-    }
+    public IActionResult Translate() => View(new TranslationRequestModel());
 
     [HttpPost]
     public async Task<IActionResult> Translate(TranslationRequestModel model)
