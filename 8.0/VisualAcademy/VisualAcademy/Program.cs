@@ -43,7 +43,8 @@ app.MapGet("/html-content-rendering", () => Results.Content(htmlTag, "text/html"
 
 #region HTML
 // app.UseDefaultFiles();
-app.UseStaticFiles(); // 정적인 HTML, CSS, JS, 이미지 파일 등을 제공하는 미들웨어
+//app.UseStaticFiles(); // 정적인 HTML, CSS, JS, 이미지 파일 등을 제공하는 미들웨어
+app.MapStaticAssets(); // .NET 9.0 
 #endregion
 
 app.UseRouting(); // 라우팅 미들웨어
