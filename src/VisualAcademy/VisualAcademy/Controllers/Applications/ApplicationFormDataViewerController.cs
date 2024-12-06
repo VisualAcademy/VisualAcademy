@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace VisualAcademy.Controllers.Applications
+﻿namespace VisualAcademy.Controllers.Applications
 {
     public class ApplicationFormDataViewerController : Controller
     {
