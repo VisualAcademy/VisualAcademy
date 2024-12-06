@@ -1,10 +1,9 @@
-﻿namespace VisualAcademy.Controllers.Applications
+﻿namespace VisualAcademy.Controllers.Applications;
+
+public class ApplicationFormDataViewerController : Controller
 {
-    public class ApplicationFormDataViewerController : Controller
+    public IActionResult Index()
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        return View();
     }
 }
