@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using VisualAcademy.Models;
-using VisualAcademy.Data;
-
-namespace VisualAcademy
+﻿namespace VisualAcademy
 {
     public class UserAndRoleInitializer(IServiceProvider serviceProvider)
     {
