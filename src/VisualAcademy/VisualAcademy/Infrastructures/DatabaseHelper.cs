@@ -1,6 +1,4 @@
-﻿
-
-namespace VisualAcademy;
+﻿namespace VisualAcademy;
 
 public class DatabaseHelper
 {
