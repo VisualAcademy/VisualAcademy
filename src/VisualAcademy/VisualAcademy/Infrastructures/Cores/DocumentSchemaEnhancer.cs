@@ -1,17 +1,10 @@
 ﻿namespace Dalbodre.Infrastructures;
 
-public class DocumentSchemaEnhancer
+public class DocumentSchemaEnhancer(string connectionString)
 {
-    private readonly string _connectionString;
-
-    public DocumentSchemaEnhancer(string connectionString)
-    {
-        _connectionString = connectionString;
-    }
-
     public void EnsureDocumentsTableAndAlterTitleColumn()
     {
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
 
@@ -50,7 +43,7 @@ public class DocumentSchemaEnhancer
     // Method to add the Language column if it doesn't exist
     public void AddLanguageColumnIfNotExists()
     {
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
 
@@ -74,7 +67,7 @@ public class DocumentSchemaEnhancer
     // Method to update Language column values to 'en-US' if they are NULL
     public void UpdateNullLanguageValuesToDefault()
     {
-        using (SqlConnection connection = new SqlConnection(_connectionString))
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
 
