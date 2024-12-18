@@ -6,8 +6,6 @@
 
 **ASP.NET Core 9.0 시작하기** 강좌가 다음 링크를 통해서 준비되고 있습니다.
 
-https://www.memoengine.com/labs/aspnet-core-8-0-getting-started
-
 [ASP.NET Core 시작하기](http://www.devlec.com/?_pageVariable=courseDetail&code=PT001TB4368&method=S&relation=PT001TB4368_ASPNETCORE9)
 
 동영상 강좌와 텍스트 강좌를 함께 보면서 ASP.NET Core를 시작하세요.
