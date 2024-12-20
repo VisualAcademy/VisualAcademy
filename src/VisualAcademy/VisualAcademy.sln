@@ -74,6 +74,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualAcademy.ApiService", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualAcademy.Web", "VisualAcademy.Web\VisualAcademy.Web.csproj", "{BB645E9A-0897-4E60-8C0B-5EE7EB1C628A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualAcademy.AppHost", "VisualAcademy.AppHost\VisualAcademy.AppHost.csproj", "{A75EED18-138D-4038-9DCD-82160F1849AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -170,6 +172,10 @@ Global
 		{BB645E9A-0897-4E60-8C0B-5EE7EB1C628A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB645E9A-0897-4E60-8C0B-5EE7EB1C628A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB645E9A-0897-4E60-8C0B-5EE7EB1C628A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A75EED18-138D-4038-9DCD-82160F1849AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A75EED18-138D-4038-9DCD-82160F1849AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A75EED18-138D-4038-9DCD-82160F1849AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A75EED18-138D-4038-9DCD-82160F1849AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -198,6 +204,7 @@ Global
 		{21FBF449-EA67-4D67-B05F-39D98BB62C8A} = {A91D9D3C-773C-4E0D-85EE-00B2AD3194AD}
 		{427E6E79-77EA-496F-9A15-D4978B04FEBC} = {A91D9D3C-773C-4E0D-85EE-00B2AD3194AD}
 		{BB645E9A-0897-4E60-8C0B-5EE7EB1C628A} = {A91D9D3C-773C-4E0D-85EE-00B2AD3194AD}
+		{A75EED18-138D-4038-9DCD-82160F1849AB} = {A91D9D3C-773C-4E0D-85EE-00B2AD3194AD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0DE1D08F-8124-469F-9D4F-970570062155}
