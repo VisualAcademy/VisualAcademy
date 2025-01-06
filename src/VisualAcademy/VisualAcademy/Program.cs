@@ -96,7 +96,7 @@ namespace VisualAcademy
             builder.Services.AddSwaggerGen();
 
             // 종속성 주입 추가 
-            builder.Services.AddTransient<IEmailSender, EmailSender>();
+            builder.Services.AddTransient<IEmailSender, Areas.Identity.Services.EmailSender>();
 
             AddDependencyInjectionContainerForArticles(builder);
 
