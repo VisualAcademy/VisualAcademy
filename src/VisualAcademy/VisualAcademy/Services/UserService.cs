@@ -1,6 +1,6 @@
-﻿namespace VisualAcademy.Services
+﻿namespace VisualAcademy.Services;
+
+public class UserService
 {
-    public class UserService
-    {
-    }
+
 }
