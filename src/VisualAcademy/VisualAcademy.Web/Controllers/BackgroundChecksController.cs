@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace VisualAcademy.Web.Controllers
+﻿namespace VisualAcademy.Web.Controllers
 {
     public class BackgroundChecksController : Controller
     {
