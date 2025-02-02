@@ -10,6 +10,7 @@ using VisualAcademy.Repositories.Tenants;
 using VisualAcademy.Models.TextTemplates;
 using Microsoft.Extensions.Options;
 using VisualAcademy.Settings.Translators;
+using Hawaso.Infrastructures;
 
 namespace VisualAcademy
 {
@@ -236,6 +237,43 @@ namespace VisualAcademy
 
             // 데이터베이스 초기화
             InitializeDatabase(app);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            #region Create ApplicantsTransfers Table
+            if (DateTime.Now < (new DateTime(2025, 2, 10)))
+            {
+                var createTenantsTransfersTable = new TenantSchemaEnhancerCreateApplicantsTransfersTable(connectionString);
+                createTenantsTransfersTable.CreateApplicantsTransfersTable();
+            }
+            #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             // 앱 실행
             app.Run();
