@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\All\All.csproj" />
     <ProjectReference Include="..\VisualAcademy.ServiceDefaults\VisualAcademy.ServiceDefaults.csproj" />
   </ItemGroup>
 
