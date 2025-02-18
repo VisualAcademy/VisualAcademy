@@ -1,4 +1,6 @@
 ﻿#nullable disable
+using All.Models.AccountViewModels;
+
 namespace VisualAcademy.Controllers;
 
 [Authorize(Roles = "Administrators")] // 강의 참고용 소스는 포함, 실행은 금지
