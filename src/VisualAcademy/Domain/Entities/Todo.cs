@@ -2,7 +2,7 @@
 
 public class Todo : IEntity
 {
-    public int Id { get; set; }
-    public string? Name { get; set; }
-    public bool IsComplete { get; set; }
+    public int Id { get; set; }  // 기본 키
+    public string? Name { get; set; }  // 할 일 이름 (nullable)
+    public bool IsComplete { get; set; }  // 완료 여부
 }
