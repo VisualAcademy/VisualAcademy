@@ -1,4 +1,6 @@
-﻿namespace VisualAcademy.Controllers;
+﻿using All.Entities;
+
+namespace VisualAcademy.Controllers;
 
 [Authorize(Roles = "Administrators")]
 public class AllowedIPRangesController(ApplicationDbContext context) : Controller

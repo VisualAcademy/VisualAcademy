@@ -1,4 +1,6 @@
-﻿namespace VisualAcademy.Controllers;
+﻿using All.Entities;
+
+namespace VisualAcademy.Controllers;
 
 [Authorize] // 로그인된 사용자만 접근 가능
 public class TenantAllowedIPRangesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager) : Controller

@@ -2,15 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+using All.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
-using VisualAcademy.Data;
-using VisualAcademy.Models;
 
 namespace VisualAcademy.Areas.Identity.Pages.Account;
 
