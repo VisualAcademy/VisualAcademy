@@ -1,4 +1,4 @@
-﻿namespace VisualAcademy.Infrastructures;
+﻿namespace All.Infrastructures.Cores;
 
 public class DefaultSchemaEnhancerCreateAllowedIPRangesTable(string defaultConnectionString)
 {

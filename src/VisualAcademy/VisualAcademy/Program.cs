@@ -11,6 +11,7 @@ using VisualAcademy.Models.TextTemplates;
 using Microsoft.Extensions.Options;
 using VisualAcademy.Settings.Translators;
 using Hawaso.Infrastructures;
+using System.Configuration;
 
 namespace VisualAcademy
 {
@@ -266,7 +267,9 @@ namespace VisualAcademy
 
 
 
-
+            // Create AllowedIPRanges table in the default database
+            var defaultSchemaEnhancer = new All.Infrastructures.Cores.DefaultSchemaEnhancerCreateAllowedIPRangesTable(connectionString);
+            defaultSchemaEnhancer.EnhanceDefaultDatabase();
 
 
 
