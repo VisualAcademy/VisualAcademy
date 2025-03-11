@@ -2,6 +2,12 @@
 
 비주얼아카데미 채널에 오신 걸 환영합니다.
 
+## 최근 동영상 강의
+
+### 2025년 C 언어 학습을 위한 Visual Studio 설치 및 Hello World 프로그램 작성하기
+
+https://youtu.be/EffKPNTzF6g
+
 ## ASP.NET Core 9.0 시작하기 
 
 **ASP.NET Core 9.0 시작하기** 강좌가 다음 링크를 통해서 준비되고 있습니다.
