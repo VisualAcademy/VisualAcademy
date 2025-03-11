@@ -12,5 +12,7 @@ CREATE TABLE dbo.Tenants
     ReportWriterURL nvarchar(max), -- 보고서 작성기 URL을 저장하는 nvarchar(max) 데이터 타입의 컬럼입니다.
     BadgePhotoType nvarchar(50), -- 뱃지 사진 유형을 저장하는 nvarchar(50) 데이터 타입의 컬럼입니다.
     PortalName nvarchar(max) CONSTRAINT DF_Tenants_PortalName DEFAULT ('VisualAcademy'), -- 테넌트 포털 이름을 저장하는 nvarchar(max) 데이터 타입의 컬럼입니다. 기본값으로 'VisualAcademy'을 지정합니다.
-    ScreeningPartnerName nvarchar(max) NULL Default('VisualAcademy') -- 스크리닝 파트너 이름을 저장하는 nvarchar(max) 데이터 타입의 컬럼입니다.
+    ScreeningPartnerName nvarchar(max) NULL Default('VisualAcademy'), -- 스크리닝 파트너 이름을 저장하는 nvarchar(max) 데이터 타입의 컬럼입니다.
+    IsMultiPortalEnabled BIT NULL DEFAULT 0, -- 여러 포털 사용 가능 여부를 나타내는 BIT 데이터 타입의 컬럼입니다. 기본값으로 0을 지정합니다.
+    [IsNewPortalOnly] BIT NULL DEFAULT 0
 );
