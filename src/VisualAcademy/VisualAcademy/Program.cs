@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using VisualAcademy.Settings.Translators;
 using Hawaso.Infrastructures;
 using System.Configuration;
+using Dalbodre.Infrastructures.Cores;
 
 namespace VisualAcademy
 {
@@ -274,7 +275,29 @@ namespace VisualAcademy
 
 
 
+            #region Tenants Table 생성 및 컬럼 추가 데모
+            // 테넌트 테이블 생성 및 컬럼 추가
+            using (var scope = app.Services.CreateScope())
+            {
+                var __scopedServices = scope.ServiceProvider;
+                var __configuration = __scopedServices.GetRequiredService<IConfiguration>();
+                var logger = __scopedServices.GetRequiredService<ILogger<Program>>();
 
+                try
+                {
+                    var __connectionString = __configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("DefaultConnection 값이 설정되지 않았습니다.");
+                    var tenantSchemaEnhancer = new TenantSchemaEnhancerCreateAndAlter(__connectionString, __configuration);
+
+                    tenantSchemaEnhancer.EnsureSchema(); // 테이블 생성 및 컬럼 추가
+
+                    logger.LogInformation("Tenant 테이블 및 컬럼이 정상적으로 처리되었습니다.");
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Tenant 테이블 생성 중 오류 발생");
+                }
+            }
+            #endregion
 
 
 
