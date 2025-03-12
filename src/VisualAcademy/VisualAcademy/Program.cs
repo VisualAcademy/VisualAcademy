@@ -301,6 +301,39 @@ namespace VisualAcademy
 
 
 
+
+
+
+
+            #region AuditTrail 테이블 생성 및 컬럼 크기 확장 데모
+            // AuditTrail 테이블 생성 및 컬럼 크기 확장
+            using (var scope = app.Services.CreateScope())
+            {
+                var __scopedServices = scope.ServiceProvider;
+                var __configuration = __scopedServices.GetRequiredService<IConfiguration>();
+                var logger = __scopedServices.GetRequiredService<ILogger<Program>>();
+
+                try
+                {
+                    var __connectionString = __configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("DefaultConnection 값이 설정되지 않았습니다.");
+
+                    var auditTrailSchemaEnhancer = new Azunt.Infrastructures.TenantAuditTrailSchemaEnhancer(__connectionString);
+
+                    auditTrailSchemaEnhancer.EnhanceAllTenantDatabases(); // AuditTrail 테이블 생성 및 Note 컬럼 크기 확장
+
+                    logger.LogInformation("AuditTrail 테이블이 정상적으로 처리되었습니다.");
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "AuditTrail 테이블 처리 중 오류 발생");
+                }
+            }
+            #endregion
+
+
+
+
+
             // 앱 실행
             app.Run();
         }
