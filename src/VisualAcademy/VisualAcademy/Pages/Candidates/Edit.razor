@@ -1,6 +1,6 @@
 ﻿@page "/Candidates/Edit/{Id:int}"
 @inject IDbContextFactory<CandidateAppDbContext> ContextFactoryInjector
-@inject NavigationManager NavigationManagerInjector
+@inject NavigationManager Nav
 
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject ProtectedLocalStorage ProtectedLocalStore
@@ -113,6 +113,6 @@ else
         var result = await ProtectedLocalStore.GetAsync<int>("Page");
         var currentPage = result.Success ? result.Value : 1;
 
-        NavigationManagerInjector.NavigateTo($"/Candidates/{currentPage}");
+        Nav.NavigateTo($"/Candidates/{currentPage}");
     }
 }

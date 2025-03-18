@@ -6,7 +6,7 @@ namespace ArticleApp.Pages.Articles
     public partial class Create
     {
         [Inject]
-        public NavigationManager NavigationManagerInjector { get; set; }
+        public NavigationManager Nav { get; set; }
 
         [Inject]
         public IArticleRepository ArticleRepository { get; set; }
@@ -19,7 +19,7 @@ namespace ArticleApp.Pages.Articles
             await ArticleRepository.AddArticleAsync(Model);
 
             // 리스트 페이지로 이동
-            NavigationManagerInjector.NavigateTo("/Articles");
+            Nav.NavigateTo("/Articles");
         }
     }
 }

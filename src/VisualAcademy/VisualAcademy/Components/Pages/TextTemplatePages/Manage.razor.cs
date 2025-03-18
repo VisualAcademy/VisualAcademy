@@ -21,7 +21,7 @@ public partial class Manage : ComponentBase
 
     #region Injectors
     [Inject]
-    public NavigationManager NavigationManagerInjector { get; set; }
+    public NavigationManager Nav { get; set; }
 
     [Inject]
     public IJSRuntime JSRuntimeInjector { get; set; }
@@ -230,7 +230,7 @@ public partial class Manage : ComponentBase
     {
         //FileUtil.SaveAsExcel(JSRuntimeInjector, "/TextTemplateDownload/ExcelDown");
 
-        NavigationManagerInjector.NavigateTo($"/TextTemplates"); // 다운로드 후 현재 페이지 다시 로드
+        Nav.NavigateTo($"/TextTemplates"); // 다운로드 후 현재 페이지 다시 로드
     }
 
     protected void DownloadExcel()

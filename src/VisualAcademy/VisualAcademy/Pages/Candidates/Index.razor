@@ -3,7 +3,7 @@
 @page "/Candidates/List/{Page:int?}"
 
 @inject IDbContextFactory<CandidateAppDbContext> _ContextFactory
-@inject NavigationManager NavigationManagerInjector
+@inject NavigationManager Nav
 
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @using Microsoft.EntityFrameworkCore;
@@ -130,7 +130,7 @@ else
         if (Page is null or < 1)
         {
             //Page = 1;
-            NavigationManagerInjector.NavigateTo("/Candidates/Index/1");
+            Nav.NavigateTo("/Candidates/Index/1");
             return;
         }
 
@@ -151,7 +151,7 @@ else
 
         if (Page > PageCount)
         {
-            NavigationManagerInjector.NavigateTo($"/Candidates/List/{PageCount}");
+            Nav.NavigateTo($"/Candidates/List/{PageCount}");
             return;
         }
 

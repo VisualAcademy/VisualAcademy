@@ -1,7 +1,7 @@
 ﻿@page "/Candidates/CandidatesNames/{Page:int?}"
 
 @inject IDbContextFactory<CandidateAppDbContext> _ContextFactory
-@inject NavigationManager NavigationManagerInjector
+@inject NavigationManager Nav
 
 @using VisualAcademy.Models.Candidates.CandidatesNames
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
@@ -130,7 +130,7 @@ else
         if (Page is null or < 1)
         {
             //Page = 1;
-            NavigationManagerInjector.NavigateTo("/Candidates/CandidatesNames/1");
+            Nav.NavigateTo("/Candidates/CandidatesNames/1");
             return;
         }
 
@@ -149,7 +149,7 @@ else
 
         if (Page > PageCount)
         {
-            NavigationManagerInjector.NavigateTo($"/Candidates/CandidatesNames/{PageCount}");
+            Nav.NavigateTo($"/Candidates/CandidatesNames/{PageCount}");
             return;
         }
 
