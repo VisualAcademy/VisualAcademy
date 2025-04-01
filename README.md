@@ -4,6 +4,10 @@ VisualAcademy 채널에 오신 걸 환영합니다.
 
 ## 데브렉 강의
 
+### Blazor Server Fundamentals 
+
+[Blazor Server Fundamentals](http://www.devlec.com/?_pageVariable=courseDetail&code=PT001TB4349&method=S&relation=PT001TB4349_BlazorServer)
+
 ### Blazor Server 풀스택 웹개발자 과정 Part 1
 
 [Blazor Server 풀스택 웹개발자 과정 Part 1](http://www.devlec.com/?_pageVariable=courseDetail&code=PT001TB4369&method=S&relation=PT001TB4369_BlazorServer)
