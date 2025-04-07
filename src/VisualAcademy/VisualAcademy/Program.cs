@@ -13,6 +13,7 @@ using VisualAcademy.Settings.Translators;
 using Hawaso.Infrastructures;
 using System.Configuration;
 using Dalbodre.Infrastructures.Cores;
+using Azunt.Infrastructures;
 
 namespace VisualAcademy
 {
@@ -243,6 +244,23 @@ namespace VisualAcademy
 
 
 
+
+
+
+
+            #region 데이터베이스 및 인증 스키마 초기화
+            var config = app.Services.GetRequiredService<IConfiguration>();
+            bool initializeDatabase = config.GetValue<bool>("Database:InitializeOnStartup");
+
+            if (initializeDatabase)
+            {
+                DatabaseInitializer.Initialize(app.Services);
+            }
+            else
+            {
+                Console.WriteLine("Database initialization is skipped (Database:InitializeOnStartup = false)");
+            }
+            #endregion
 
 
 
