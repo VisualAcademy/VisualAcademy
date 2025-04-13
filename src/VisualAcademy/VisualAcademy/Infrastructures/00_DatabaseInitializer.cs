@@ -1,6 +1,7 @@
 ﻿using Hawaso.Infrastructures.Initializers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using VisualAcademy.Infrastructures._Initializers;
 
 namespace Azunt.Infrastructures;
 
