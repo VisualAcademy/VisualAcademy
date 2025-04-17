@@ -1,4 +1,5 @@
 ﻿using All.Entities;
+using Azunt.Web.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using VisualAcademy.Components.Pages.ApplicantsTransfers;
 using VisualAcademy.Models.Buffets;

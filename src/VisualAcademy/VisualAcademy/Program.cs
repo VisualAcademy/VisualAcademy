@@ -14,6 +14,7 @@ using Hawaso.Infrastructures;
 using System.Configuration;
 using Dalbodre.Infrastructures.Cores;
 using Azunt.Infrastructures;
+using Azunt.Web.Data;
 
 namespace VisualAcademy
 {
