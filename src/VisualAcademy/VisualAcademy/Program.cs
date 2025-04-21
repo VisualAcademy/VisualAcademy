@@ -100,6 +100,27 @@ namespace VisualAcademy
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
+
+
+
+            #region Authorization Policy Configuration
+            // ASP.NET Core 애플리케이션에서 권한 정책을 정의합니다.
+            builder.Services.AddAuthorization(options =>
+            {
+                // "AdminOnly" 정책: "Administrators" 역할을 가진 사용자만 접근 가능
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Administrators"));
+
+                // "ManagerOnly" 정책: "Managers" 역할을 가진 사용자만 접근 가능
+                options.AddPolicy("ManagerOnly", policy => policy.RequireRole("Managers"));
+            });
+            #endregion
+
+
+
+
+
+
             // 종속성 주입 추가 
             builder.Services.AddTransient<IEmailSender, Areas.Identity.Services.EmailSender>();
 
