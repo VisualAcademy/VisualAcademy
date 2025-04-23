@@ -308,8 +308,8 @@ namespace VisualAcademy
 
 
 
-            // Create AllowedIPRanges table in the default database
-            var defaultSchemaEnhancer = new All.Infrastructures.Cores.DefaultSchemaEnhancerCreateAllowedIPRangesTable(connectionString);
+            // Create AllowedIpRanges table in the default database
+            var defaultSchemaEnhancer = new All.Infrastructures.Cores.DefaultSchemaEnhancerCreateAllowedIpRangesTable(connectionString);
             defaultSchemaEnhancer.EnhanceDefaultDatabase();
 
 

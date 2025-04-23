@@ -1,5 +1,5 @@
-﻿@using All.Entities
-@model IEnumerable<AllowedIPRange>
+﻿@using Azunt.Entities
+@model IEnumerable<AllowedIpRange>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,10 +14,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.StartIPRange)
+                @Html.DisplayNameFor(model => model.StartIpRange)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndIPRange)
+                @Html.DisplayNameFor(model => model.EndIpRange)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
@@ -35,10 +35,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.StartIPRange)
+                @Html.DisplayFor(modelItem => item.StartIpRange)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EndIPRange)
+                @Html.DisplayFor(modelItem => item.EndIpRange)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)

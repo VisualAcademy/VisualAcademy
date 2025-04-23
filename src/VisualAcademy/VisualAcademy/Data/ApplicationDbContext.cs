@@ -1,4 +1,4 @@
-﻿using All.Entities;
+﻿using Azunt.Entities;
 using Azunt.Web.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using VisualAcademy.Components.Pages.ApplicantsTransfers;
@@ -105,5 +105,5 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public DbSet<VisualAcademy.Models.Movie> Movie { get; set; } = default!;
 
-    public DbSet<AllowedIPRange> AllowedIPRanges { get; set; }
+    public DbSet<AllowedIpRange> AllowedIpRanges { get; set; }
 }

@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using All.Entities;
+using Azunt.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 
@@ -135,33 +135,33 @@ public class LoginModel : PageModel
                         var ipParts = currentIP.Split('.');
                         if (ipParts.Length == 4) // IPv4 주소인지 확인
                         {
-                            // 마지막 옥텟을 1로 설정하여 StartIPRange 계산
+                            // 마지막 옥텟을 1로 설정하여 StartIpRange 계산
                             ipParts[3] = "1";
                             string startIPRange = string.Join(".", ipParts);
 
-                            // 마지막 옥텟을 255로 설정하여 EndIPRange 계산
+                            // 마지막 옥텟을 255로 설정하여 EndIpRange 계산
                             ipParts[3] = "255";
                             string endIPRange = string.Join(".", ipParts);
 
                             // 사용자 이메일에서 도메인 부분만 추출
                             string emailDomain = Input.Email.Substring(Input.Email.IndexOf('@') + 1);
 
-                            // 동일한 StartIPRange와 EndIPRange를 가진 엔트리가 이미 있는지 확인
-                            var existingIPRange = await _context.AllowedIPRanges
-                                .FirstOrDefaultAsync(ip => ip.StartIPRange == startIPRange && ip.EndIPRange == endIPRange && ip.TenantId == user.TenantId);
+                            // 동일한 StartIpRange와 EndIpRange를 가진 엔트리가 이미 있는지 확인
+                            var existingIPRange = await _context.AllowedIpRanges
+                                .FirstOrDefaultAsync(ip => ip.StartIpRange == startIPRange && ip.EndIpRange == endIPRange && ip.TenantId == user.TenantId);
 
                             // 동일한 범위가 존재하지 않는 경우에만 새 범위 추가
                             if (existingIPRange == null)
                             {
-                                var newIPRange = new AllowedIPRange
+                                var newIPRange = new AllowedIpRange
                                 {
-                                    StartIPRange = startIPRange,
-                                    EndIPRange = endIPRange,
+                                    StartIpRange = startIPRange,
+                                    EndIpRange = endIPRange,
                                     Description = emailDomain, // 사용자 이메일 도메인으로 설명 설정
                                     CreateDate = DateTime.Now,
                                     TenantId = user.TenantId // 현재 로그인한 사용자의 TenantId 사용
                                 };
-                                _context.AllowedIPRanges.Add(newIPRange);
+                                _context.AllowedIpRanges.Add(newIPRange);
                                 await _context.SaveChangesAsync();
                             }
                         }
@@ -213,7 +213,7 @@ public class LoginModel : PageModel
     // IP 허용 검사 메서드 구현
     private async Task<bool> CheckIPAllowed(long TenantId, string currentIP)
     {
-        var ipRangeList = await _context.AllowedIPRanges
+        var ipRangeList = await _context.AllowedIpRanges
                                         .Where(r => r.TenantId == TenantId)
                                         .ToListAsync();
 
@@ -225,7 +225,7 @@ public class LoginModel : PageModel
 
         foreach (var range in ipRangeList)
         {
-            if (IsIPInRange(currentIP, range.StartIPRange, range.EndIPRange))
+            if (IsIPInRange(currentIP, range.StartIpRange, range.EndIpRange))
             {
                 return true; // 현재 IP가 허용된 범위 내에 있으면 true 반환
             }

@@ -76,8 +76,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualAcademy.Web", "Visual
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualAcademy.AppHost", "VisualAcademy.AppHost\VisualAcademy.AppHost.csproj", "{A75EED18-138D-4038-9DCD-82160F1849AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "All", "All\All.csproj", "{62BE4677-3370-4EED-9849-19CA87A7884A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -178,10 +176,6 @@ Global
 		{A75EED18-138D-4038-9DCD-82160F1849AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A75EED18-138D-4038-9DCD-82160F1849AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A75EED18-138D-4038-9DCD-82160F1849AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62BE4677-3370-4EED-9849-19CA87A7884A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62BE4677-3370-4EED-9849-19CA87A7884A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62BE4677-3370-4EED-9849-19CA87A7884A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62BE4677-3370-4EED-9849-19CA87A7884A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

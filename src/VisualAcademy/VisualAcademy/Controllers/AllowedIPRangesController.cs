@@ -1,14 +1,14 @@
-﻿using All.Entities;
+﻿using Azunt.Entities;
 
 namespace VisualAcademy.Controllers;
 
 [Authorize(Roles = "Administrators")]
-public class AllowedIPRangesController(ApplicationDbContext context) : Controller
+public class AllowedIpRangesController(ApplicationDbContext context) : Controller
 {
-    // GET: AllowedIPRanges
-    public async Task<IActionResult> Index() => View(await context.AllowedIPRanges.ToListAsync());
+    // GET: AllowedIpRanges
+    public async Task<IActionResult> Index() => View(await context.AllowedIpRanges.ToListAsync());
 
-    // GET: AllowedIPRanges/Details/5
+    // GET: AllowedIpRanges/Details/5
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -16,7 +16,7 @@ public class AllowedIPRangesController(ApplicationDbContext context) : Controlle
             return NotFound();
         }
 
-        var allowedIPRange = await context.AllowedIPRanges
+        var allowedIPRange = await context.AllowedIpRanges
             .FirstOrDefaultAsync(m => m.Id == id);
         if (allowedIPRange == null)
         {
@@ -26,15 +26,15 @@ public class AllowedIPRangesController(ApplicationDbContext context) : Controlle
         return View(allowedIPRange);
     }
 
-    // GET: AllowedIPRanges/Create
+    // GET: AllowedIpRanges/Create
     public IActionResult Create() => View();
 
-    // POST: AllowedIPRanges/Create
+    // POST: AllowedIpRanges/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,StartIPRange,EndIPRange,Description,CreateDate,TenantId")] AllowedIPRange allowedIPRange)
+    public async Task<IActionResult> Create([Bind("Id,StartIpRange,EndIpRange,Description,CreateDate,TenantId")] AllowedIpRange allowedIPRange)
     {
         if (ModelState.IsValid)
         {
@@ -45,7 +45,7 @@ public class AllowedIPRangesController(ApplicationDbContext context) : Controlle
         return View(allowedIPRange);
     }
 
-    // GET: AllowedIPRanges/Edit/5
+    // GET: AllowedIpRanges/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -53,7 +53,7 @@ public class AllowedIPRangesController(ApplicationDbContext context) : Controlle
             return NotFound();
         }
 
-        var allowedIPRange = await context.AllowedIPRanges.FindAsync(id);
+        var allowedIPRange = await context.AllowedIpRanges.FindAsync(id);
         if (allowedIPRange == null)
         {
             return NotFound();
@@ -61,12 +61,12 @@ public class AllowedIPRangesController(ApplicationDbContext context) : Controlle
         return View(allowedIPRange);
     }
 
-    // POST: AllowedIPRanges/Edit/5
+    // POST: AllowedIpRanges/Edit/5
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,StartIPRange,EndIPRange,Description,CreateDate,TenantId")] AllowedIPRange allowedIPRange)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,StartIpRange,EndIpRange,Description,CreateDate,TenantId")] AllowedIpRange allowedIPRange)
     {
         if (id != allowedIPRange.Id)
         {
@@ -82,7 +82,7 @@ public class AllowedIPRangesController(ApplicationDbContext context) : Controlle
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AllowedIPRangeExists(allowedIPRange.Id))
+                if (!AllowedIpRangeExists(allowedIPRange.Id))
                 {
                     return NotFound();
                 }
@@ -96,7 +96,7 @@ public class AllowedIPRangesController(ApplicationDbContext context) : Controlle
         return View(allowedIPRange);
     }
 
-    // GET: AllowedIPRanges/Delete/5
+    // GET: AllowedIpRanges/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -104,7 +104,7 @@ public class AllowedIPRangesController(ApplicationDbContext context) : Controlle
             return NotFound();
         }
 
-        var allowedIPRange = await context.AllowedIPRanges
+        var allowedIPRange = await context.AllowedIpRanges
             .FirstOrDefaultAsync(m => m.Id == id);
         if (allowedIPRange == null)
         {
@@ -114,20 +114,20 @@ public class AllowedIPRangesController(ApplicationDbContext context) : Controlle
         return View(allowedIPRange);
     }
 
-    // POST: AllowedIPRanges/Delete/5
+    // POST: AllowedIpRanges/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        var allowedIPRange = await context.AllowedIPRanges.FindAsync(id);
+        var allowedIPRange = await context.AllowedIpRanges.FindAsync(id);
         if (allowedIPRange != null)
         {
-            context.AllowedIPRanges.Remove(allowedIPRange);
+            context.AllowedIpRanges.Remove(allowedIPRange);
         }
 
         await context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
-    private bool AllowedIPRangeExists(int id) => context.AllowedIPRanges.Any(e => e.Id == id);
+    private bool AllowedIpRangeExists(int id) => context.AllowedIpRanges.Any(e => e.Id == id);
 }

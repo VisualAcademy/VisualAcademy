@@ -1,10 +1,10 @@
 ﻿namespace All.Infrastructures.Cores;
 
-public class DefaultSchemaEnhancerCreateAllowedIPRangesTable(string defaultConnectionString)
+public class DefaultSchemaEnhancerCreateAllowedIpRangesTable(string defaultConnectionString)
 {
-    public void EnhanceDefaultDatabase() => CreateAllowedIPRangesTableIfNotExists();
+    public void EnhanceDefaultDatabase() => CreateAllowedIpRangesTableIfNotExists();
 
-    private void CreateAllowedIPRangesTableIfNotExists()
+    private void CreateAllowedIpRangesTableIfNotExists()
     {
         using (SqlConnection connection = new SqlConnection(defaultConnectionString))
         {
@@ -14,17 +14,17 @@ public class DefaultSchemaEnhancerCreateAllowedIPRangesTable(string defaultConne
                     SELECT COUNT(*) 
                     FROM INFORMATION_SCHEMA.TABLES 
                     WHERE TABLE_SCHEMA = 'dbo' 
-                    AND TABLE_NAME = 'AllowedIPRanges'", connection);
+                    AND TABLE_NAME = 'AllowedIpRanges'", connection);
 
             int tableCount = (int)cmdCheck.ExecuteScalar();
 
             if (tableCount == 0)
             {
                 SqlCommand cmdCreateTable = new SqlCommand(@"
-                        CREATE TABLE AllowedIPRanges (
+                        CREATE TABLE AllowedIpRanges (
                             ID INT PRIMARY KEY IDENTITY(1,1),
-                            StartIPRange VARCHAR(15),
-                            EndIPRange VARCHAR(15),
+                            StartIpRange VARCHAR(15),
+                            EndIpRange VARCHAR(15),
                             Description NVarChar(Max),
                             CreateDate DATETIME Default(GetDate()),
                             TenantId BIGINT

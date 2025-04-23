@@ -1,5 +1,5 @@
 ﻿#nullable disable
-using All.Models.AccountViewModels;
+using Azunt.Models.AccountViewModels;
 
 namespace VisualAcademy.Controllers;
 

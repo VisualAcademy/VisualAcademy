@@ -1,5 +1,5 @@
-﻿@using All.Entities
-@model AllowedIPRange
+﻿@using Azunt.Entities
+@model AllowedIpRange
 
 @{
     ViewData["Title"] = "Edit";
@@ -7,7 +7,7 @@
 
 <h1>Edit</h1>
 
-<h4>AllowedIPRange</h4>
+<h4>AllowedIpRange</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,14 +15,14 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="StartIPRange" class="control-label"></label>
-                <input asp-for="StartIPRange" class="form-control" />
-                <span asp-validation-for="StartIPRange" class="text-danger"></span>
+                <label asp-for="StartIpRange" class="control-label"></label>
+                <input asp-for="StartIpRange" class="form-control" />
+                <span asp-validation-for="StartIpRange" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EndIPRange" class="control-label"></label>
-                <input asp-for="EndIPRange" class="form-control" />
-                <span asp-validation-for="EndIPRange" class="text-danger"></span>
+                <label asp-for="EndIpRange" class="control-label"></label>
+                <input asp-for="EndIpRange" class="form-control" />
+                <span asp-validation-for="EndIpRange" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>

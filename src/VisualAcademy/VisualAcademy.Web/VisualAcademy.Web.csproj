@@ -7,14 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Azunt" Version="1.0.0" />
+        <PackageReference Include="Azunt" Version="1.0.1" />
         <PackageReference Include="CsvHelper" Version="33.0.1" />
         <PackageReference Include="Dapper" Version="2.1.35" />
         <PackageReference Include="Dul" Version="1.3.3" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\All\All.csproj" />
         <ProjectReference Include="..\VisualAcademy.ServiceDefaults\VisualAcademy.ServiceDefaults.csproj" />
     </ItemGroup>
 

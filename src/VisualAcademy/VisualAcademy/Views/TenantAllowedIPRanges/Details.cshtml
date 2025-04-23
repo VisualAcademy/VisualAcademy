@@ -1,5 +1,5 @@
-﻿@using All.Entities
-@model AllowedIPRange
+﻿@using Azunt.Entities
+@model AllowedIpRange
 
 @{
     ViewData["Title"] = "Details";
@@ -8,20 +8,20 @@
 <h1>Details</h1>
 
 <div>
-    <h4>AllowedIPRange</h4>
+    <h4>AllowedIpRange</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StartIPRange)
+            @Html.DisplayNameFor(model => model.StartIpRange)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StartIPRange)
+            @Html.DisplayFor(model => model.StartIpRange)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EndIPRange)
+            @Html.DisplayNameFor(model => model.EndIpRange)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EndIPRange)
+            @Html.DisplayFor(model => model.EndIpRange)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
