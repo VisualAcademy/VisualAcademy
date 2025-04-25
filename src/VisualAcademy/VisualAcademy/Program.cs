@@ -15,6 +15,7 @@ using System.Configuration;
 using Dalbodre.Infrastructures.Cores;
 using Azunt.Infrastructures;
 using Azunt.Web.Data;
+using Azunt.Web.Infrastructures;
 
 namespace VisualAcademy
 {
@@ -270,7 +271,7 @@ namespace VisualAcademy
 
 
 
-            #region 데이터베이스 및 인증 스키마 초기화
+            #region 데이터베이스 및 인증 스키마 초기화 - Program.cs에서 직접 호출 
             var config = app.Services.GetRequiredService<IConfiguration>();
             bool initializeDatabase = config.GetValue<bool>("Database:InitializeOnStartup");
 
