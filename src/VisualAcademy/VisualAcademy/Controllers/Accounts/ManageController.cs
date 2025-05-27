@@ -261,7 +261,7 @@ public class ManageController(
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> RemoveLogin(RemoveLoginViewModel model)
+    public async Task<IActionResult> RemoveLogin(Azunt.Models.ManageViewModels.RemoveLoginViewModel model)
     {
         var user = await userManager.GetUserAsync(User);
         if (user == null)
