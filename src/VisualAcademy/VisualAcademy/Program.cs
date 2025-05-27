@@ -242,11 +242,11 @@ namespace VisualAcademy
                 // 운영 환경에서는 예외 처리 미들웨어와 HSTS 미들웨어를 사용한다.
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                app.UseHsts(); // 브라우저가 HTTPS만 쓰게 강제
             }
 
             // HTTPS 리디렉션과 정적 파일 미들웨어를 사용한다.
-            app.UseHttpsRedirection();
+            app.UseHttpsRedirection(); // // HTTP 요청을 HTTPS로 리디렉션
 
             // 미들웨어 추가 
             app.UseStaticFiles(); // 정적인 HTML, CSS, JavaScript, ... 실행
