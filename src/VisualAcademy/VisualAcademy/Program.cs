@@ -1,21 +1,22 @@
 using ArticleApp.Models;
+using Azunt.Infrastructures;
+using Azunt.ResourceManagement;
+using Azunt.Web.Data;
+using Azunt.Web.Infrastructures;
+using Dalbodre.Infrastructures.Cores;
+using Hawaso.Infrastructures;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.Options;
 using RedPlus.Services;
+using System.Configuration;
 using VisualAcademy.Areas.Identity;
 using VisualAcademy.Areas.Identity.Services;
 using VisualAcademy.Components.Pages.ApplicantsTransfers;
 using VisualAcademy.Infrastructures;
 using VisualAcademy.Models.Candidates;
-using VisualAcademy.Repositories.Tenants;
 using VisualAcademy.Models.TextTemplates;
-using Microsoft.Extensions.Options;
+using VisualAcademy.Repositories.Tenants;
 using VisualAcademy.Settings.Translators;
-using Hawaso.Infrastructures;
-using System.Configuration;
-using Dalbodre.Infrastructures.Cores;
-using Azunt.Infrastructures;
-using Azunt.Web.Data;
-using Azunt.Web.Infrastructures;
 
 namespace VisualAcademy
 {
@@ -180,6 +181,17 @@ namespace VisualAcademy
             // Azure Translator 설정 바인딩
             builder.Services.Configure<AzureTranslatorSettings>(builder.Configuration.GetSection("AzureTranslator"));
             builder.Services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<AzureTranslatorSettings>>().Value);
+
+
+
+            #region ResourceManagement 
+            // Resource 모듈 등록
+            builder.Services.AddDependencyInjectionContainerForResourceApp(connectionString, Azunt.Models.Enums.RepositoryMode.EfCore);
+            builder.Services.AddTransient<ResourceAppDbContextFactory>();
+            #endregion
+
+
+
 
             // 앱 빌드
             var app = builder.Build();
