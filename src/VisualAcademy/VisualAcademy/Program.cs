@@ -1,5 +1,7 @@
 using ArticleApp.Models;
+using Azunt.DivisionManagement;
 using Azunt.Infrastructures;
+using Azunt.Models.Enums;
 using Azunt.ResourceManagement;
 using Azunt.Web.Data;
 using Azunt.Web.Infrastructures;
@@ -189,6 +191,17 @@ namespace VisualAcademy
             builder.Services.AddDependencyInjectionContainerForResourceApp(connectionString, Azunt.Models.Enums.RepositoryMode.EfCore);
             builder.Services.AddTransient<ResourceAppDbContextFactory>();
             #endregion
+
+
+
+
+            #region DivisionManagement
+            // 디비전 관리: 기본 CRUD 교과서 코드
+            builder.Services.AddDependencyInjectionContainerForDivisionApp(connectionString, RepositoryMode.EfCore);
+            builder.Services.AddTransient<DivisionDbContextFactory>();
+            #endregion
+
+
 
 
 
