@@ -40,7 +40,7 @@
                     <thead class="thead-light">
                         <tr>
                             <th class="text-center text-nowrap" @onclick="SortByName" style="cursor: pointer;">
-                                Name <Azunt.Web.Components.Pages.Depots.Components.SortOrderArrow SortColumn="Name" SortOrder="@sortOrder" />
+                                Name <Azunt.Components.Sorting.SortOrderArrow SortColumn="Name" SortOrder="@sortOrder" />
                             </th>
 
                             @if (!SimpleMode)
@@ -107,7 +107,7 @@
     </div>
 
     <div class="col-md-12">
-        <Azunt.Web.Components.Pages.Depots.Components.SearchBox placeholder="Search Depots..." SearchQueryChanged="Search" />
+        <Azunt.Components.Search.SearchBox placeholder="Search Depots..." SearchQueryChanged="Search" />
     </div>
 </div>
 
@@ -119,7 +119,7 @@
     <EditorFormTitle>@EditorFormTitle</EditorFormTitle>
 </Azunt.Web.Components.Pages.Depots.Components.ModalForm>
 
-<Azunt.Web.Components.Pages.Depots.Components.DeleteDialog @ref="DeleteDialogReference" OnClickCallback="DeleteClick" />
+<Azunt.Components.Dialogs.DeleteDialog @ref="DeleteDialogReference" OnClickCallback="DeleteClick" />
 
 @if (IsInlineDialogShow)
 {
