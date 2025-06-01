@@ -19,6 +19,7 @@ using VisualAcademy.Models.Candidates;
 using VisualAcademy.Models.TextTemplates;
 using VisualAcademy.Repositories.Tenants;
 using VisualAcademy.Settings.Translators;
+using Azunt.DepotManagement;
 
 namespace VisualAcademy
 {
@@ -199,6 +200,16 @@ namespace VisualAcademy
             // 디비전 관리: 기본 CRUD 교과서 코드
             builder.Services.AddDependencyInjectionContainerForDivisionApp(connectionString, RepositoryMode.EfCore);
             builder.Services.AddTransient<DivisionDbContextFactory>();
+            #endregion
+
+
+
+
+
+            #region Depot Management
+            // Depot 관리
+            builder.Services.AddDependencyInjectionContainerForDepotApp(connectionString, RepositoryMode.Dapper, ServiceLifetime.Transient);
+            builder.Services.AddTransient<DepotAppDbContextFactory>();
             #endregion
 
 
