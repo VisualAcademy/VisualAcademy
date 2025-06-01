@@ -1,0 +1,58 @@
+﻿@namespace Azunt.Web.Components.Pages.Depots.Controls
+@using Azunt.DepotManagement
+@inject IDepotRepository DepotRepository
+
+<div>
+    <!-- 드롭다운 리스트 -->
+    <select class="form-control mb-2" @onchange="OnSelectChanged">
+        <option value="">-- Select a depot --</option>
+        @foreach (var depot in DepotList)
+        {
+            <option value="@depot" selected="@(depot == SelectedDepot)">
+                @depot
+            </option>
+        }
+    </select>
+
+    <!-- 직접 입력용 텍스트박스: 필요없으면 제거 -->
+    <!-- 텍스트박스 입력 시에도 SelectedDepotChanged 호출 -->
+    <input class="form-control" type="text" placeholder="Or type a new depot..."
+           @bind="SelectedDepot"
+           @oninput="OnInputChanged" />
+</div>
+
+@code {
+    [Parameter]
+    public string SelectedDepot { get; set; } = "";
+
+    [Parameter]
+    public EventCallback<string> SelectedDepotChanged { get; set; }
+
+    private List<string> DepotList { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var depots = await DepotRepository.GetAllAsync();
+        DepotList = depots
+            .Select(d => d.Name ?? "")
+            .Where(n => !string.IsNullOrWhiteSpace(n))
+            .Distinct()
+            .ToList();
+    }
+
+    private async Task OnSelectChanged(ChangeEventArgs e)
+    {
+        var selected = e.Value?.ToString();
+        if (!string.IsNullOrWhiteSpace(selected))
+        {
+            SelectedDepot = selected;
+            await SelectedDepotChanged.InvokeAsync(SelectedDepot);
+        }
+    }
+
+    private async Task OnInputChanged(ChangeEventArgs e)
+    {
+        SelectedDepot = e.Value?.ToString() ?? "";
+        await SelectedDepotChanged.InvokeAsync(SelectedDepot);
+    }
+}
