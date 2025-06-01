@@ -1,6 +1,5 @@
 ﻿using Azunt.Web.Infrastructures._Initializers;
 using Azunt.Web.Infrastructures.Initializers;
-using Hawaso.Infrastructures.Initializers;
 
 namespace Azunt.Web.Infrastructures;
 
