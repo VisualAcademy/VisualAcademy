@@ -144,7 +144,7 @@ public static class AssetSchemaInitializer
 
         try
         {
-            //Azunt.ProgressiveTypeManagement.ProgressiveTypesTableBuilder.Run(services, forMaster);
+            Azunt.ProgressiveTypeManagement.ProgressiveTypesTableBuilder.Run(services, forMaster);
             logger.LogInformation($"{target}의 ProgressiveTypes 테이블 초기화 완료");
         }
         catch (Exception ex)
