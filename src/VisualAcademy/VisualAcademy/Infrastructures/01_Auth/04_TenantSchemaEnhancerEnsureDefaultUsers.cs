@@ -1,4 +1,10 @@
-﻿namespace Azunt.Web.Infrastructures.Auth;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
+
+namespace Azunt.Web.Infrastructures.Auth;
 
 /// <summary>
 /// 테넌트 데이터베이스에서 AspNetUsers 테이블이 비어 있는 경우,
@@ -35,10 +41,10 @@ public class TenantSchemaEnhancerEnsureDefaultUsers
 
         // 2. 기본 Role 정의 및 생성
         string[] requiredRoles = {
-            Dul.Roles.Administrators.ToString(),
-            Dul.Roles.Everyone.ToString(),
-            Dul.Roles.Users.ToString(),
-            Dul.Roles.Guests.ToString()
+            Azunt.Models.Enums.Roles.Administrators.ToString(),
+            Azunt.Models.Enums.Roles.Everyone.ToString(),
+            Azunt.Models.Enums.Roles.Users.ToString(),
+            Azunt.Models.Enums.Roles.Guests.ToString()
         };
 
         foreach (var roleName in requiredRoles)
@@ -50,7 +56,7 @@ public class TenantSchemaEnhancerEnsureDefaultUsers
                 {
                     Name = roleName,
                     NormalizedName = roleName.ToUpper(),
-                    Description = $"{roleName} 그룹"
+                    Description = $"{roleName} Role"
                 };
                 await roleManager.CreateAsync(role);
                 logger.LogInformation($"Role created: {roleName}");
@@ -65,19 +71,22 @@ public class TenantSchemaEnhancerEnsureDefaultUsers
         string adminEmail = config["DefaultUsers:AdministratorEmail"] ?? throw new InvalidOperationException("AdministratorEmail is not configured.");
         string adminPassword = config["DefaultUsers:AdministratorPassword"] ?? throw new InvalidOperationException("AdministratorPassword is not configured.");
         string guestEmail = config["DefaultUsers:GuestEmail"] ?? throw new InvalidOperationException("GuestEmail is not configured.");
-        string guestPassword = config["DefaultUsers:GuestPassword"] ?? throw new InvalidOperationException("GuestPassword is not configured.");
+        string guestPassword = $"Az{Guid.NewGuid()}7$"; 
         string anonymousEmail = config["DefaultUsers:AnonymousEmail"] ?? throw new InvalidOperationException("AnonymousEmail is not configured.");
-        string anonymousPassword = config["DefaultUsers:AnonymousPassword"] ?? throw new InvalidOperationException("AnonymousPassword is not configured.");
+        string anonymousPassword = $"Az{Guid.NewGuid()}7$"; 
 
         // 4. 기본 사용자 생성
         await CreateUserIfNotExists(userManager, logger, adminEmail, adminPassword,
-            new[] { Dul.Roles.Administrators.ToString(), Dul.Roles.Users.ToString() }, emailConfirmed: true);
+            new[] {
+                Azunt.Models.Enums.Roles.Administrators.ToString(),
+                Azunt.Models.Enums.Roles.Users.ToString()
+            }, emailConfirmed: true);
 
         await CreateUserIfNotExists(userManager, logger, guestEmail, guestPassword,
-            new[] { Dul.Roles.Guests.ToString() });
+            new[] { Azunt.Models.Enums.Roles.Guests.ToString() });
 
         await CreateUserIfNotExists(userManager, logger, anonymousEmail, anonymousPassword,
-            new[] { Dul.Roles.Guests.ToString() });
+            new[] { Azunt.Models.Enums.Roles.Guests.ToString() });
     }
 
     /// <summary>

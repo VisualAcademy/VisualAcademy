@@ -250,6 +250,7 @@ public class TenantSchemaEnhancerEnsureUsersTable
                 ["TenantName"] = "NVARCHAR(MAX) DEFAULT('Azunt')",
                 ["RoleID"] = "BIGINT NULL",
                 ["DivisionId"] = "BIGINT NULL DEFAULT(0)",
+                ["DivisionName"] = "NVARCHAR(255) NULL DEFAULT('')",
 
                 // 기타
                 ["CriminalHistory"] = "NVARCHAR(MAX) NULL",
