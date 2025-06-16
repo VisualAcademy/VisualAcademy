@@ -135,7 +135,7 @@
         <PackageReference Include="Azunt.ResourceManagement" Version="1.0.5" />
         <PackageReference Include="Azunt.RuleManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.SubcategoryManagement" Version="1.0.1" />
-        <PackageReference Include="Azunt.TenantManagement" Version="1.0.1" />
+        <PackageReference Include="Azunt.TenantManagement" Version="1.0.3" />
         <PackageReference Include="Azure.Storage.Blobs" Version="12.24.1" />
         <PackageReference Include="CsvHelper" Version="33.1.0" />
         <PackageReference Include="DulPager" Version="1.0.2" />
