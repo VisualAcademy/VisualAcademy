@@ -30,7 +30,7 @@ public static class SecurityInitializer
                 ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             // appName을 구분하여 시드
-            ResourceSeeder.InsertRequiredResources(connectionString, logger, appName: null); // 전체
+            //ResourceSeeder.InsertRequiredResources(connectionString, logger, appName: null); // 전체
             ResourceSeeder.InsertRequiredResources(connectionString, logger, appName: "VisualAcademy");
 
             logger.LogInformation($"{target}의 Resources 시드 데이터 삽입 완료");
@@ -48,6 +48,14 @@ public static class SecurityInitializer
         {
             Azunt.RuleManagement.RulesTableBuilder.Run(services, forMaster);
             logger.LogInformation($"{target}의 Rules 테이블 초기화 완료");
+
+            // 시드 데이터 삽입 추가
+            var config = services.GetRequiredService<IConfiguration>();
+            var connectionString = config.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+            Azunt.RuleManagement.RuleSeeder.SeedAdministratorRoleRules(connectionString, logger);
+            logger.LogInformation($"{target}의 Rules 시드 데이터 삽입 완료");
         }
         catch (Exception ex)
         {
