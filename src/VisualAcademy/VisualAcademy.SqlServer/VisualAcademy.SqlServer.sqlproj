@@ -79,6 +79,7 @@
     <Build Include="dbo\Tables\TextTemplates\00_TextTemplates.sql" />
     <Build Include="dbo\Tables\Documents.sql" />
     <Build Include="dbo\Tables\ApplicantsTransfers.sql" />
+    <Build Include="dbo\Tables\Divisions.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Identity\AspNetRoleClaims.sql" />
