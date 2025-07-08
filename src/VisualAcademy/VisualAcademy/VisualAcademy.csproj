@@ -121,6 +121,7 @@
     <ItemGroup>
         <PackageReference Include="Azunt" Version="1.1.3" />
         <PackageReference Include="Azunt.AttachFileManagement" Version="1.0.1" />
+        <PackageReference Include="Azunt.BackgroundCheckManagement" Version="1.0.3" />
         <PackageReference Include="Azunt.BannedCustomerManagement" Version="1.0.2" />
         <PackageReference Include="Azunt.Components" Version="1.0.3" />
         <PackageReference Include="Azunt.DenominationManagement" Version="1.0.0" />
@@ -140,7 +141,7 @@
         <PackageReference Include="Azure.Storage.Blobs" Version="12.24.1" />
         <PackageReference Include="CsvHelper" Version="33.1.0" />
         <PackageReference Include="DulPager" Version="1.0.2" />
-        <PackageReference Include="EPPlus" Version="8.0.6" PrivateAssets="All" />
+        <PackageReference Include="EPPlus" Version="8.0.7" PrivateAssets="All" />
         <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="9.0.6" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.6" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.6" />
@@ -155,7 +156,7 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.1" />
         <PackageReference Include="Dul" Version="1.3.4" />
         <PackageReference Include="DocumentFormat.OpenXml" Version="3.3.0" />
-        <PackageReference Include="Twilio" Version="7.11.3" />
+        <PackageReference Include="Twilio" Version="7.11.4" />
     </ItemGroup>
 
     <ItemGroup>
