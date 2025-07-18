@@ -1,6 +1,7 @@
 ﻿using Azunt.Entities;
 using Azunt.Web.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using VisualAcademy.Components.Pages.ApplicantsTransfers;
 using VisualAcademy.Models.Buffets;
 using VisualAcademy.Models.Tenants;
@@ -20,6 +21,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     public DbSet<Garnish> Garnishes { get; set; }
 
     public DbSet<ApplicantTransfer> ApplicantsTransfers { get; set; }
+
+    public DbSet<KnownUser> KnownUsers { get; set; }
 
     /// <summary>
     /// 모델(테이블)이 생성될 때 처음 실행 
@@ -45,6 +48,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         //    new TenantModel { Id = 1, Name = "Tenant 1" },
         //    new TenantModel { Id = 2, Name = "Tenant 2" }
         //);
+
+        builder.Entity<KnownUser>().ToTable("KnownUsers");
     }
 
     #region SeedRoles: 기본 역할(Role)들을 생성하는 코드 중 하나 
