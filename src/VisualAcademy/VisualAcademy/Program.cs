@@ -1,4 +1,4 @@
-using ArticleApp.Models;
+using Azunt.ArticleManagement;
 using Azunt.DivisionManagement;
 using Azunt.Infrastructures;
 using Azunt.Models.Enums;

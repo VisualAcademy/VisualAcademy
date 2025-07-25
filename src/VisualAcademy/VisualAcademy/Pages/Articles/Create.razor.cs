@@ -1,4 +1,4 @@
-﻿using ArticleApp.Models;
+﻿using Azunt.ArticleManagement;
 using Microsoft.AspNetCore.Components;
 
 namespace ArticleApp.Pages.Articles

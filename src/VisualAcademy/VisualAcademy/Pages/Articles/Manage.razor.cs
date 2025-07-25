@@ -1,4 +1,4 @@
-﻿using ArticleApp.Models;
+﻿using Azunt.ArticleManagement;
 using Dul.Domain.Common;
 using DulPager;
 using Microsoft.AspNetCore.Components;
