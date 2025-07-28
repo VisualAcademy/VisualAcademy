@@ -1,4 +1,5 @@
 using Azunt.ArticleManagement;
+using Azunt.DepotManagement;
 using Azunt.DivisionManagement;
 using Azunt.Infrastructures;
 using Azunt.Models.Enums;
@@ -6,6 +7,7 @@ using Azunt.ResourceManagement;
 using Azunt.Web.Data;
 using Azunt.Web.Infrastructures;
 using Dalbodre.Infrastructures.Cores;
+using DotNetNote.Endpoints;
 using Hawaso.Infrastructures;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Options;
@@ -19,7 +21,6 @@ using VisualAcademy.Models.Candidates;
 using VisualAcademy.Models.TextTemplates;
 using VisualAcademy.Repositories.Tenants;
 using VisualAcademy.Settings.Translators;
-using Azunt.DepotManagement;
 
 namespace VisualAcademy
 {
@@ -378,6 +379,11 @@ namespace VisualAcademy
             }
             #endregion
 
+
+
+
+            // 엔드포인트 등록
+            app.MapIsoCountriesEndpoint();
 
 
 
