@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Azunt" Version="1.1.3" />
+        <PackageReference Include="Azunt" Version="1.1.4" />
         <PackageReference Include="Azunt.AppointmentTypeManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.ArticleManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.AttachFileManagement" Version="1.0.1" />
@@ -16,7 +16,7 @@
         <PackageReference Include="Azunt.BranchManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.Components" Version="1.0.3" />
         <PackageReference Include="Azunt.DenominationManagement" Version="1.0.0" />
-        <PackageReference Include="Azunt.DepartmentManagement" Version="1.0.1" />
+        <PackageReference Include="Azunt.DepartmentManagement" Version="1.0.3" />
         <PackageReference Include="Azunt.DepotManagement" Version="1.0.1" />
         <PackageReference Include="Azunt.DivisionManagement" Version="1.0.2" />
         <PackageReference Include="Azunt.EmployeeManagement" Version="1.0.0" />
