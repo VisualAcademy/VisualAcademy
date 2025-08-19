@@ -3,8 +3,6 @@
 
 @namespace VisualAcademy.Pages.TextTemplates
 
-@* @attribute [Authorize(Roles = "Administrators")] *@
-
 <h3 class="mt-1 mb-1">Text Template Manager <span class="oi oi-plus text-primary align-baseline" @onclick="ShowEditorForm" style="cursor: pointer;"></span> 
     <button onclick="location.href = '/TextTemplateDownload/ExcelDown';" class="btn btn-sm btn-primary" style="float: right;">Excel Export</button></h3>
 
@@ -14,7 +12,6 @@
         {
             <div>
                 <p>
-                    @* <MatProgressBar Indeterminate="true"></MatProgressBar> *@
                     Loading...
                 </p>
             </div>
@@ -79,16 +76,14 @@
         <DulPager.DulPagerComponent Model="pager" PageIndexChanged="PageIndexChanged"></DulPager.DulPagerComponent>
     </div>
     <div class="col-md-12">
-        <VisualAcademy.Pages.TextTemplates.Components.SearchBox placeholder="Search TextTemplates..." SearchQueryChanged="Search"></VisualAcademy.Pages.TextTemplates.Components.SearchBox>
+        <Azunt.Components.Search.SearchBox placeholder="Search TextTemplates..." SearchQueryChanged="Search" Engine="Azunt.Components.Search.SearchBox.DebounceEngine.Cts"></Azunt.Components.Search.SearchBox>
     </div>
 </div>
 
-@*입력 또는 수정 폼 모달 다이얼로그*@
 <VisualAcademy.Pages.TextTemplates.Components.ModalForm @ref="EditorFormReference" ModelSender="model" CreateCallback="CreateOrEdit" EditCallback="CreateOrEdit" UserName="@UserName">
     <EditorFormTitle>@EditorFormTitle</EditorFormTitle>
 </VisualAcademy.Pages.TextTemplates.Components.ModalForm>
 
-@*삭제 폼 모달 다이얼로그*@
 <VisualAcademy.Pages.TextTemplates.Components.DeleteDialog @ref="DeleteDialogReference" OnClickCallback="DeleteClick">
 </VisualAcademy.Pages.TextTemplates.Components.DeleteDialog>
 
