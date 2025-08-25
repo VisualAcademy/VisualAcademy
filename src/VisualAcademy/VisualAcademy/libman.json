@@ -1,0 +1,11 @@
+{
+    "version": "3.0",
+    "defaultProvider": "cdnjs",
+    "libraries": [
+        {
+            "library": "jszip@3.10.1",
+            "destination": "wwwroot/lib/jszip",
+            "files": [ "jszip.min.js", "jszip.js" ]
+        }
+    ]
+}
