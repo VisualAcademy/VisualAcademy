@@ -1,6 +1,7 @@
 using Azunt.ArticleManagement;
 using Azunt.DepotManagement;
 using Azunt.DivisionManagement;
+using Azunt.Endpoints;
 using Azunt.Infrastructures;
 using Azunt.Models.Enums;
 using Azunt.ResourceManagement;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Options;
 using RedPlus.Services;
 using System.Configuration;
+using System.Net.Http.Headers;
 using VisualAcademy.Areas.Identity;
 using VisualAcademy.Areas.Identity.Services;
 using VisualAcademy.Components.Pages.ApplicantsTransfers;
@@ -215,6 +217,16 @@ namespace VisualAcademy
 
 
 
+            // 최신 권장 방식: HttpClientFactory 등록
+            builder.Services.AddHttpClient("egress-ip", client =>
+            {
+                client.Timeout = TimeSpan.FromSeconds(5);
+                client.DefaultRequestHeaders.UserAgent.ParseAdd("Azunt-EgressIp/1.0");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/plain"));
+            });
+
+
 
 
 
@@ -385,7 +397,8 @@ namespace VisualAcademy
             // 엔드포인트 등록
             app.MapIsoCountriesEndpoint();
 
-
+            // Diagnostics 엔드포인트 매핑
+            app!.MapDiagnosticsEndpoints();
 
 
             // 앱 실행
