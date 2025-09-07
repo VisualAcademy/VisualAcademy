@@ -7,6 +7,8 @@ using Azunt.Models.Enums;
 using Azunt.ResourceManagement;
 using Azunt.Web.Data;
 using Azunt.Web.Infrastructures;
+using Azunt.Web.Policies;
+using Azunt.Web.Settings;
 using Dalbodre.Infrastructures.Cores;
 using DotNetNote.Endpoints;
 using Hawaso.Infrastructures;
@@ -227,6 +229,15 @@ namespace VisualAcademy
             });
 
 
+
+            #region Background Service
+            // appsettings 바인딩
+            builder.Services.Configure<BackgroundScreeningOptions>(
+                builder.Configuration.GetSection("BackgroundScreening"));
+
+            // 정책 서비스 DI
+            builder.Services.AddScoped<IBackgroundScreeningPolicy, BackgroundScreeningPolicy>();
+            #endregion
 
 
 
