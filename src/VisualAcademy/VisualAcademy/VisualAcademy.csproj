@@ -149,7 +149,7 @@
         <PackageReference Include="Azure.Storage.Blobs" Version="12.25.0" />
         <PackageReference Include="CsvHelper" Version="33.1.0" />
         <PackageReference Include="DulPager" Version="1.0.2" />
-        <PackageReference Include="EPPlus" Version="8.1.0" PrivateAssets="All" />
+        <PackageReference Include="EPPlus" Version="8.1.1" PrivateAssets="All" />
         <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid.EntityFrameworkAdapter" Version="9.0.8" />
         <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.8" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.8" />
