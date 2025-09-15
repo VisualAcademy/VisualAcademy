@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace DotNetNote.Endpoints;
+﻿namespace DotNetNote.Endpoints;
 
 public static class IsoCountriesEndpoint
 {
