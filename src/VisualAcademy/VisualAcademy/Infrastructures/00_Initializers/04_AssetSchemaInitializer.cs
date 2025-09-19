@@ -2,10 +2,6 @@
 using Azunt.Infrastructures.Tenants;
 using Azunt.SubcategoryManagement;
 using Azunt.Web.Infrastructures.Assets.Tenants;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
 
 namespace Azunt.Web.Infrastructures._Initializers;
 
