@@ -1,6 +1,7 @@
 using Azunt.ArticleManagement;
 using Azunt.DepotManagement;
 using Azunt.DivisionManagement;
+using Azunt.EmployeeManagement;
 using Azunt.Endpoints;
 using Azunt.Infrastructures;
 using Azunt.Models.Enums;
@@ -410,6 +411,40 @@ namespace VisualAcademy
 
             // Diagnostics 엔드포인트 매핑
             app!.MapDiagnosticsEndpoints();
+
+
+
+            #region Employees 테이블 초기화/보강 및 시드 (DbInitItem 클래스 없이)
+            try
+            {
+                var cfg = app.Services.GetRequiredService<IConfiguration>();
+                var employeesSection = cfg.GetSection("Database:Initializers")
+                                          .GetChildren()
+                                          .FirstOrDefault(x =>
+                                              string.Equals(x["Name"], "Employees", StringComparison.OrdinalIgnoreCase));
+
+                if (employeesSection != null)
+                {
+                    bool forMaster = bool.TryParse(employeesSection["ForMaster"], out var fm) ? fm : false;
+                    bool enableSeeding = bool.TryParse(employeesSection["EnableSeeding"], out var es) ? es : false; // 기본값 false
+
+                    EmployeesTableBuilder.Run(app.Services, forMaster: forMaster, enableSeeding: enableSeeding);
+
+                    Console.WriteLine(
+                        $"Employees table initialization finished. Target={(forMaster ? "Master" : "Tenants")}, Seed={enableSeeding}"
+                    );
+                }
+                else
+                {
+                    Console.WriteLine("Employees initializer not configured in Database:Initializers. Skipped.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Employees table initialization failed: {ex.Message}");
+            }
+            #endregion
+
 
 
             // 앱 실행
