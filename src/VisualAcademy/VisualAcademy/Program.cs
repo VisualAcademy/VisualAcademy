@@ -6,6 +6,7 @@ using Azunt.Endpoints;
 using Azunt.Infrastructures;
 using Azunt.Models.Enums;
 using Azunt.ResourceManagement;
+using Azunt.TenantSettingManagement;
 using Azunt.Web.Data;
 using Azunt.Web.Infrastructures;
 using Azunt.Web.Policies;
@@ -240,7 +241,8 @@ namespace VisualAcademy
             builder.Services.AddScoped<IBackgroundScreeningPolicy, BackgroundScreeningPolicy>();
             #endregion
 
-
+            // 기본 연결 문자열로 모듈 등록 (Service/DbContextFactory 등)
+            builder.Services.AddTenantSettingsModule(builder.Configuration);
 
             // 앱 빌드
             var app = builder.Build();
