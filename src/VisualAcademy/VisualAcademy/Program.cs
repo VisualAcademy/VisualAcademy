@@ -8,6 +8,7 @@ using Azunt.Models.Enums;
 using Azunt.ResourceManagement;
 using Azunt.TenantSettingManagement;
 using Azunt.Web.Data;
+using Azunt.Web.Infrastructure.Extensions;
 using Azunt.Web.Infrastructures;
 using Azunt.Web.Policies;
 using Azunt.Web.Settings;
@@ -243,6 +244,9 @@ namespace VisualAcademy
 
             // ±âº» ¿¬°á ¹®ÀÚ¿­·Î ¸ðµâ µî·Ï (Service/DbContextFactory µî)
             builder.Services.AddTenantSettingsModule(builder.Configuration);
+
+            // DI ¹­À½
+            builder.Services.AddAzuntWeb(builder.Configuration);
 
             // ¾Û ºôµå
             var app = builder.Build();
@@ -482,6 +486,7 @@ namespace VisualAcademy
             #endregion
 
 
+            app.MapAzuntMinimalApis();
 
             // ¾Û ½ÇÇà
             app.Run();
