@@ -1,0 +1,25 @@
+﻿@page "/tenant-policy"
+<h3>Tenant Policy Viewer</h3>
+
+<p>Header X-Demo-UserTenant: @UserTenant</p>
+<p>EditOverride? @IsEditOverride</p>
+<p>BypassUploadCheck? @IsBypass</p>
+
+@code {
+    [Inject] NavigationManager Nav { get; set; } = default!;
+    [Inject] ITenantPolicyService Policy { get; set; } = default!;
+
+    private string UserTenant = "VisualAcademy";
+    private bool IsEditOverride;
+    private bool IsBypass;
+
+    protected override void OnInitialized()
+    {
+        var uri = new Uri(Nav.Uri);
+        var q = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        UserTenant = q["userTenant"] ?? "VisualAcademy";
+
+        IsEditOverride = Policy.IsEditOverrideTenant(UserTenant);
+        IsBypass = Policy.IsBypassUploadCheckTenant(UserTenant);
+    }
+}
