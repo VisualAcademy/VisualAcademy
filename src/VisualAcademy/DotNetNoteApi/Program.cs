@@ -46,8 +46,8 @@ public interface IUserService
 
 public class User
 {
-    public string Id { get; internal set; }
-    public string Username { get; internal set; }
+    public string? Id { get; internal set; }
+    public string? Username { get; internal set; }
 }
 
 public class UserService : IUserService
@@ -56,7 +56,7 @@ public class UserService : IUserService
     {
         if (username != "Administrator" || password != "Pa$$w0rd")
         {
-            return Task.FromResult<User>(null);
+            return Task.FromResult<User>(null!);
         }
 
         var user = new User
