@@ -25,7 +25,7 @@
             </NavLink>
         </div>
 
-        <!-- 서브 메뉴 구현 -->
+        <!-- 서브 메뉴 구현: 예시 -->
         <div class="nav-item px-3">
             <a class="nav-link" @onclick="@(() => ToggleSubMenu("blazorApp"))" @onclick:stopPropagation>
                 <span class="oi oi-list" aria-hidden="true"></span> Blazor App
@@ -63,8 +63,7 @@
             </div>
         </div>
 
-
-        <!-- 서브 메뉴 구현 -->
+        <!-- 서브 메뉴 구현: 예시 -->
         <div class="nav-item px-3">
             <a class="nav-link" @onclick="@(() => ToggleSubMenu("blazorFundamentals"))" @onclick:stopPropagation>
                 <span class="oi oi-list" aria-hidden="true"></span> Fundamentals
@@ -114,7 +113,7 @@
             </NavLink>
         </div>
 
-        <!-- 서브 메뉴 구현 -->
+        <!-- 서브 메뉴 구현: 예시 -->
         <div class="nav-item px-3">
             <a class="nav-link" @onclick="@(() => ToggleSubMenu("components"))" @onclick:stopPropagation>
                 <span class="oi oi-list" aria-hidden="true"></span> Components
@@ -124,6 +123,346 @@
                 <NavLink class="nav-link ms-3" href="/DulDropDownListServerFiltering">
                     <span class="oi oi-list" aria-hidden="true"></span> Filter DropDownList
                 </NavLink>
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- 1단계: 영업 (Sales) - 3단계 구성 -->
+        <!-- ============================== -->
+        <div class="nav-item px-3">
+            <a class="nav-link" @onclick="@(() => ToggleSubMenu("sales"))" @onclick:stopPropagation>
+                <span class="oi oi-briefcase" aria-hidden="true"></span> 영업 (Sales)
+                <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["sales"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+            </a>
+            <div class="@(collapseSubMenus["sales"] ? "collapse" : null)">
+                <!-- 2단계: 고객 (Customers) -->
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("sales_customers"))" @onclick:stopPropagation>
+                        <span class="oi oi-people" aria-hidden="true"></span> 고객 (Customers)
+                        <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["sales_customers"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["sales_customers"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/Accounts">
+                            <span class="oi oi-people" aria-hidden="true"></span> 고객 (Accounts)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Contacts">
+                            <span class="oi oi-person" aria-hidden="true"></span> 연락처 (Contacts)
+                        </NavLink>
+                    </div>
+                </div>
+
+                <!-- 2단계: 영업 (Sales) -->
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("sales_core"))" @onclick:stopPropagation>
+                        <span class="oi oi-graph" aria-hidden="true"></span> 영업 (Sales)
+                        <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["sales_core"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["sales_core"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/Leads">
+                            <span class="oi oi-target" aria-hidden="true"></span> 잠재 고객 (Leads)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Opportunities">
+                            <span class="oi oi-flag" aria-hidden="true"></span> 영업 기회 (Opportunities)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Competitors">
+                            <span class="oi oi-fire" aria-hidden="true"></span> 경쟁 업체 (Competitors)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Quotes">
+                            <span class="oi oi-document" aria-hidden="true"></span> 견적 (Quotes)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Orders">
+                            <span class="oi oi-spreadsheet" aria-hidden="true"></span> 주문 (Orders)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Invoices">
+                            <span class="oi oi-inbox" aria-hidden="true"></span> 송장 (Invoices)
+                        </NavLink>
+                    </div>
+                </div>
+
+                <!-- 2단계: 참고자료 (Reference) -->
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("sales_reference"))" @onclick:stopPropagation>
+                        <span class="oi oi-book" aria-hidden="true"></span> 참고자료 (Reference)
+                        <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["sales_reference"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["sales_reference"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/Products">
+                            <span class="oi oi-box" aria-hidden="true"></span> 제품 (Products)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/PriceLists">
+                            <span class="oi oi-tags" aria-hidden="true"></span> 가격표 (Price Lists)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Units">
+                            <span class="oi oi-resize-both" aria-hidden="true"></span> 단위 (Units)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Territories">
+                            <span class="oi oi-map" aria-hidden="true"></span> 영업 구역 (Territories)
+                        </NavLink>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================== -->
+        <!-- 1단계: 마케팅 (Marketing) - 3단계 -->
+        <!-- ============================== -->
+        <div class="nav-item px-3">
+            <a class="nav-link" @onclick="@(() => ToggleSubMenu("marketing"))" @onclick:stopPropagation>
+                <span class="oi oi-bullhorn" aria-hidden="true"></span> 마케팅 (Marketing)
+                <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["marketing"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+            </a>
+            <div class="@(collapseSubMenus["marketing"] ? "collapse" : null)">
+                <!-- 2단계: 고객 (Audience) -->
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("marketing_audience"))" @onclick:stopPropagation>
+                        <span class="oi oi-people" aria-hidden="true"></span> 고객 대상 (Audience)
+                        <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["marketing_audience"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["marketing_audience"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/Segments">
+                            <span class="oi oi-layers" aria-hidden="true"></span> 세그먼트 (Segments)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Leads">
+                            <span class="oi oi-target" aria-hidden="true"></span> 잠재 고객 (Leads)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Contacts">
+                            <span class="oi oi-person" aria-hidden="true"></span> 연락처 (Contacts)
+                        </NavLink>
+                    </div>
+                </div>
+
+                <!-- 2단계: 마케팅 (Execution) -->
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("marketing_execution"))" @onclick:stopPropagation>
+                        <span class="oi oi-graph" aria-hidden="true"></span> 마케팅 실행 (Execution)
+                        <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["marketing_execution"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["marketing_execution"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/CustomerJourneys">
+                            <span class="oi oi-random" aria-hidden="true"></span> 고객 여정 (Customer Journeys)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Emails">
+                            <span class="oi oi-envelope-closed" aria-hidden="true"></span> 이메일 (Emails)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/MarketingPages">
+                            <span class="oi oi-browser" aria-hidden="true"></span> 마케팅 페이지 (Marketing Pages)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/MarketingForms">
+                            <span class="oi oi-task" aria-hidden="true"></span> 양식 (Forms)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Events">
+                            <span class="oi oi-calendar" aria-hidden="true"></span> 이벤트 (Events)
+                        </NavLink>
+                    </div>
+                </div>
+
+                <!-- 2단계: 참고자료 (Reference) -->
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("marketing_reference"))" @onclick:stopPropagation>
+                        <span class="oi oi-book" aria-hidden="true"></span> 참고자료 (Reference)
+                        <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["marketing_reference"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["marketing_reference"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/MarketingLists">
+                            <span class="oi oi-list" aria-hidden="true"></span> 마케팅 목록 (Marketing Lists)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/EmailTemplates">
+                            <span class="oi oi-document" aria-hidden="true"></span> 이메일 템플릿 (Email Templates)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/ContentBlocks">
+                            <span class="oi oi-grid-three-up" aria-hidden="true"></span> 콘텐츠 블록 (Content Blocks)
+                        </NavLink>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================== -->
+        <!-- 1단계: 고객 서비스 (Customer Service) -->
+        <!-- ===================================== -->
+        <div class="nav-item px-3">
+            <a class="nav-link" @onclick="@(() => ToggleSubMenu("customerService"))" @onclick:stopPropagation>
+                <span class="oi oi-people" aria-hidden="true"></span> 고객 서비스 (Customer Service)
+                <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["customerService"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+            </a>
+            <div class="@(collapseSubMenus["customerService"] ? "collapse" : null)">
+                <!-- 2단계: 고객 (Customers) -->
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("cs_customers"))" @onclick:stopPropagation>
+                        <span class="oi oi-people" aria-hidden="true"></span> 고객 (Customers)
+                        <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["cs_customers"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["cs_customers"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/Accounts">
+                            <span class="oi oi-people" aria-hidden="true"></span> 고객 (Accounts)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Contacts">
+                            <span class="oi oi-person" aria-hidden="true"></span> 연락처 (Contacts)
+                        </NavLink>
+                    </div>
+                </div>
+
+                <!-- 2단계: 서비스 (Service) -->
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("cs_service"))" @onclick:stopPropagation>
+                        <span class="oi oi-wrench" aria-hidden="true"></span> 서비스 (Service)
+                        <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["cs_service"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["cs_service"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/Cases">
+                            <span class="oi oi-warning" aria-hidden="true"></span> 사례 (Cases)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Queues">
+                            <span class="oi oi-inbox" aria-hidden="true"></span> 대기열 (Queues)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/ScheduleBoard">
+                            <span class="oi oi-clock" aria-hidden="true"></span> 서비스 일정 (Service Schedule)
+                        </NavLink>
+                    </div>
+                </div>
+
+                <!-- 2단계: 참고자료 (Reference) -->
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("cs_reference"))" @onclick:stopPropagation>
+                        <span class="oi oi-book" aria-hidden="true"></span> 참고자료 (Reference)
+                        <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["cs_reference"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["cs_reference"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/KnowledgeBase">
+                            <span class="oi oi-book" aria-hidden="true"></span> 지식 베이스 (Knowledge Base)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/ServiceLevelAgreements">
+                            <span class="oi oi-spreadsheet" aria-hidden="true"></span> SLA (Service Level Agreements)
+                        </NavLink>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================= -->
+        <!-- 1단계: 현장 서비스 (Field Service) -->
+        <!-- ================================= -->
+        <div class="nav-item px-3">
+            <a class="nav-link" @onclick="@(() => ToggleSubMenu("fieldService"))" @onclick:stopPropagation>
+                <span class="oi oi-wrench" aria-hidden="true"></span> 현장 서비스 (Field Service)
+                <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["fieldService"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+            </a>
+            <div class="@(collapseSubMenus["fieldService"] ? "collapse" : null)">
+                <!-- 2단계: 자산/고객 (Assets/Customers) -->
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("fs_assets"))" @onclick:stopPropagation>
+                        <span class="oi oi-box" aria-hidden="true"></span> 자산/고객 (Assets/Customers)
+                        <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["fs_assets"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["fs_assets"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/Assets">
+                            <span class="oi oi-box" aria-hidden="true"></span> 자산 (Assets)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Accounts">
+                            <span class="oi oi-people" aria-hidden="true"></span> 고객 (Accounts)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Contacts">
+                            <span class="oi oi-person" aria-hidden="true"></span> 연락처 (Contacts)
+                        </NavLink>
+                    </div>
+                </div>
+
+                <!-- 2단계: 운영 (Operations) -->
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("fs_operations"))" @onclick:stopPropagation>
+                        <span class="oi oi-cog" aria-hidden="true"></span> 운영 (Operations)
+                        <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["fs_operations"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["fs_operations"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/WorkOrders">
+                            <span class="oi oi-wrench" aria-hidden="true"></span> 작업 주문 (Work Orders)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/ResourceScheduling">
+                            <span class="oi oi-clock" aria-hidden="true"></span> 리소스 일정 (Resource Scheduling)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/ServiceTerritories">
+                            <span class="oi oi-map" aria-hidden="true"></span> 서비스 지역 (Service Territories)
+                        </NavLink>
+                    </div>
+                </div>
+
+                <!-- 2단계: 참고자료 (Reference) -->
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("fs_reference"))" @onclick:stopPropagation>
+                        <span class="oi oi-book" aria-hidden="true"></span> 참고자료 (Reference)
+                        <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["fs_reference"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["fs_reference"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/ServiceTasks">
+                            <span class="oi oi-task" aria-hidden="true"></span> 서비스 작업 (Service Tasks)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/IncidentTypes">
+                            <span class="oi oi-bolt" aria-hidden="true"></span> 인시던트 유형 (Incident Types)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/PriceLists">
+                            <span class="oi oi-tags" aria-hidden="true"></span> 가격표 (Price Lists)
+                        </NavLink>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ======================================= -->
+        <!-- 1단계: 프로젝트 서비스 (Project Operations) -->
+        <!-- ======================================= -->
+        <div class="nav-item px-3">
+            <a class="nav-link" @onclick="@(() => ToggleSubMenu("projectOperations"))" @onclick:stopPropagation>
+                <span class="oi oi-task" aria-hidden="true"></span> 프로젝트 서비스 (Project Operations)
+                <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["projectOperations"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+            </a>
+            <div class="@(collapseSubMenus["projectOperations"] ? "collapse" : null)">
+                <!-- 2단계: 프로젝트 (Projects) -->
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("po_projects"))" @onclick:stopPropagation>
+                        <span class="oi oi-task" aria-hidden="true"></span> 프로젝트 (Projects)
+                        <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["po_projects"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["po_projects"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/Projects">
+                            <span class="oi oi-task" aria-hidden="true"></span> 프로젝트 (Projects)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/Tasks">
+                            <span class="oi oi-list" aria-hidden="true"></span> 작업 (Tasks)
+                        </NavLink>
+                    </div>
+                </div>
+
+                <!-- 2단계: 실행 (Delivery) -->
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("po_delivery"))" @onclick:stopPropagation>
+                        <span class="oi oi-graph" aria-hidden="true"></span> 실행 (Delivery)
+                        <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["po_delivery"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["po_delivery"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/TimeEntries">
+                            <span class="oi oi-clock" aria-hidden="true"></span> 시간 입력 (Time Entries)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/ExpenseEntries">
+                            <span class="oi oi-dollar" aria-hidden="true"></span> 비용 입력 (Expense Entries)
+                        </NavLink>
+                    </div>
+                </div>
+
+                <!-- 2단계: 참고자료 (Reference) -->
+                <div class="nav-item ms-3">
+                    <a class="nav-link" @onclick="@(() => ToggleSubMenu("po_reference"))" @onclick:stopPropagation>
+                        <span class="oi oi-book" aria-hidden="true"></span> 참고자료 (Reference)
+                        <span class="oi oi-chevron-right submenu-chevron @(collapseSubMenus["po_reference"] ? "collapsed" : "expanded")" aria-hidden="true"></span>
+                    </a>
+                    <div class="@(collapseSubMenus["po_reference"] ? "collapse" : null)">
+                        <NavLink class="nav-link ms-3" href="/Contracts">
+                            <span class="oi oi-document" aria-hidden="true"></span> 계약 (Contracts)
+                        </NavLink>
+                        <NavLink class="nav-link ms-3" href="/PriceLists">
+                            <span class="oi oi-tags" aria-hidden="true"></span> 가격표 (Price Lists)
+                        </NavLink>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -142,12 +481,43 @@
 
     private Dictionary<string, bool> collapseSubMenus = new Dictionary<string, bool>
     {
+        // 예시 메뉴
         { "blazorApp", true },
         { "todoListInMemory", true },
         { "blazorFundamentals", true },
         { "fundamentals", true },
         { "components", true },
         { "crud", true },
+
+        // 영업 (Sales)
+        { "sales", false },
+        { "sales_customers", true },
+        { "sales_core", true },
+        { "sales_reference", true },
+
+        // 마케팅 (Marketing)
+        { "marketing", true },
+        { "marketing_audience", true },
+        { "marketing_execution", true },
+        { "marketing_reference", true },
+
+        // 고객 서비스 (Customer Service)
+        { "customerService", true },
+        { "cs_customers", true },
+        { "cs_service", true },
+        { "cs_reference", true },
+
+        // 현장 서비스 (Field Service)
+        { "fieldService", true },
+        { "fs_assets", true },
+        { "fs_operations", true },
+        { "fs_reference", true },
+
+        // 프로젝트 서비스 (Project Operations)
+        { "projectOperations", true },
+        { "po_projects", true },
+        { "po_delivery", true },
+        { "po_reference", true },
     };
 
     private void ToggleSubMenu(string key)
