@@ -1,0 +1,1 @@
+﻿VisualAcademy\Data\ApplicationUser.cs 경로로 이동
