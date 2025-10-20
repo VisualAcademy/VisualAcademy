@@ -97,5 +97,6 @@
   <ItemGroup>
     <None Include="Scripts\Employee_FormData_EmploymentHistory_Extract.sql" />
     <None Include="Scripts\Employee_FormData_EducationHistory_Extract.sql" />
+    <None Include="Scripts\Employee_FormData_AliasNames_Extract.sql" />
   </ItemGroup>
 </Project>
