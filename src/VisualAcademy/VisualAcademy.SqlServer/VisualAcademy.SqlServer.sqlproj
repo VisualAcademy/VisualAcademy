@@ -94,4 +94,7 @@
     <Build Include="dbo\Tables\Identity\AspNetUsers.sql" />
     <Build Include="dbo\Tables\Identity\AspNetUserTokens.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Employee_FormData_EmploymentHistory_Extract.sql" />
+  </ItemGroup>
 </Project>
