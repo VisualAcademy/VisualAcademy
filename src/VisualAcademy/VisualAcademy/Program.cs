@@ -252,6 +252,11 @@ namespace VisualAcademy
             // DI ¹­À½
             builder.Services.AddAzuntWeb(builder.Configuration);
 
+
+            builder.Services.AddDbContext<Azunt.Data.LogsDbContext>(opt =>
+                opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
             // ¾Û ºôµå
             var app = builder.Build();
 
