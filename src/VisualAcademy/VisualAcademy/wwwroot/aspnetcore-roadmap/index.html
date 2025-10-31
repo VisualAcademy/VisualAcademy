@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ASP.NET Core 강의 소개 & 로드맵 — 박용준</title>
+  <meta name="description" content="박용준 강사의 ASP.NET Core 강의 소개와 수강 로드맵. 기초 C#부터 배포/운영, 클라우드까지 한 번에!"/>
+  <link rel="stylesheet" href="./assets/styles.css"/>
+</head>
+<body>
+  <!-- Top Nav (simple) -->
+  <nav class="topnav">
+    <div class="container inner">
+      <div class="brand">
+        <div class="brand-badge"></div>
+        <span>ASP.NET Core Roadmap</span>
+      </div>
+      <div class="links">
+        <a href="#" data-scrollto="overview" class="tab">개요</a>
+        <a href="#" data-scrollto="roadmap" class="tab active">로드맵</a>
+        <a href="#" data-scrollto="modules" class="tab">강의 목록</a>
+        <a href="#" data-scrollto="faq" class="tab">FAQ</a>
+      </div>
+      <div class="actions">
+        <a class="cta-btn" href="#" data-scrollto="faq">문의</a>
+        <a class="cta-btn primary" href="#" data-scrollto="roadmap">시작하기</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="overview">
+    <div class="media">
+      <img src="./assets/hero.svg" alt="ASP.NET Core 로드맵 배너"/>
+    </div>
+    <div class="overlay"></div>
+    <div class="content">
+      <div class="container">
+        <span class="kicker">박용준 강의</span>
+        <h1>ASP.NET Core 강의 소개 & 로드맵</h1>
+        <p>
+          .NET 및 C# 기초부터 ASP.NET Core MVC · Razor Pages · Blazor · Web API ·
+          Entity Framework Core · 인증/인가 · 배포/운영 · Azure App Service까지,
+          현업 중심의 커리큘럼으로 단계별 완주를 돕습니다.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Subnav -->
+  <div class="subnav">
+    <div class="container">
+      <div class="tabs">
+        <a href="#" data-scrollto="overview" class="tab">개요</a>
+        <a href="#" data-scrollto="highlights" class="tab">특장점</a>
+        <a href="#" data-scrollto="roadmap" class="tab active">로드맵</a>
+        <a href="#" data-scrollto="modules" class="tab">강의 목록</a>
+        <a href="#" data-scrollto="faq" class="tab">FAQ</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Highlights (features) -->
+  <section class="section" id="highlights">
+    <div class="container">
+      <h2>왜 이 강의인가요?</h2>
+      <p class="sub">실무 흐름을 그대로 반영한, 단계별 러닝 경로를 제공합니다.</p>
+      <div class="features">
+        <div class="card">
+          <img src="./assets/feature1.svg" width="48" height="48" alt="아이콘"/>
+          <h3>체계적 로드맵</h3>
+          <p>기초 → 백엔드 → 프론트엔드 → 데이터 → 클라우드 배포까지 순차적으로 연결됩니다.</p>
+        </div>
+        <div class="card">
+          <img src="./assets/feature2.svg" width="48" height="48" alt="아이콘"/>
+          <h3>실전 중심</h3>
+          <p>MVC/Blazor/Web API/EF Core/Identity/Serilog/Azure 등 현업 필수 스택을 집중 학습.</p>
+        </div>
+        <div class="card">
+          <img src="./assets/feature3.svg" width="48" height="48" alt="아이콘"/>
+          <h3>확장 가능한 설계</h3>
+          <p>DI/구성/로깅/미들웨어/테스트 전략으로 유지보수와 확장에 강합니다.</p>
+        </div>
+        <div class="card">
+          <img src="./assets/feature4.svg" width="48" height="48" alt="아이콘"/>
+          <h3>클라우드 배포</h3>
+          <p>Azure App Service를 활용한 배포·스케일링·모니터링까지 한 번에 익힙니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap -->
+  <section class="section" id="roadmap">
+    <div class="container">
+      <h2>추천 수강 로드맵</h2>
+      <p class="sub">FAQ에서 가장 많이 묻는 “어떤 순서로 들어야 하나요?”에 대한 답입니다.</p>
+      <div class="timeline">
+        <!-- Steps -->
+        <div class="step">
+          <div class="dot"></div>
+          <div class="body">
+            <h3>1. C# & .NET 기초</h3>
+            <p>언어 문법, OOP, 컬렉션, LINQ, 비동기(Async/Await), .NET 런타임 이해.</p>
+            <div class="badges">
+              <span class="badge primary">필수</span><span class="badge">초급</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot"></div>
+          <div class="body">
+            <h3>2. ASP.NET Core Fundamentals</h3>
+            <p>Program/Startup, DI, 구성(Configuration), 환경, 로깅, 미들웨어 파이프라인.</p>
+            <div class="badges">
+              <span class="badge primary">핵심</span><span class="badge">초·중급</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot"></div>
+          <div class="body">
+            <h3>3. MVC 패턴 & Razor Pages</h3>
+            <p>라우팅, 컨트롤러/뷰, 모델 바인딩/검증, 태그 헬퍼, Razor Pages로 CRUD 구축.</p>
+            <div class="badges">
+              <span class="badge primary">웹 기초</span><span class="badge">중급</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot"></div>
+          <div class="body">
+            <h3>4. Entity Framework Core (DB)</h3>
+            <p>Code-First/DB-First, 마이그레이션, 관계 매핑, LINQ 쿼리, 성능/추적 제어.</p>
+            <div class="badges">
+              <span class="badge success">실무</span><span class="badge">중급</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot"></div>
+          <div class="body">
+            <h3>5. 인증/인가 & Identity</h3>
+            <p>쿠키/토큰, ASP.NET Core Identity, 외부 로그인, 역할/정책 기반 권한.</p>
+            <div class="badges">
+              <span class="badge primary">보안</span><span class="badge">중급</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot"></div>
+          <div class="body">
+            <h3>6. Web API & Swagger</h3>
+            <p>REST 설계, 모델 유효성, 버저닝, Swagger/OpenAPI, 필터, 예외 처리.</p>
+            <div class="badges">
+              <span class="badge success">실무</span><span class="badge">중급</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot"></div>
+          <div class="body">
+            <h3>7. Blazor (Server & WebAssembly)</h3>
+            <p>상태 관리, 양방향 바인딩, Form, 인증 연계, 컴포넌트 아키텍처.</p>
+            <div class="badges">
+              <span class="badge">프론트엔드</span><span class="badge">중급</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot"></div>
+          <div class="body">
+            <h3>8. 고급: 미들웨어/필터/성능/캐싱</h3>
+            <p>고성능 엔드포인트, 응답 캐싱, 분산 캐시, 정책 캐시, 병목 분석.</p>
+            <div class="badges">
+              <span class="badge warn">고급</span><span class="badge">중·고급</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot"></div>
+          <div class="body">
+            <h3>9. 로깅/모니터링 (Serilog 등)</h3>
+            <p>구조적 로깅, 분산 추적, 대시보드, 예외/성능 모니터링.</p>
+            <div class="badges">
+              <span class="badge">운영</span><span class="badge">중급</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot"></div>
+          <div class="body">
+            <h3>10. 배포 & Azure App Service</h3>
+            <p>IIS/리눅스/Nginx 배포, Azure App Service 배포·스케일·슬롯·로그 스트림.</p>
+            <div class="badges">
+              <span class="badge primary">클라우드</span><span class="badge success">필수</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot"></div>
+          <div class="body">
+            <h3>11. CI/CD (GitHub Actions, Azure Pipelines)</h3>
+            <p>빌드/테스트/배포 자동화, 비밀관리(Key Vault), 단계적 배포(Blue/Green).</p>
+            <div class="badges">
+              <span class="badge">DevOps</span><span class="badge">중·고급</span>
+            </div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="dot"></div>
+          <div class="body">
+            <h3>12. 실전 프로젝트 & 리팩터링</h3>
+            <p>도메인 설계, 모듈화, 테스트, 성능 최적화, 보안 점검, 문서화.</p>
+            <div class="badges">
+              <span class="badge success">완주</span><span class="badge">포트폴리오</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="actions" style="margin-top:16px;">
+        <button id="copy-roadmap" class="cta-btn">로드맵 복사</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modules -->
+  <section class="section" id="modules">
+    <div class="container">
+      <h2>세부 강의 목록</h2>
+      <p class="sub">로드맵에 맞춘 추천 강의 구성.</p>
+      <div class="modules">
+        <div class="card module">
+          <h3>입문: C# & .NET 핵심</h3>
+          <p class="meta"><span>난이도: 초급</span> · <span>시간: 10h</span></p>
+          <p>문법/컬렉션/LINQ/비동기/예외처리/유닛테스트 맛보기.</p>
+        </div>
+        <div class="card module">
+          <h3>ASP.NET Core 빠르게 시작하기</h3>
+          <p class="meta"><span>난이도: 초중급</span> · <span>시간: 8h</span></p>
+          <p>DI·구성·미들웨어·로그로 웹앱의 토대를 구축.</p>
+        </div>
+        <div class="card module">
+          <h3>MVC & Razor Pages 실전</h3>
+          <p class="meta"><span>난이도: 중급</span> · <span>시간: 12h</span></p>
+          <p>CRUD, 검증, 파일 업로드, 페이지 모델, SEO/라우팅.</p>
+        </div>
+        <div class="card module">
+          <h3>EF Core 데이터 액세스</h3>
+          <p class="meta"><span>난이도: 중급</span> · <span>시간: 10h</span></p>
+          <p>마이그레이션, 관계/성능, 트랜잭션, 저장 프로시저.</p>
+        </div>
+        <div class="card module">
+          <h3>Identity 인증/인가</h3>
+          <p class="meta"><span>난이도: 중급</span> · <span>시간: 8h</span></p>
+          <p>로그인/회원가입, Roles/Policies, Claims, 외부 로그인.</p>
+        </div>
+        <div class="card module">
+          <h3>Web API & Swagger</h3>
+          <p class="meta"><span>난이도: 중급</span> · <span>시간: 9h</span></p>
+          <p>REST, 필터, 버저닝, OpenAPI 문서화, 보안 베스트프랙티스.</p>
+        </div>
+        <div class="card module">
+          <h3>Blazor Server & WASM</h3>
+          <p class="meta"><span>난이도: 중급</span> · <span>시간: 12h</span></p>
+          <p>상태관리, 폼/검증, 컴포넌트 패턴, 인증 연동.</p>
+        </div>
+        <div class="card module">
+          <h3>운영: 성능·캐싱·로깅</h3>
+          <p class="meta"><span>난이도: 중·고급</span> · <span>시간: 8h</span></p>
+          <p>분석/캐싱/분산추적/Serilog/대시보드로 운영 품질 개선.</p>
+        </div>
+        <div class="card module">
+          <h3>배포: Azure App Service</h3>
+          <p class="meta"><span>난이도: 중급</span> · <span>시간: 6h</span></p>
+          <p>빌드/배포, 슬롯, 스케일링, 진단 로그/Log Stream, 헬스체크.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <h2>FAQ</h2>
+      <p class="sub">자주 묻는 질문</p>
+      <div class="accordion">
+        <div class="acc-item">
+          <button class="acc-btn">
+            <span>Q1. 완전 처음인데, 어디서 시작하나요?</span>
+            <span class="chev">▶</span>
+          </button>
+          <div class="acc-panel">
+            C# & .NET 기초 → ASP.NET Core Fundamentals → MVC/Razor Pages 순서를 추천합니다. 
+            이후 EF Core와 Identity를 통해 데이터/보안을 익히세요.
+          </div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-btn">
+            <span>Q2. API와 프론트엔드는 언제 배우나요?</span>
+            <span class="chev">▶</span>
+          </button>
+          <div class="acc-panel">
+            MVC/Razor Pages 이후 Web API를 학습하고, Blazor(Server/WASM)로 프론트엔드까지 확장하세요.
+          </div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-btn">
+            <span>Q3. 배포와 운영은 어떻게 하나요?</span>
+            <span class="chev">▶</span>
+          </button>
+          <div class="acc-panel">
+            Azure App Service로 배포/스케일링을 실습하고, Serilog와 모니터링으로 운영 품질을 높입니다.
+            CI/CD는 GitHub Actions 또는 Azure Pipelines를 추천합니다.
+          </div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-btn">
+            <span>Q4. 추천 수강 순서를 한 줄로 요약하면?</span>
+            <span class="chev">▶</span>
+          </button>
+          <div class="acc-panel">
+            <strong>입문</strong> C#/.NET → <strong>핵심</strong> ASP.NET Core 기본 → <strong>웹</strong> MVC/Razor → 
+            <strong>DB</strong> EF Core → <strong>보안</strong> Identity → <strong>API</strong> Web API/Swagger → 
+            <strong>UI</strong> Blazor → <strong>운영</strong> 성능/로깅 → <strong>배포</strong> Azure App Service → 
+            <strong>DevOps</strong> CI/CD → <strong>완주</strong> 실전 프로젝트.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="cta">
+        <h3>지금 바로 로드맵을 시작해 보세요</h3>
+        <p>기초부터 배포까지, 한 흐름으로 연결된 실전 커리큘럼.</p>
+        <div class="actions">
+          <a class="cta-btn primary" href="#" data-scrollto="roadmap">로드맵 보기</a>
+          <a class="cta-btn" href="#" data-scrollto="faq">문의하기</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container row">
+      <div>© 박용준 • ASP.NET Core 강의 로드맵</div>
+      <div><a href="#" data-scrollto="overview">맨 위로</a></div>
+    </div>
+  </footer>
+
+  <script src="./assets/app.js"></script>
+</body>
+</html>
