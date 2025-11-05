@@ -2,6 +2,10 @@
 
 VisualAcademy 채널에 오신 걸 환영합니다.
 
+## 최근 유튜브 동영상
+
+[Visual Studio 2026 설치 - .NET 10 개발 환경 구축](https://youtu.be/HZoXN4fRSRs?si=KgMTPTCzGTFzqqMw)
+
 ## 데브렉 강의
 
 ### Blazor Server Fundamentals 
