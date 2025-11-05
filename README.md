@@ -6,6 +6,8 @@ VisualAcademy 채널에 오신 걸 환영합니다.
 
 [Visual Studio 2026 설치 - .NET 10 개발 환경 구축](https://youtu.be/HZoXN4fRSRs?si=KgMTPTCzGTFzqqMw)
 
+[ASP.NET Core 10.0 기반 MVC·Razor Pages·Blazor Server 통합 프로젝트 실행하기](https://youtu.be/Wtz_wVDVIKg?si=R6CVsAXW4y_w1W02)
+
 ## 데브렉 강의
 
 ### Blazor Server Fundamentals 
