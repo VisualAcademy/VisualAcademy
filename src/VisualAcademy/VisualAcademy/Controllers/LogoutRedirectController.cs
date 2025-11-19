@@ -1,9 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-
-namespace VisualAcademy.Controllers;
+﻿namespace VisualAcademy.Controllers;
 
 [IgnoreAntiforgeryToken]
 public class LogoutRedirectController : Controller
