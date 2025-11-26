@@ -28,6 +28,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+#region Hello, World!
+//app.MapGet("/", () => "Hello World!");
+app.MapGet("/version", () => "ASP.NET Core 10.0");
+#endregion
+
 #region HTTP
 // C# 11.0 버전의 원시 문자열 리터럴(Raw string literals)
 string htmlTag = """
