@@ -106,4 +106,7 @@
     <None Include="Scripts\Employee_FormData_ProfessionalLicenses_Extract.sql" />
     <None Include="Seed\LicenseTypes.seed.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.PostDeployment.sql" />
+  </ItemGroup>
 </Project>
