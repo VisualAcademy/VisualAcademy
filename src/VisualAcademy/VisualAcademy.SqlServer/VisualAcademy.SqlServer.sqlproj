@@ -61,6 +61,7 @@
     <Folder Include="Scripts" />
     <Folder Include="dbo\Tables\Identity" />
     <Folder Include="dbo\Tables\TextTemplates" />
+    <Folder Include="Seed" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Broths.sql" />
@@ -87,6 +88,7 @@
     <Build Include="dbo\Tables\Identity\AspNetUserPasskeys.sql" />
     <Build Include="dbo\Tables\Devices.sql" />
     <Build Include="dbo\Tables\Categories.sql" />
+    <Build Include="dbo\Tables\LicenseTypes.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Identity\AspNetRoleClaims.sql" />
@@ -102,5 +104,6 @@
     <None Include="Scripts\Employee_FormData_EducationHistory_Extract.sql" />
     <None Include="Scripts\Employee_FormData_AliasNames_Extract.sql" />
     <None Include="Scripts\Employee_FormData_ProfessionalLicenses_Extract.sql" />
+    <None Include="Seed\LicenseTypes.seed.sql" />
   </ItemGroup>
 </Project>
