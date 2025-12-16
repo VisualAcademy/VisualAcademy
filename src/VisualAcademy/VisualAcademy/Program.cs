@@ -40,6 +40,13 @@ namespace VisualAcademy
 
             //[!] ConfigureServices... Startup.cs 파일에서 ConfigureServices 메서드 영역: 
 
+
+
+            // QuestPDF license
+            QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
+
+
+
             // Add services to the container.
             builder.Services.AddRazorPages(); // Razor Pages
             builder.Services.AddControllersWithViews(); // MVC
