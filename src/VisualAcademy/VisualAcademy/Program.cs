@@ -3,30 +3,26 @@ using Azunt.DepotManagement;
 using Azunt.DivisionManagement;
 using Azunt.EmployeeManagement;
 using Azunt.Endpoints;
-using Azunt.Infrastructures;
 using Azunt.Models.Enums;
 using Azunt.ResourceManagement;
 using Azunt.TenantSettingManagement;
-using Azunt.Web.Data;
 using Azunt.Web.Infrastructure.Extensions;
 using Azunt.Web.Infrastructures;
 using Azunt.Web.Policies;
 using Azunt.Web.Settings;
-using Dalbodre.Infrastructures.Cores;
 using DotNetNote.Endpoints;
 using Hawaso.Infrastructures;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Options;
 using RedPlus.Services;
-using System.Configuration;
 using System.Net.Http.Headers;
 using VisualAcademy.Areas.Identity;
-using VisualAcademy.Areas.Identity.Services;
 using VisualAcademy.Components.Pages.ApplicantsTransfers;
 using VisualAcademy.Infrastructures;
 using VisualAcademy.Models.Candidates;
 using VisualAcademy.Models.TextTemplates;
 using VisualAcademy.Repositories.Tenants;
+using VisualAcademy.Settings;
 using VisualAcademy.Settings.Translators;
 
 namespace VisualAcademy
@@ -41,10 +37,22 @@ namespace VisualAcademy
             //[!] ConfigureServices... Startup.cs 파일에서 ConfigureServices 메서드 영역: 
 
 
+            // -------------------------------------------------
+            // 1) Stripe 설정 바인딩 (Settings/StripeSettings.cs)
+            // -------------------------------------------------
+            builder.Services.Configure<StripeSettings>(
+                builder.Configuration.GetSection("Stripe"));
+
+
+            // -------------------------------------------------
+            // Azure Blob Storage settings (for invoice PDF files)
+            // -------------------------------------------------
+            builder.Services.Configure<AzureBlobSettings>(
+                builder.Configuration.GetSection("AzureBlob"));
+
 
             // QuestPDF license
             QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
-
 
 
             // Add services to the container.
