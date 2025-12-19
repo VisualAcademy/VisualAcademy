@@ -90,6 +90,7 @@
     <Build Include="dbo\Tables\Categories.sql" />
     <Build Include="dbo\Tables\LicenseTypes.sql" />
     <Build Include="dbo\Tables\InvoiceItemTemplates.sql" />
+    <Build Include="dbo\Tables\InvoiceNumberSequences.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Identity\AspNetRoleClaims.sql" />
