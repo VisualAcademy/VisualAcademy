@@ -1,4 +1,63 @@
-﻿<h3>PayByBankTransfer</h3>
+﻿@* 
+================================================================================
+PayByBankTransfer.razor (Portal) - Bank Transfer 안내 페이지
+Path: Pages\Portal\PayByBankTransfer.razor
+Route: /portal/pay-by-bank-transfer/{Id:long}
+Auth: [Authorize] (로그인 사용자만 접근)
+
+[목적]
+- 카드 결제(Stripe 등)가 아닌 "은행 이체(ACH/Wire)"로 인보이스를 결제하려는 사용자를 위해
+  이체 안내문 + 인보이스 요약 정보를 표시한다.
+- 실제 '결제 처리(수납/정산/상태 변경)'는 이 페이지에서 수행하지 않는다.
+  => 사용자가 이체를 완료한 뒤, 포털 관리자가 입금 내역을 확인하여 Invoice를 Paid 처리한다.
+
+[화면 구성]
+1) 좌측(Instruction)
+   - 이체 방법 안내문(샘플 텍스트 포함)
+   - 송금해야 할 금액/통화, 인보이스 번호, 클라이언트 정보 표시
+   - 수취인/은행 정보(현재는 sample) 표시
+   - 결제 참조(Payment reference)로 "Invoice {InvoiceNumber} + 조직명" 안내
+
+2) 우측(Invoice summary)
+   - Invoice 번호(없으면 #Id fallback)
+   - Client 조직명 + BillingEmail
+   - Amount due (Total + Currency)
+   - Due date (DueDateUtc, 없으면 N/A)
+
+[데이터 로딩 프로세스]
+- 초기 로딩 시 _loading = true
+- OnInitializedAsync()에서 DB 조회:
+  Db.Invoices
+    .Include(i => i.Client)
+    .FirstOrDefaultAsync(i => i.Id == Id && !i.IsDeleted)
+- 조회 완료 후 _loading = false
+- 결과에 따라:
+  - _loading = true  : "Loading invoice..."
+  - _invoice = null  : "Invoice could not be found" 오류 박스
+  - _invoice != null : 정상 화면 렌더링
+
+[네비게이션]
+- "Back to Pay Now" 버튼 클릭 시:
+  Nav.NavigateTo("/portal/pay/{Id}", forceLoad: true)
+  => 동일 인보이스의 일반 결제 페이지로 복귀
+
+[유지보수/주의사항]
+- 이 페이지는 '안내 페이지'이므로 결제 상태(예: Paid) 업데이트 로직이 없음.
+  실제 Paid 처리는 관리자(Portal Admin) 측 기능/프로세스에서 수행해야 한다.
+- Bank details 영역은 현재 "Potawatomi - sample" 하드코딩.
+  운영 반영 시:
+  1) 테넌트별 은행계좌 정보를 DB/설정(Options)로 분리하거나
+  2) Invoice/Tenant/Client에 매핑된 BankAccount 엔티티로 관리하는 방식을 권장.
+- 보안: 계좌정보 노출 범위(누가 볼 수 있는지)와 테넌트 분리(tenant isolation) 정책 확인 필요.
+
+[TODO 후보]
+- 테넌트별 은행계좌 정보 동적 바인딩 (sample 제거)
+- Payment reference 규칙을 시스템 표준으로 정리(예: InvoiceNumber 필수화 등)
+- Invoice 접근 권한 체크 강화(현재는 [Authorize]만 존재: 소속/권한 기반 필터 필요할 수 있음)
+================================================================================
+*@
+
+<h3>PayByBankTransfer</h3>
 
 @code {
 

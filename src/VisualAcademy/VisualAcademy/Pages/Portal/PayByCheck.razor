@@ -1,0 +1,75 @@
+﻿@* 
+================================================================================
+PayByCheck.razor (Portal) - Check(수표) 우편 결제 안내 페이지
+Path: Pages\Portal\PayByCheck.razor
+Route: /portal/pay-by-check/{Id:long}
+Auth: [Authorize] (로그인 사용자만 접근)
+
+[목적]
+- 온라인 카드결제/계좌이체가 아닌, "종이 수표(Check)를 우편으로 발송"하여 인보이스를 결제하려는
+  사용자를 위해 안내문 + 인보이스 요약 정보를 제공한다.
+- 이 페이지 자체는 결제를 처리하지 않으며(수표 수령/입금/정산 없음), 단지 안내(Instructions) 화면이다.
+  => 수표가 실제로 수령/입금되고 결제 확인이 끝나면, 포털 관리자(Portal Admin)가 시스템에서 Invoice를 Paid 처리한다.
+
+[화면 구성]
+1) 좌측(Instructions)
+   - 수표 결제 안내문(샘플 텍스트 포함)
+   - 결제해야 할 금액/통화(Amount due), 인보이스 번호, Tenant 식별자(현재 TenantId 표시) 노출
+   - 수표 수취인명(Make check payable to) 안내: 현재 "VisualAcademy - sample" 하드코딩
+   - 우편 주소(Mailing address) 안내: 현재 샘플 주소 하드코딩
+   - 메모(Memo line)에 "Invoice {InvoiceNumber} + 조직명"을 기입하도록 안내하여 매칭 가능성을 높임
+   - 하단에 "Back to Pay Now" 버튼 제공(현 코드에서는 card-footer에 배치)
+
+2) 우측(Invoice summary)
+   - Client 조직명 + BillingEmail
+   - 인보이스 상태(Status), 발행일(UTC), 만기일(UTC)
+   - Subtotal / Tax (각각 통화 포함)
+   ※ 이 페이지는 요약 정보 제공 목적이며, 결제/상태 변경을 수행하지 않는다.
+
+[데이터 로딩 프로세스]
+- 초기 상태: _loading = true
+- OnInitializedAsync()에서 Id 파라미터 기반으로 Invoice 조회:
+  Db.Invoices
+    .Include(i => i.Client)
+    .FirstOrDefaultAsync(i => i.Id == Id && !i.IsDeleted)
+- 로딩 완료: _loading = false
+- 렌더링 분기:
+  - _loading = true  : "Loading invoice..."
+  - _invoice = null  : "Invoice could not be found or is no longer available." 오류 박스
+  - _invoice != null : 안내/요약 UI 렌더링
+
+[네비게이션]
+- "Back to Pay Now" 버튼 클릭 시:
+  Nav.NavigateTo("/portal/pay/{Id}", forceLoad: true)
+  => 동일 인보이스의 일반 결제 페이지로 복귀
+
+[유지보수/주의사항]
+- 결제 확정 로직 없음:
+  - 수표 결제는 오프라인 프로세스(우편 수령 → 입금 → 정산)라서,
+    시스템 상 Paid 처리는 관리자(Portal Admin) 기능/운영 절차에 의존한다.
+- 샘플 데이터 하드코딩:
+  - "VisualAcademy Authority" / Mailing address 등은 현재 sample.
+  - 운영 반영 시 테넌트별로 다른 수취인/주소를 사용할 수 있으므로
+    (1) 테넌트별 설정(Options/DB) 분리 또는
+    (2) Tenant/Invoice에 연결되는 PaymentInstruction(또는 RemittanceAddress) 엔터티 도입을 권장.
+- Tenant 표시 방식:
+  - 현재 좌측 안내에서 "Tenant: @_invoice.TenantId"만 노출함.
+  - 실제 사용자에게 의미가 부족할 수 있으므로, 필요 시 TenantName(표시명) 등으로 교체 고려.
+- 보안/권한:
+  - [Authorize]만으로는 "해당 인보이스를 볼 수 있는 사용자"를 충분히 제한하지 못할 수 있음.
+    (예: 다른 Client가 URL Id를 추측해 접근하는 경우)
+  - 운영 환경에서는 소속/권한 기반 필터(tenant/client ownership) 확인 및 강화 필요.
+
+[TODO 후보]
+- 수취인명/우편주소를 테넌트별 동적 바인딩으로 전환(sample 제거)
+- Memo line 규칙을 표준화(예: InvoiceNumber 필수화, Reference 포맷 고정)
+- Invoice 접근 제어 강화(Invoice가 로그인 사용자/조직에 속하는지 검증)
+- 우측 summary 항목 확장(예: Total, Balance due 등) 또는 표시 정책 통일
+================================================================================
+*@
+
+<h3>PayByCheck</h3>
+
+@code {
+
+}
