@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace VisualAcademy.Models;
 
-namespace VisualAcademy.Models
+public class PostSummary
 {
-    public class PostSummary
-    {
-        public string BlogName { get; set; }
-        public string PostTitle { get; set; }
-        public DateOnly PublishedOn { get; set; }
-    }
+    public string BlogName { get; set; } = string.Empty;
+    public string PostTitle { get; set; } = string.Empty;
+    public DateOnly PublishedOn { get; set; }
 }
