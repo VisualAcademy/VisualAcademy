@@ -1,8 +1,9 @@
-﻿@page "{id}"
+﻿@page "{id:int}"
 
 @{ 
     // id 이름으로 넘어 온 라우트 토큰 값 받기 
-    var id = int.Parse((string)RouteData.Values["id"]);
+    var idValue = RouteData.Values["id"]?.ToString();
+    var id = int.TryParse(idValue, out var parsed) ? parsed : 0;
 }
 
 <!DOCTYPE html>
