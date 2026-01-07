@@ -14,10 +14,26 @@ public class ApplicantUploadService
         memoryStream.Position = 0; // Reset stream position
 
         using var spreadsheetDocument = SpreadsheetDocument.Open(memoryStream, false);
-        WorkbookPart workbookPart = spreadsheetDocument.WorkbookPart;
-        Sheet sheet = workbookPart.Workbook.Descendants<Sheet>().FirstOrDefault();
-        WorksheetPart worksheetPart = (WorksheetPart)workbookPart.GetPartById(sheet.Id);
-        SheetData sheetData = worksheetPart.Worksheet.Elements<SheetData>().First();
+
+        // WorkbookPart null 가드
+        WorkbookPart workbookPart = spreadsheetDocument.WorkbookPart
+            ?? throw new InvalidOperationException("WorkbookPart is missing in the Excel file.");
+
+        // Sheet null 가드
+        Sheet? sheet = workbookPart.Workbook.Descendants<Sheet>().FirstOrDefault()
+            ?? throw new InvalidOperationException("No worksheet found in the Excel file.");
+
+        // Id를 안전하게 string으로 추출
+        string sheetId = sheet.Id?.Value
+            ?? throw new InvalidOperationException("Worksheet Id is missing.");
+
+        // WorksheetPart null 가드
+        var worksheetPart = workbookPart.GetPartById(sheetId) as WorksheetPart
+            ?? throw new InvalidOperationException("WorksheetPart not found for the given sheet Id.");
+
+        // SheetData null 가드
+        SheetData? sheetData = worksheetPart.Worksheet.Elements<SheetData>().FirstOrDefault()
+            ?? throw new InvalidOperationException("SheetData not found in the worksheet.");
 
         foreach (Row row in sheetData.Elements<Row>().Skip(7))
         {
@@ -130,15 +146,33 @@ public class ApplicantUploadService
         return applicants;
     }
 
-    private string ReadCellValue(WorkbookPart workbookPart, Cell cell)
+    private static string ReadCellValue(WorkbookPart workbookPart, Cell? cell)
     {
+        if (cell == null)
+        {
+            return string.Empty;
+        }
+
+        // SharedString인 경우
         if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
         {
-            return workbookPart.SharedStringTablePart.SharedStringTable.Elements<SharedStringItem>().ElementAt(int.Parse(cell.CellValue.InnerText)).InnerText;
+            var sharedStringPart = workbookPart.SharedStringTablePart
+                ?? throw new InvalidOperationException("SharedStringTablePart is missing.");
+
+            var sharedStringTable = sharedStringPart.SharedStringTable
+                ?? throw new InvalidOperationException("SharedStringTable is missing.");
+
+            var rawIndex = cell.CellValue?.InnerText;
+            if (string.IsNullOrEmpty(rawIndex) || !int.TryParse(rawIndex, out var index))
+            {
+                return string.Empty;
+            }
+
+            var sharedStringItem = sharedStringTable.Elements<SharedStringItem>().ElementAtOrDefault(index);
+            return sharedStringItem?.InnerText ?? string.Empty;
         }
-        else
-        {
-            return cell.CellValue?.InnerText;
-        }
+
+        // 일반 값
+        return cell.CellValue?.InnerText ?? string.Empty;
     }
 }
