@@ -169,8 +169,7 @@ public class LoginModel : PageModel
                     catch (Exception ex)
                     {
                         // 예외 로깅 또는 사용자에게 친절한 에러 메시지 표시
-                        // 예: _logger.LogError("An error occurred: {0}", ex.ToString());
-                        // 사용자에게는 특정 에러 메시지를 반환하거나, 에러 페이지로 리디렉션할 수 있습니다.
+                        _logger.LogError("An error occurred: {0}", ex.ToString());                        
                     }
                 }
 
