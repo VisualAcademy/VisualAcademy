@@ -307,17 +307,35 @@ public partial class Manage : ComponentBase
 
     private async Task GetUserIdAndUserName()
     {
+        // 현재 인증 상태(AuthenticationState) 가져오기
         var authState = await AuthenticationStateProviderRef.GetAuthenticationStateAsync();
+
+        // ClaimsPrincipal (현재 사용자)
         var user = authState.User;
 
-        if (user.Identity.IsAuthenticated)
+        // user.Identity는 null일 수 있으므로 ?. 사용
+        // IsAuthenticated == true 인 경우만 로그인된 사용자로 처리
+        if (user.Identity?.IsAuthenticated == true)
         {
+            // ClaimsPrincipal을 기반으로 실제 ApplicationUser 조회
+            // (외부 로그인, 쿠키 만료 등으로 null이 될 가능성 있음)
             var currentUser = await UserManagerRef.GetUserAsync(user);
-            UserId = currentUser.Id;
-            UserName = user.Identity.Name;
+
+            // currentUser가 null일 수 있으므로 null 병합 연산자 사용
+            // → CS8602 (null 역참조) 방지
+            UserId = currentUser?.Id ?? "";
+
+            // Identity 또는 Name이 null일 수 있으므로 단계적으로 안전하게 처리
+            // 1) Claims의 Name
+            // 2) ApplicationUser의 UserName
+            // 3) 최종 fallback: "Anonymous"
+            UserName = user.Identity?.Name
+                       ?? currentUser?.UserName
+                       ?? "Anonymous";
         }
         else
         {
+            // 비인증 사용자(로그인 안 됨)
             UserId = "";
             UserName = "Anonymous";
         }
