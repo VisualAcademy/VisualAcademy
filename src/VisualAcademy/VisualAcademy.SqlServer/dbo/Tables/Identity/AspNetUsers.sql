@@ -43,6 +43,11 @@
     [AdditionalEmploymentEndDate] DATETIME2(7) NULL, -- 추가 근무 종료일
     [AdditionalEmploymentLocation] NVARCHAR(255) NULL, -- 추가 근무 장소
 
+
+    -- Profile Picture(PFP, Persona Avatar)
+    [ProfilePicture]          VARBINARY(MAX)    NULL,
+
+
     CONSTRAINT [PK_AspNetUsers] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
