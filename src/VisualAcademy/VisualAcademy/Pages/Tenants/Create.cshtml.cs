@@ -4,12 +4,19 @@ namespace VisualAcademy.Pages.Tenants
     {
         private readonly ApplicationDbContext _context;
 
-        public CreateModel(ApplicationDbContext context) => _context = context;
-
-        public IActionResult OnGet() => Page();
+        public CreateModel(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         [BindProperty]
-        public TenantModel TenantModel { get; set; }
+        public TenantModel TenantModel { get; set; } = default!;
+
+        public IActionResult OnGet()
+        {
+            TenantModel = new TenantModel();
+            return Page();
+        }
 
         public async Task<IActionResult> OnPostAsync()
         {
