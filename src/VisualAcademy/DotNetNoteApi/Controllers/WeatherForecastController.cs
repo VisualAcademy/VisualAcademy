@@ -14,6 +14,8 @@ public class WeatherForecastController(ILogger<WeatherForecastController> logger
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
+    public ILogger<WeatherForecastController> Logger { get; } = logger;
+
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get() => Enumerable.Range(1, 5).Select(index => new WeatherForecast
     {
