@@ -5,6 +5,7 @@ using Azunt.EmployeeManagement;
 using Azunt.Endpoints;
 using Azunt.Models.Enums;
 using Azunt.ResourceManagement;
+using Azunt.Services.Terminology;
 using Azunt.TenantSettingManagement;
 using Azunt.Web.Infrastructure.Extensions;
 using Azunt.Web.Infrastructures;
@@ -36,6 +37,12 @@ namespace VisualAcademy
 
             //[!] ConfigureServices... Startup.cs 파일에서 ConfigureServices 메서드 영역: 
 
+            #region Termonology
+            // Terminology 설정 바인딩
+            builder.Services.Configure<TerminologySettings>(builder.Configuration);
+            // Terminology 서비스 등록
+            builder.Services.AddSingleton<ITerminologyService, TerminologyService>();
+            #endregion
 
             // -------------------------------------------------
             // 1) Stripe 설정 바인딩 (Settings/StripeSettings.cs)
