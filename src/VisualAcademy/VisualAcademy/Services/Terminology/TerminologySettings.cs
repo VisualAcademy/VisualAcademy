@@ -1,4 +1,4 @@
-﻿namespace VisualAcademy.Services.Terminology;
+﻿namespace Azunt.Services.Terminology;
 
 public sealed class TerminologySettings
 {

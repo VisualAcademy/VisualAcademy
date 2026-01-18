@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Options;
-using VisualAcademy.Services.Terminology;
 
 namespace Azunt.Services.Terminology;
 
