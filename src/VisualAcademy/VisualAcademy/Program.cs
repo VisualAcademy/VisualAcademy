@@ -37,7 +37,7 @@ namespace VisualAcademy
 
             //[!] ConfigureServices... Startup.cs 파일에서 ConfigureServices 메서드 영역: 
 
-            #region Termonology
+            #region Terminology
             // Terminology 설정 바인딩
             builder.Services.Configure<TerminologySettings>(builder.Configuration);
             // Terminology 서비스 등록
