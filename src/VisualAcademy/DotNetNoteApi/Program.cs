@@ -2,27 +2,24 @@
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
 using System.Security.Claims;
-using System.Text.Encodings.Web;
 using System.Text;
+using System.Text.Encodings.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUserService, UserService>();
-//builder.Services.AddAuthentication("BasicAuthentication")
-//    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
 builder.Services.AddAuthentication()
-    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>(
+        "BasicAuthentication", null);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -32,7 +29,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllers();
@@ -73,6 +69,8 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
 {
     private readonly IUserService _userService;
 
+    // 핵심: 여기는 여전히 ISystemClock을 받되, 경고만 억제한다
+#pragma warning disable CS0618
     public BasicAuthenticationHandler(
         IOptionsMonitor<AuthenticationSchemeOptions> options,
         ILoggerFactory logger,
@@ -80,6 +78,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
         ISystemClock clock,
         IUserService userService)
         : base(options, logger, encoder, clock)
+#pragma warning restore CS0618
     {
         _userService = userService;
     }
@@ -94,65 +93,63 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
 
         try
         {
-            // 1) Authorization 헤더 읽기
             var authHeaderValue = Request.Headers["Authorization"].FirstOrDefault();
 
-            // 헤더가 없으면 즉시 실패 처리
             if (string.IsNullOrEmpty(authHeaderValue))
             {
                 return AuthenticateResult.Fail("Missing Authorization header.");
             }
 
-            // 2) Authorization 헤더 파싱 (Basic Base64 형식 가정)
             var authHeader = AuthenticationHeaderValue.Parse(authHeaderValue);
 
-            // 3) Base64 디코딩
-            var credentialBytes = Convert.FromBase64String(authHeader.Parameter ?? string.Empty);
+            if (!"Basic".Equals(authHeader.Scheme, StringComparison.OrdinalIgnoreCase))
+            {
+                return AuthenticateResult.Fail("Invalid authorization scheme.");
+            }
 
-            // 4) "username:password" 형식으로 분리
+            var credentialBytes =
+                Convert.FromBase64String(authHeader.Parameter ?? string.Empty);
+
             var credentials = Encoding.UTF8
-                                       .GetString(credentialBytes)
-                                       .Split(new[] { ':' }, 2);
+                .GetString(credentialBytes)
+                .Split(new[] { ':' }, 2);
+
+            if (credentials.Length != 2)
+            {
+                return AuthenticateResult.Fail("Invalid Authorization header format.");
+            }
 
             var username = credentials[0];
             var password = credentials[1];
 
-            // 5) 실제 사용자 인증 서비스 호출
             user = await _userService.Authenticate(username, password);
         }
         catch
         {
-            // 파싱 오류, Base64 오류, 서비스 오류 등 모든 예외 처리
             return AuthenticateResult.Fail("Error Occurred. Authorization failed.");
         }
 
-        // 6) 인증 실패 시 처리
         if (user == null)
         {
             return AuthenticateResult.Fail("Invalid Credentials");
         }
 
-        // user.Id / user.Username가 null일 수 있으므로 안전하게 처리
         if (string.IsNullOrEmpty(user.Id) || string.IsNullOrEmpty(user.Username))
         {
             return AuthenticateResult.Fail("Authenticated user has invalid identity data.");
         }
 
-        // 7) 인증 성공 → 클레임 생성 (이제 경고 없음)
         var claims = new[]
         {
-        new Claim(ClaimTypes.NameIdentifier, user.Id),
-        new Claim(ClaimTypes.Name, user.Username)
-    };
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(ClaimTypes.Name, user.Username)
+        };
 
-        // 8) ClaimsIdentity 및 Principal 생성
         var identity = new ClaimsIdentity(claims, Scheme.Name);
         var principal = new ClaimsPrincipal(identity);
 
-        // 9) 인증 티켓 발급
         var ticket = new AuthenticationTicket(principal, Scheme.Name);
 
-        // 10) 최종 성공 반환
         return AuthenticateResult.Success(ticket);
     }
 }
