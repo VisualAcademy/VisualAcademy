@@ -67,14 +67,17 @@
     {
         EmployeeSearchText = e?.Value?.ToString() ?? string.Empty;
 
-        if (string.IsNullOrEmpty(EmployeeSearchText))
+        if (string.IsNullOrWhiteSpace(EmployeeSearchText))
         {
             FilteredEmployees = Employees;
+            return;
         }
-        else
-        {
-            FilteredEmployees = Employees.Where(e => e.FirstName.Contains(EmployeeSearchText, StringComparison.OrdinalIgnoreCase) || e.LastName.Contains(EmployeeSearchText, StringComparison.OrdinalIgnoreCase));
-        }
+
+        var keyword = EmployeeSearchText.Trim();
+
+        FilteredEmployees = Employees.Where(emp =>
+            (emp.FirstName ?? string.Empty).Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
+            (emp.LastName ?? string.Empty).Contains(keyword, StringComparison.OrdinalIgnoreCase));
     }
 
     private void SelectEmployee(Employee emp)
