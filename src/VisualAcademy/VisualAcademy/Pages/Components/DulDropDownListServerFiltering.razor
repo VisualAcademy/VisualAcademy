@@ -65,10 +65,7 @@
 
     private void FilterEmployees(ChangeEventArgs e)
     {
-        if (e != null)
-        {
-            EmployeeSearchText = e.Value.ToString();
-        }
+        EmployeeSearchText = e?.Value?.ToString() ?? string.Empty;
 
         if (string.IsNullOrEmpty(EmployeeSearchText))
         {
