@@ -2,8 +2,9 @@
 {
     public class AzureTranslatorSettings
     {
-        public string Endpoint { get; set; }
-        public string SubscriptionKey { get; set; }
-        public string Region { get; set; }
+        // Non-nullable properties 초기화로 CS8618 경고 제거
+        public string Endpoint { get; set; } = string.Empty;
+        public string SubscriptionKey { get; set; } = string.Empty;
+        public string Region { get; set; } = string.Empty;
     }
 }
