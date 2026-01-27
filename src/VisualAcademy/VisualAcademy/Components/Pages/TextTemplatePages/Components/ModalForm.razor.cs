@@ -41,7 +41,7 @@ public partial class ModalForm : ComponentBase
     [Parameter]
     public TextTemplateModel ModelSender { get; set; }
 
-    public TextTemplateModel ModelEdit { get; set; }
+    public TextTemplateModel ModelEdit { get; set; } = new TextTemplateModel();
 
     #region Lifecycle Methods
     // 넘어온 Model 값을 수정 전용 ModelEdit에 담기 
