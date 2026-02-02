@@ -9,7 +9,7 @@ public class DetailsModel : PageModel
         _context = context;
     }
 
-    public TenantModel TenantModel { get; set; }
+    public TenantModel? TenantModel { get; set; }
 
     public async Task<IActionResult> OnGetAsync(long? id)
     {
