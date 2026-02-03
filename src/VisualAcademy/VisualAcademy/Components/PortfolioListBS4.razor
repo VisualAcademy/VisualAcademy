@@ -1,6 +1,6 @@
-﻿@using RedPlus.Models
+﻿@using Microsoft.AspNetCore.Components.Web
 @using RedPlus.Services
-@using Microsoft.AspNetCore.Components.Web
+@using VisualAcademy.Models
 
 @namespace RedPlus.Components
 
@@ -85,7 +85,7 @@
 }
 
 @code {
-    Portfolio selectedPortfolio = new Portfolio();
+    Portfolio? selectedPortfolio = null;
     int currentRating = 0;
     int voteCount = 0;
     string voteLabel;
