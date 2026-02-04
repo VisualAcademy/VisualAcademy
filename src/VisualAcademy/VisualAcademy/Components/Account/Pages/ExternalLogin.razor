@@ -23,7 +23,7 @@
 <h2>Associate your @ProviderDisplayName account.</h2>
 <hr />
 
-<div  class="alert alert-info">
+<div class="alert alert-info">
     You've successfully authenticated with <strong>@ProviderDisplayName</strong>.
     Please enter an email address for this site below and click the Register button to finish
     logging in.
@@ -31,13 +31,17 @@
 
 <div class="row">
     <div class="col-md-4">
-        <EditForm Model="Input" OnValidSubmit="OnValidSubmitAsync" FormName="confirmation" method="post">
+        @* Use a non-null UI model to avoid CS8602 while keeping SupplyParameterFromForm safe *@
+        <EditForm Model="Model" OnValidSubmit="OnValidSubmitAsync" FormName="confirmation" method="post">
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert" />
             <div class="form-floating mb-3">
-                <InputText @bind-Value="Input.Email" class="form-control" autocomplete="email" placeholder="Please enter your email." />
+                <InputText @bind-Value="Model.Email"
+                           class="form-control"
+                           autocomplete="email"
+                           placeholder="Please enter your email." />
                 <label for="email" class="form-label">Email</label>
-                <ValidationMessage For="() => Input.Email" />
+                <ValidationMessage For="() => Model.Email" />
             </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </EditForm>
@@ -50,11 +54,15 @@
     private string? message;
     private ExternalLoginInfo externalLoginInfo = default!;
 
+    // Always non-null model used by UI and logic
+    private InputModel Model { get; set; } = new();
+
     [CascadingParameter]
     private HttpContext HttpContext { get; set; } = default!;
 
+    // Bound from form posts; must NOT use an initializer (BL0008)
     [SupplyParameterFromForm]
-    private InputModel Input { get; set; } = new();
+    private InputModel? Input { get; set; }
 
     [SupplyParameterFromQuery]
     private string? RemoteError { get; set; }
@@ -69,6 +77,10 @@
 
     protected override async Task OnInitializedAsync()
     {
+        // Sync bound form input into a non-null UI model
+        Model = Input ?? new InputModel();
+        Input ??= Model;
+
         if (RemoteError is not null)
         {
             RedirectManager.RedirectToWithStatus("Account/Login", $"Error from external provider: {RemoteError}", HttpContext);
@@ -121,7 +133,7 @@
         // If the user does not have an account, then ask the user to create an account.
         if (externalLoginInfo.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
         {
-            Input.Email = externalLoginInfo.Principal.FindFirstValue(ClaimTypes.Email) ?? "";
+            Model.Email = externalLoginInfo.Principal.FindFirstValue(ClaimTypes.Email) ?? "";
         }
     }
 
@@ -130,8 +142,8 @@
         var emailStore = GetEmailStore();
         var user = CreateUser();
 
-        await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-        await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+        await UserStore.SetUserNameAsync(user, Model.Email, CancellationToken.None);
+        await emailStore.SetEmailAsync(user, Model.Email, CancellationToken.None);
 
         var result = await UserManager.CreateAsync(user);
         if (result.Succeeded)
@@ -148,12 +160,13 @@
                 var callbackUrl = NavigationManager.GetUriWithQueryParameters(
                     NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
                     new Dictionary<string, object?> { ["userId"] = userId, ["code"] = code });
-                await EmailSender.SendConfirmationLinkAsync(user, Input.Email, HtmlEncoder.Default.Encode(callbackUrl));
+
+                await EmailSender.SendConfirmationLinkAsync(user, Model.Email, HtmlEncoder.Default.Encode(callbackUrl));
 
                 // If account confirmation is required, we need to show the link if we don't have a real email sender
                 if (UserManager.Options.SignIn.RequireConfirmedAccount)
                 {
-                    RedirectManager.RedirectTo("Account/RegisterConfirmation", new() { ["email"] = Input.Email });
+                    RedirectManager.RedirectTo("Account/RegisterConfirmation", new() { ["email"] = Model.Email });
                 }
 
                 await SignInManager.SignInAsync(user, isPersistent: false, externalLoginInfo.LoginProvider);
