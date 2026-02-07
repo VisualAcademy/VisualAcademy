@@ -6,10 +6,10 @@ namespace ArticleApp.Pages.Articles
     public partial class Create
     {
         [Inject]
-        public NavigationManager Nav { get; set; }
+        public NavigationManager Nav { get; set; } = default!;
 
         [Inject]
-        public IArticleRepository ArticleRepository { get; set; }
+        public IArticleRepository ArticleRepository { get; set; } = default!;
 
         public Article Model { get; set; } = new Article();
 
