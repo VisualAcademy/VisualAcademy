@@ -301,9 +301,9 @@ public partial class Manage : ComponentBase
     [Parameter]
     public string UserName { get; set; } = "";
 
-    [Inject] public UserManager<VisualAcademy.Data.ApplicationUser> UserManagerRef { get; set; }
+    [Inject] public UserManager<VisualAcademy.Data.ApplicationUser> UserManagerRef { get; set; } = null!;
 
-    [Inject] public AuthenticationStateProvider AuthenticationStateProviderRef { get; set; }
+    [Inject] public AuthenticationStateProvider AuthenticationStateProviderRef { get; set; } = null!;
 
     private async Task GetUserIdAndUserName()
     {
