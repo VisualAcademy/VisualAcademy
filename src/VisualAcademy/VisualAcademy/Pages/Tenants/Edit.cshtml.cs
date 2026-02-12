@@ -14,7 +14,7 @@ public class EditModel : PageModel
     }
 
     [BindProperty]
-    public TenantModel TenantModel { get; set; }
+    public TenantModel TenantModel { get; set; } = default!;
 
     public async Task<IActionResult> OnGetAsync(long? id)
     {
