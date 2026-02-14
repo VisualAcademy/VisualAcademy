@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,22 +13,17 @@ namespace VisualAcademy.Pages.TextTemplates;
 public partial class Manage : ComponentBase
 {
     #region Parameters
-    [Parameter]
-    public int ParentId { get; set; } = 0;
+    [Parameter] public int ParentId { get; set; } = 0;
 
-    [Parameter]
-    public string ParentKey { get; set; } = "";
+    [Parameter] public string ParentKey { get; set; } = "";
     #endregion
 
     #region Injectors
-    [Inject]
-    public NavigationManager Nav { get; set; }
+    [Inject] public NavigationManager? Nav { get; set; }
 
-    [Inject]
-    public IJSRuntime JSRuntimeInjector { get; set; }
+    [Inject] public IJSRuntime? JSRuntimeInjector { get; set; }
 
-    [Inject]
-    public ITextTemplateRepository RepositoryReference { get; set; }
+    [Inject] public ITextTemplateRepository? RepositoryReference { get; set; }
     #endregion
 
     #region Properties
@@ -40,28 +36,27 @@ public partial class Manage : ComponentBase
     /// <summary>
     /// EditorForm에 대한 참조: 모달로 글쓰기 또는 수정하기
     /// </summary>
-    //public Components.EditorForm EditorFormReference { get; set; }
-    public Components.ModalForm EditorFormReference { get; set; }
+    public Components.ModalForm? EditorFormReference { get; set; }
 
     /// <summary>
     /// DeleteDialog에 대한 참조: 모달로 항목 삭제하기 
     /// </summary>
-    public Components.DeleteDialog DeleteDialogReference { get; set; }
+    public Components.DeleteDialog? DeleteDialogReference { get; set; }
 
     /// <summary>
     /// 현재 페이지에서 리스트로 사용되는 모델 리스트 
     /// </summary>
-    protected List<TextTemplateModel> models = new List<TextTemplateModel>();
+    protected List<TextTemplateModel> models = new();
 
     /// <summary>
     /// 현재 페이지에서 선택된 단일 데이터를 나타내는 모델 클래스 
     /// </summary>
-    protected TextTemplateModel model = new TextTemplateModel();
+    protected TextTemplateModel model = new();
 
     /// <summary>
     /// 페이저 설정
     /// </summary>
-    protected DulPager.DulPagerBase pager = new DulPager.DulPagerBase()
+    protected DulPager.DulPagerBase pager = new()
     {
         PageNumber = 1,
         PageIndex = 0,
@@ -75,7 +70,7 @@ public partial class Manage : ComponentBase
     /// </summary>
     protected override async Task OnInitializedAsync()
     {
-        if (UserId == "" && UserName == "")
+        if (string.IsNullOrWhiteSpace(UserId) && string.IsNullOrWhiteSpace(UserName))
         {
             await GetUserIdAndUserName();
         }
@@ -86,37 +81,46 @@ public partial class Manage : ComponentBase
 
     private async Task DisplayData()
     {
+        // DI 안전성 보장
+        if (RepositoryReference is null)
+            throw new InvalidOperationException($"{nameof(RepositoryReference)} was not injected.");
+
         // ParentKey와 ParentId를 사용하는 목적은 특정 부모의 Details 페이지에서 리스트로 표현하기 위함
-        if (ParentKey != "")
+        if (!string.IsNullOrWhiteSpace(ParentKey))
         {
-            var articleSet = await RepositoryReference.GetArticlesAsync<string>(pager.PageIndex, pager.PageSize, "", this.searchQuery, this.sortOrder, ParentKey);
+            var articleSet = await RepositoryReference.GetArticlesAsync<string>(
+                pager.PageIndex, pager.PageSize, "", searchQuery, sortOrder, ParentKey);
+
             pager.RecordCount = articleSet.TotalCount;
             models = articleSet.Items.ToList();
         }
         else if (ParentId != 0)
         {
-            var articleSet = await RepositoryReference.GetArticlesAsync<int>(pager.PageIndex, pager.PageSize, "", this.searchQuery, this.sortOrder, ParentId);
+            var articleSet = await RepositoryReference.GetArticlesAsync<int>(
+                pager.PageIndex, pager.PageSize, "", searchQuery, sortOrder, ParentId);
+
             pager.RecordCount = articleSet.TotalCount;
             models = articleSet.Items.ToList();
         }
         else
         {
-            var articleSet = await RepositoryReference.GetArticlesAsync<int>(pager.PageIndex, pager.PageSize, searchField: "", this.searchQuery, this.sortOrder, parentIdentifier: 0);
+            var articleSet = await RepositoryReference.GetArticlesAsync<int>(
+                pager.PageIndex, pager.PageSize, searchField: "", searchQuery, sortOrder, parentIdentifier: 0);
+
             pager.RecordCount = articleSet.TotalCount;
             models = articleSet.Items.ToList();
         }
 
-        StateHasChanged(); // Refresh
+        // Refresh
+        StateHasChanged();
     }
 
-    protected async void PageIndexChanged(int pageIndex)
+    protected async Task PageIndexChanged(int pageIndex)
     {
         pager.PageIndex = pageIndex;
         pager.PageNumber = pageIndex + 1;
 
         await DisplayData();
-
-        StateHasChanged();
     }
 
     #region Event Handlers
@@ -125,8 +129,11 @@ public partial class Manage : ComponentBase
     /// </summary>
     protected void ShowEditorForm()
     {
+        if (EditorFormReference is null)
+            throw new InvalidOperationException($"{nameof(EditorFormReference)} was not initialized.");
+
         EditorFormTitle = "CREATE";
-        this.model = new TextTemplateModel(); // 모델 초기화
+        model = new TextTemplateModel(); // 모델 초기화
         EditorFormReference.Show();
     }
 
@@ -135,9 +142,11 @@ public partial class Manage : ComponentBase
     /// </summary>
     protected void EditBy(TextTemplateModel model)
     {
+        if (EditorFormReference is null)
+            throw new InvalidOperationException($"{nameof(EditorFormReference)} was not initialized.");
+
         EditorFormTitle = "EDIT";
-        this.model = new TextTemplateModel(); // 모델 초기화
-        this.model = model;
+        this.model = model; // 선택 모델로 교체
         EditorFormReference.Show();
     }
 
@@ -146,6 +155,9 @@ public partial class Manage : ComponentBase
     /// </summary>
     protected void DeleteBy(TextTemplateModel model)
     {
+        if (DeleteDialogReference is null)
+            throw new InvalidOperationException($"{nameof(DeleteDialogReference)} was not initialized.");
+
         this.model = model;
         DeleteDialogReference.Show();
     }
@@ -154,23 +166,32 @@ public partial class Manage : ComponentBase
     /// <summary>
     /// 모델 초기화 및 모달 폼 닫기
     /// </summary>
-    protected async void CreateOrEdit()
+    protected async Task CreateOrEdit()
     {
-        EditorFormReference.Hide();
-        
-        this.model = new TextTemplateModel();
+        if (EditorFormReference is null)
+            throw new InvalidOperationException($"{nameof(EditorFormReference)} was not initialized.");
 
+        EditorFormReference.Hide();
+
+        model = new TextTemplateModel();
         await DisplayData();
     }
 
     /// <summary>
     /// 삭제 모달 폼에서 현재 선택한 항목 삭제
     /// </summary>
-    protected async void DeleteClick()
+    protected async Task DeleteClick()
     {
-        await RepositoryReference.DeleteAsync(this.model.Id);
+        if (RepositoryReference is null)
+            throw new InvalidOperationException($"{nameof(RepositoryReference)} was not injected.");
+
+        if (DeleteDialogReference is null)
+            throw new InvalidOperationException($"{nameof(DeleteDialogReference)} was not initialized.");
+
+        await RepositoryReference.DeleteAsync(model.Id);
         DeleteDialogReference.Hide();
-        this.model = new TextTemplateModel(); // 선택했던 모델 초기화
+
+        model = new TextTemplateModel(); // 선택했던 모델 초기화
         await DisplayData(); // 다시 로드
     }
 
@@ -183,23 +204,24 @@ public partial class Manage : ComponentBase
     protected void ToggleClose()
     {
         IsInlineDialogShow = false;
-        this.model = new TextTemplateModel();
+        model = new TextTemplateModel();
     }
 
     /// <summary>
     /// 토글: Pinned
     /// </summary>
-    protected async void ToggleClick()
+    protected async Task ToggleClick()
     {
-        //model.Active = !model.Active;
+        if (RepositoryReference is null)
+            throw new InvalidOperationException($"{nameof(RepositoryReference)} was not injected.");
 
         // 변경된 내용 업데이트
-        await RepositoryReference.UpdateAsync(this.model);
+        await RepositoryReference.UpdateAsync(model);
 
-        IsInlineDialogShow = false; // 표시 속성 초기화
-        this.model = new TextTemplateModel(); // 선택한 모델 초기화 
+        IsInlineDialogShow = false;            // 표시 속성 초기화
+        model = new TextTemplateModel();       // 선택한 모델 초기화
 
-        await DisplayData(); // 다시 로드
+        await DisplayData();                   // 다시 로드
     }
 
     /// <summary>
@@ -215,12 +237,12 @@ public partial class Manage : ComponentBase
     #region Search
     private string searchQuery = "";
 
-    protected async void Search(string query)
+    protected async Task Search(string query)
     {
         pager.PageIndex = 0;
+        pager.PageNumber = 1;
 
-        this.searchQuery = query;
-
+        searchQuery = query ?? "";
         await DisplayData();
     }
     #endregion
@@ -228,49 +250,23 @@ public partial class Manage : ComponentBase
     #region Excel
     protected void DownloadExcelWithWebApi()
     {
-        //FileUtil.SaveAsExcel(JSRuntimeInjector, "/TextTemplateDownload/ExcelDown");
+        if (Nav is null)
+            throw new InvalidOperationException($"{nameof(Nav)} was not injected.");
 
+        // FileUtil.SaveAsExcel(JSRuntimeInjector, "/TextTemplateDownload/ExcelDown");
         Nav.NavigateTo($"/TextTemplates"); // 다운로드 후 현재 페이지 다시 로드
     }
 
     protected void DownloadExcel()
     {
-        //using (var package = new ExcelPackage())
-        //{
-        //    var worksheet = package.Workbook.Worksheets.Add("TextTemplates");
-
-        //    var tableBody = worksheet.Cells["B2:B2"].LoadFromCollection(
-        //        (from m in models select new { m.Created, m.Name, m.Title, m.DownCount, m.FileName })
-        //        , true);
-
-        //    var uploadCol = tableBody.Offset(1, 1, models.Count, 1);
-
-        //    // 그라데이션 효과 부여
-        //    var rule = uploadCol.ConditionalFormatting.AddThreeColorScale();
-        //    rule.LowValue.Color = Color.SkyBlue;
-        //    rule.MiddleValue.Color = Color.White;
-        //    rule.HighValue.Color = Color.Red;
-
-        //    var header = worksheet.Cells["B2:F2"];
-        //    worksheet.DefaultColWidth = 25;
-        //    worksheet.Cells[3, 2, models.Count + 2, 2].Style.Numberformat.Format = "yyyy MMM d DDD";
-        //    tableBody.Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-        //    tableBody.Style.Fill.PatternType = ExcelFillStyle.Solid;
-        //    tableBody.Style.Fill.BackgroundColor.SetColor(Color.WhiteSmoke);
-        //    tableBody.Style.Border.BorderAround(ExcelBorderStyle.Medium);
-        //    header.Style.Font.Bold = true;
-        //    header.Style.Font.Color.SetColor(Color.White);
-        //    header.Style.Fill.BackgroundColor.SetColor(Color.DarkBlue);
-
-        //    FileUtil.SaveAs(JSRuntimeInjector, $"{DateTime.Now.ToString("yyyyMMddhhmmss")}_TextTemplates.xlsx", package.GetAsByteArray());
-        //}
+        // 생략
     }
     #endregion
 
     #region Sorting
     private string sortOrder = "";
 
-    protected async void SortByName()
+    protected async Task SortByName()
     {
         if (!sortOrder.Contains("Name"))
         {
@@ -295,18 +291,22 @@ public partial class Manage : ComponentBase
     #endregion
 
     #region Get UserId and UserName
-    [Parameter]
-    public string UserId { get; set; } = "";
+    [Parameter] public string UserId { get; set; } = "";
 
-    [Parameter]
-    public string UserName { get; set; } = "";
+    [Parameter] public string UserName { get; set; } = "";
 
-    [Inject] public UserManager<VisualAcademy.Data.ApplicationUser> UserManagerRef { get; set; } = null!;
+    [Inject] public UserManager<VisualAcademy.Data.ApplicationUser>? UserManagerRef { get; set; }
 
-    [Inject] public AuthenticationStateProvider AuthenticationStateProviderRef { get; set; } = null!;
+    [Inject] public AuthenticationStateProvider? AuthenticationStateProviderRef { get; set; }
 
     private async Task GetUserIdAndUserName()
     {
+        if (AuthenticationStateProviderRef is null)
+            throw new InvalidOperationException($"{nameof(AuthenticationStateProviderRef)} was not injected.");
+
+        if (UserManagerRef is null)
+            throw new InvalidOperationException($"{nameof(UserManagerRef)} was not injected.");
+
         // 현재 인증 상태(AuthenticationState) 가져오기
         var authState = await AuthenticationStateProviderRef.GetAuthenticationStateAsync();
 
@@ -322,10 +322,8 @@ public partial class Manage : ComponentBase
             var currentUser = await UserManagerRef.GetUserAsync(user);
 
             // currentUser가 null일 수 있으므로 null 병합 연산자 사용
-            // → CS8602 (null 역참조) 방지
             UserId = currentUser?.Id ?? "";
 
-            // Identity 또는 Name이 null일 수 있으므로 단계적으로 안전하게 처리
             // 1) Claims의 Name
             // 2) ApplicationUser의 UserName
             // 3) 최종 fallback: "Anonymous"
