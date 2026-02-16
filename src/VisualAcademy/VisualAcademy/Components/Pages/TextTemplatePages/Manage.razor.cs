@@ -177,6 +177,12 @@ public partial class Manage : ComponentBase
         await DisplayData();
     }
 
+    // ModalForm.CreateCallback(Action)용 브리지
+    protected void CreateOrEdit_ActionBridge() => _ = CreateOrEdit();
+
+    // ModalForm.EditCallback(EventCallback<bool>)용 브리지
+    protected Task CreateOrEdit_BoolBridge(bool _) => CreateOrEdit();
+
     /// <summary>
     /// 삭제 모달 폼에서 현재 선택한 항목 삭제
     /// </summary>

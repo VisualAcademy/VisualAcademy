@@ -80,7 +80,7 @@
     </div>
 </div>
 
-<VisualAcademy.Pages.TextTemplates.Components.ModalForm @ref="EditorFormReference" ModelSender="model" CreateCallback="CreateOrEdit" EditCallback="CreateOrEdit" UserName="@UserName">
+<VisualAcademy.Pages.TextTemplates.Components.ModalForm @ref="EditorFormReference" ModelSender="model" CreateCallback="CreateOrEdit_ActionBridge" EditCallback="CreateOrEdit_BoolBridge" UserName="@UserName">
     <EditorFormTitle>@EditorFormTitle</EditorFormTitle>
 </VisualAcademy.Pages.TextTemplates.Components.ModalForm>
 
