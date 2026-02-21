@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace VisualAcademy.Pages.Tenants
 {
@@ -12,7 +14,7 @@ namespace VisualAcademy.Pages.Tenants
         }
 
         [BindProperty]
-        public TenantModel TenantModel { get; set; }
+        public TenantModel? TenantModel { get; set; }
 
         public async Task<IActionResult> OnGetAsync(long? id)
         {
@@ -21,7 +23,8 @@ namespace VisualAcademy.Pages.Tenants
                 return NotFound();
             }
 
-            TenantModel = await _context.Tenants.FirstOrDefaultAsync(m => m.Id == id);
+            TenantModel = await _context.Tenants
+                .FirstOrDefaultAsync(m => m.Id == id);
 
             if (TenantModel == null)
             {
