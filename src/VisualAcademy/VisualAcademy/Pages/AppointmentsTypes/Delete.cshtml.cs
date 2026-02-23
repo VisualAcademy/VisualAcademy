@@ -10,7 +10,7 @@ public class DeleteModel : PageModel
     public DeleteModel(IAppointmentTypeRepository appointmentTypeRepository) => _appointmentTypeRepository = appointmentTypeRepository;
 
     [BindProperty]
-    public AppointmentTypeModel AppointmentType { get; set; }
+    public AppointmentTypeModel? AppointmentType { get; set; }
 
     public long TenantId { get; set; } = 1;
 
