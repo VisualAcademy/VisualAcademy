@@ -11,7 +11,7 @@ namespace VisualAcademy.Pages.AppointmentsTypes {
         public EditModel(IAppointmentTypeRepository appointmentTypeRepository) => _appointmentTypeRepository = appointmentTypeRepository;
 
         [BindProperty]
-        public AppointmentTypeModel AppointmentType { get; set; }
+        public AppointmentTypeModel AppointmentType { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(long id) {
             long tenantId = 1; // tenantId 값을 1로 초기화합니다.
