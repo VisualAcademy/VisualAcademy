@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
 using VisualAcademy.Models.Tenants;
 using VisualAcademy.Repositories.Tenants;
 
