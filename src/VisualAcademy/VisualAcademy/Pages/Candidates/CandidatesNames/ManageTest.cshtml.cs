@@ -1,8 +1,3 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using VisualAcademy.Data;
-
 namespace VisualAcademy.Pages.Candidates.CandidatesNames
 {
     public class ManageTestModel(UserManager<ApplicationUser> userManager) : PageModel
