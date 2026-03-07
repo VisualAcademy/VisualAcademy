@@ -9,10 +9,10 @@ namespace ArticleApp.Pages.Articles;
 public partial class Manage
 {
     [Inject]
-    public IArticleRepository ArticleRepository { get; set; }
+    public IArticleRepository ArticleRepository { get; set; } = default!;
 
     [Inject]
-    public IJSRuntime JSRuntime { get; set; }
+    public IJSRuntime JSRuntime { get; set; } = default!;
 
     private void btnCreate_Click()
     {
@@ -100,7 +100,7 @@ public partial class Manage
         PagerButtonCount = 3
     };
 
-    private List<Article> articles;
+    private List<Article> articles = new List<Article>();
 
     protected override async Task OnInitializedAsync()
     {
