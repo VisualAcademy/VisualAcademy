@@ -1,25 +1,24 @@
-namespace VisualAcademy.Pages.Candidates.CandidatesNames
+namespace VisualAcademy.Pages.Candidates.CandidatesNames;
+
+public class ManageTestModel(UserManager<ApplicationUser> userManager) : PageModel
 {
-    public class ManageTestModel(UserManager<ApplicationUser> userManager) : PageModel
+    public string UserId { get; set; } = string.Empty;
+
+    private async Task LoadAsync(ApplicationUser user)
     {
-        public string UserId { get; set; } = string.Empty;
+        var userId = await userManager.GetUserIdAsync(user);
+        UserId = userId;
+    }
 
-        private async Task LoadAsync(ApplicationUser user)
+    public async Task<IActionResult> OnGetAsync()
+    {
+        var user = await userManager.GetUserAsync(User);
+        if (user == null)
         {
-            var userId = await userManager.GetUserIdAsync(user);
-            UserId = userId;
+            return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
         }
 
-        public async Task<IActionResult> OnGetAsync()
-        {
-            var user = await userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return NotFound($"Unable to load user with ID '{userManager.GetUserId(User)}'.");
-            }
-
-            await LoadAsync(user);
-            return Page();
-        }
+        await LoadAsync(user);
+        return Page();
     }
 }
