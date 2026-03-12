@@ -8,7 +8,7 @@ public class CreateModel(IAppointmentTypeRepository appointmentTypeRepository) :
     public IActionResult OnGet() => Page();
 
     [BindProperty]
-    public AppointmentTypeModel AppointmentType { get; set; }
+    public AppointmentTypeModel AppointmentType { get; set; } = new();
 
     public async Task<IActionResult> OnPostAsync()
     {

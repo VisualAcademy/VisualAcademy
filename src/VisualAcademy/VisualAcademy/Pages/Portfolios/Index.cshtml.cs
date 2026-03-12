@@ -14,7 +14,7 @@ namespace RedPlus.Pages.Portfolios
             this._service = service;
         }
 
-        public IEnumerable<Portfolio> Portfolios { get; private set; }
+        public IEnumerable<Portfolio> Portfolios { get; private set; } = new List<Portfolio>();
 
         public void OnGet()
         {
