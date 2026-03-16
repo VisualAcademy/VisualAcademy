@@ -2,7 +2,7 @@
 @using VisualAcademy.Models
 @using RedPlus.Services
 
-@namespace RedPlus.Components 
+@namespace RedPlus.Components
 
 @inject RedPlus.Services.PortfolioServiceJsonFile PortfolioService
 
@@ -22,7 +22,7 @@
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-primary"
-                            data-bs-toggle="modal" 
+                            data-bs-toggle="modal"
                             data-bs-target="#portfolioModal"
                             @onclick="() => SelectPortfolio(portfolio.Id)">
                         Read More...
@@ -33,7 +33,6 @@
     }
 </div>
 <!-- /.row -->
-
 @if (selectedPortfolio != null)
 {
     <!-- Modal -->
@@ -70,12 +69,12 @@
                         if (i <= currentRating)
                         {
                             <span style="cursor: pointer;"
-                                @onclick="() => HandleClick(currentStar)">★</span>
+                                  @onclick="() => HandleClick(currentStar)">★</span>
                         }
                         else
                         {
                             <span style="cursor: pointer;"
-                                @onclick="() => HandleClick(currentStar)">☆</span>
+                                  @onclick="() => HandleClick(currentStar)">☆</span>
                         }
                     }
                 </div>
@@ -85,18 +84,20 @@
 }
 
 @code {
-    Portfolio? selectedPortfolio = null;
-    int currentRating = 0;
-    int voteCount = 0;
-    string voteLabel;
-    void SelectPortfolio(int portfolioId)
+    private Portfolio? selectedPortfolio = null;
+    private int currentRating = 0;
+    private int voteCount = 0;
+    private string voteLabel = string.Empty;
+
+    private void SelectPortfolio(int portfolioId)
     {
         selectedPortfolio = PortfolioService.GetPortfolios().First(p => p.Id == portfolioId);
 
-        if (selectedPortfolio.Ratings == null)
+        if (selectedPortfolio.Ratings == null || !selectedPortfolio.Ratings.Any())
         {
             currentRating = 0;
             voteCount = 0;
+            voteLabel = string.Empty;
         }
         else
         {
@@ -106,9 +107,14 @@
         }
     }
 
-    void HandleClick(int rating)
+    private void HandleClick(int rating)
     {
+        if (selectedPortfolio is null)
+        {
+            return;
+        }
+
         PortfolioService.AddRating(selectedPortfolio.Id, rating);
-        SelectPortfolio(selectedPortfolio.Id); 
+        SelectPortfolio(selectedPortfolio.Id);
     }
 }
