@@ -1,6 +1,7 @@
 ﻿@page "/Account/LoginWithRecoveryCode"
 
 @using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Identity
 @using VisualAcademy.Data
 
@@ -20,13 +21,13 @@
 </p>
 <div class="row">
     <div class="col-md-4">
-        <EditForm Model="Input" FormName="login-with-recovery-code" OnValidSubmit="OnValidSubmitAsync" method="post">
+        <EditForm Model="InputValue" FormName="login-with-recovery-code" OnValidSubmit="OnValidSubmitAsync" method="post">
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" role="alert" />
             <div class="form-floating mb-3">
-                <InputText @bind-Value="Input.RecoveryCode" class="form-control" autocomplete="off" placeholder="RecoveryCode" />
+                <InputText @bind-Value="InputValue.RecoveryCode" class="form-control" autocomplete="off" placeholder="RecoveryCode" />
                 <label for="recovery-code" class="form-label">Recovery Code</label>
-                <ValidationMessage For="() => Input.RecoveryCode" class="text-danger" />
+                <ValidationMessage For="() => InputValue.RecoveryCode" class="text-danger" />
             </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
         </EditForm>
@@ -38,24 +39,24 @@
     private ApplicationUser user = default!;
 
     [SupplyParameterFromForm]
-    private InputModel Input { get; set; } = new();
+    private InputModel? Input { get; set; }
 
     [SupplyParameterFromQuery]
     private string? ReturnUrl { get; set; }
 
+    private InputModel InputValue => Input ??= new InputModel();
+
     protected override async Task OnInitializedAsync()
     {
-        // Ensure the user has gone through the username & password screen first
-        user = await SignInManager.GetTwoFactorAuthenticationUserAsync() ??
-            throw new InvalidOperationException("Unable to load two-factor authentication user.");
+        user = await SignInManager.GetTwoFactorAuthenticationUserAsync()
+            ?? throw new InvalidOperationException("Unable to load two-factor authentication user.");
     }
 
     private async Task OnValidSubmitAsync()
     {
-        var recoveryCode = Input.RecoveryCode.Replace(" ", string.Empty);
+        var recoveryCode = (Input?.RecoveryCode ?? string.Empty).Replace(" ", string.Empty);
 
         var result = await SignInManager.TwoFactorRecoveryCodeSignInAsync(recoveryCode);
-
         var userId = await UserManager.GetUserIdAsync(user);
 
         if (result.Succeeded)
@@ -80,6 +81,6 @@
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Recovery Code")]
-        public string RecoveryCode { get; set; } = "";
+        public string RecoveryCode { get; set; } = string.Empty;
     }
 }
