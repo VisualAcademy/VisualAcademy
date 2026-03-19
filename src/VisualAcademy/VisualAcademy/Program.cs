@@ -21,6 +21,7 @@ using VisualAcademy.Areas.Identity;
 using VisualAcademy.Components.Pages.ApplicantsTransfers;
 using VisualAcademy.Infrastructures;
 using VisualAcademy.Models.Candidates;
+using VisualAcademy.Models.Configuration;
 using VisualAcademy.Models.TextTemplates;
 using VisualAcademy.Repositories.Tenants;
 using VisualAcademy.Settings;
@@ -36,6 +37,9 @@ namespace VisualAcademy
             var builder = WebApplication.CreateBuilder(args);
 
             //[!] ConfigureServices... Startup.cs 파일에서 ConfigureServices 메서드 영역: 
+
+            // 테넌트 설정 바인딩
+            builder.Services.Configure<TenantSettings>(builder.Configuration.GetSection("TenantSettings"));
 
             #region Terminology
             // Terminology 설정 바인딩
