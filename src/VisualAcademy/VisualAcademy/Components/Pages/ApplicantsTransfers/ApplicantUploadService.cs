@@ -11,105 +11,56 @@ public class ApplicantUploadService
 
         using var memoryStream = new MemoryStream();
         await fileStream.CopyToAsync(memoryStream);
-        memoryStream.Position = 0; // Reset stream position
+        memoryStream.Position = 0;
 
         using var spreadsheetDocument = SpreadsheetDocument.Open(memoryStream, false);
 
-        // WorkbookPart null 가드
         WorkbookPart workbookPart = spreadsheetDocument.WorkbookPart
             ?? throw new InvalidOperationException("WorkbookPart is missing in the Excel file.");
 
-        // Sheet null 가드
-        Sheet? sheet = workbookPart.Workbook.Descendants<Sheet>().FirstOrDefault()
+        Sheet sheet = workbookPart.Workbook.Descendants<Sheet>().FirstOrDefault()
             ?? throw new InvalidOperationException("No worksheet found in the Excel file.");
 
-        // Id를 안전하게 string으로 추출
         string sheetId = sheet.Id?.Value
             ?? throw new InvalidOperationException("Worksheet Id is missing.");
 
-        // WorksheetPart null 가드
-        var worksheetPart = workbookPart.GetPartById(sheetId) as WorksheetPart
+        WorksheetPart worksheetPart = workbookPart.GetPartById(sheetId) as WorksheetPart
             ?? throw new InvalidOperationException("WorksheetPart not found for the given sheet Id.");
 
-        // SheetData null 가드
-        SheetData? sheetData = worksheetPart.Worksheet.Elements<SheetData>().FirstOrDefault()
+        SheetData sheetData = worksheetPart.Worksheet.Elements<SheetData>().FirstOrDefault()
             ?? throw new InvalidOperationException("SheetData not found in the worksheet.");
 
         foreach (Row row in sheetData.Elements<Row>().Skip(7))
         {
-            var cellEnumerator = row.Elements<Cell>().GetEnumerator();
+            using var cellEnumerator = row.Elements<Cell>().GetEnumerator();
 
-            cellEnumerator.MoveNext();
-            var department = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var employeeId = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var firstName = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var middleInitial = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var lastName = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var dateBirthday = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var ssNumber = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var address1 = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var address2 = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var city = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var state = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var zip = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var gender = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var cellPhone = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var primaryEmail = ReadCellValue(workbookPart, cellEnumerator.Current);
+            var department = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var employeeId = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var firstName = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var middleInitial = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var lastName = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var dateBirthday = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var ssNumber = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var address1 = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var address2 = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var city = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var state = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var zip = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var gender = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var cellPhone = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var primaryEmail = SafeReadNextCellValue(workbookPart, cellEnumerator);
 
             // 이후 열들에 대한 처리...
             // ...
 
-            cellEnumerator.MoveNext();
-            var employmentStatus = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var dateSeniority = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var defaultJobsHR = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var employeeStatus = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var tribalNation = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var gamingLicenseType = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var dateRehired = ReadCellValue(workbookPart, cellEnumerator.Current);
-
-            cellEnumerator.MoveNext();
-            var dateTerminated = ReadCellValue(workbookPart, cellEnumerator.Current);
+            var employmentStatus = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var dateSeniority = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var defaultJobsHR = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var employeeStatus = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var tribalNation = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var gamingLicenseType = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var dateRehired = SafeReadNextCellValue(workbookPart, cellEnumerator);
+            var dateTerminated = SafeReadNextCellValue(workbookPart, cellEnumerator);
 
             applicants.Add(new ApplicantTransfer
             {
@@ -120,7 +71,7 @@ public class ApplicantUploadService
                 LastName = lastName,
                 DOB = dateBirthday,
                 SSN = ssNumber,
-                Address = address1 + " " + address2,
+                Address = $"{address1} {address2}".Trim(),
                 City = city,
                 State = state,
                 PostalCode = zip,
@@ -131,7 +82,6 @@ public class ApplicantUploadService
                 WorkPhone = cellPhone,
                 Email = primaryEmail,
                 PrimaryEmail = primaryEmail,
-                // 추가적으로 필요한 매핑을 계속 진행...
                 EmploymentStatus = employmentStatus,
                 DateSeniority = dateSeniority,
                 DefaultJobsHR = defaultJobsHR,
@@ -146,6 +96,16 @@ public class ApplicantUploadService
         return applicants;
     }
 
+    private static string SafeReadNextCellValue(WorkbookPart workbookPart, IEnumerator<Cell> enumerator)
+    {
+        if (!enumerator.MoveNext())
+        {
+            return string.Empty;
+        }
+
+        return ReadCellValue(workbookPart, enumerator.Current);
+    }
+
     private static string ReadCellValue(WorkbookPart workbookPart, Cell? cell)
     {
         if (cell == null)
@@ -153,26 +113,24 @@ public class ApplicantUploadService
             return string.Empty;
         }
 
-        // SharedString인 경우
-        if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
+        if (cell.DataType is not null && cell.DataType.Value == CellValues.SharedString)
         {
-            var sharedStringPart = workbookPart.SharedStringTablePart
+            SharedStringTablePart sharedStringPart = workbookPart.SharedStringTablePart
                 ?? throw new InvalidOperationException("SharedStringTablePart is missing.");
 
-            var sharedStringTable = sharedStringPart.SharedStringTable
+            SharedStringTable sharedStringTable = sharedStringPart.SharedStringTable
                 ?? throw new InvalidOperationException("SharedStringTable is missing.");
 
-            var rawIndex = cell.CellValue?.InnerText;
-            if (string.IsNullOrEmpty(rawIndex) || !int.TryParse(rawIndex, out var index))
+            string? rawIndex = cell.CellValue?.InnerText;
+            if (string.IsNullOrEmpty(rawIndex) || !int.TryParse(rawIndex, out int index))
             {
                 return string.Empty;
             }
 
-            var sharedStringItem = sharedStringTable.Elements<SharedStringItem>().ElementAtOrDefault(index);
+            SharedStringItem? sharedStringItem = sharedStringTable.Elements<SharedStringItem>().ElementAtOrDefault(index);
             return sharedStringItem?.InnerText ?? string.Empty;
         }
 
-        // 일반 값
         return cell.CellValue?.InnerText ?? string.Empty;
     }
 }
