@@ -18,7 +18,10 @@ public class ApplicantUploadService
         WorkbookPart workbookPart = spreadsheetDocument.WorkbookPart
             ?? throw new InvalidOperationException("WorkbookPart is missing in the Excel file.");
 
-        Sheet sheet = workbookPart.Workbook.Descendants<Sheet>().FirstOrDefault()
+        Workbook workbook = workbookPart.Workbook
+            ?? throw new InvalidOperationException("Workbook is missing in the Excel file.");
+
+        Sheet sheet = workbook.Descendants<Sheet>().FirstOrDefault()
             ?? throw new InvalidOperationException("No worksheet found in the Excel file.");
 
         string sheetId = sheet.Id?.Value
@@ -27,7 +30,10 @@ public class ApplicantUploadService
         WorksheetPart worksheetPart = workbookPart.GetPartById(sheetId) as WorksheetPart
             ?? throw new InvalidOperationException("WorksheetPart not found for the given sheet Id.");
 
-        SheetData sheetData = worksheetPart.Worksheet.Elements<SheetData>().FirstOrDefault()
+        Worksheet worksheet = worksheetPart.Worksheet
+            ?? throw new InvalidOperationException("Worksheet is missing in the Excel file.");
+
+        SheetData sheetData = worksheet.Elements<SheetData>().FirstOrDefault()
             ?? throw new InvalidOperationException("SheetData not found in the worksheet.");
 
         foreach (Row row in sheetData.Elements<Row>().Skip(7))
