@@ -33,7 +33,6 @@
     }
 </div>
 <!-- /.row -->
-
 @if (selectedPortfolio != null)
 {
     <!-- Modal -->
@@ -64,18 +63,20 @@
                     {
                         <span>@voteCount @voteLabel</span>
                     }
+
                     @for (int i = 1; i < 6; i++)
                     {
                         var currentStar = i;
+
                         if (i <= currentRating)
                         {
                             <span style="cursor: pointer;"
-                                @onclick="() => HandleClick(currentStar)">★</span>
+                                  @onclick="() => HandleClick(currentStar)">★</span>
                         }
                         else
                         {
                             <span style="cursor: pointer;"
-                                @onclick="() => HandleClick(currentStar)">☆</span>
+                                  @onclick="() => HandleClick(currentStar)">☆</span>
                         }
                     }
                 </div>
@@ -85,18 +86,31 @@
 }
 
 @code {
+
     Portfolio? selectedPortfolio = null;
     int currentRating = 0;
     int voteCount = 0;
-    string voteLabel;
+    string voteLabel = "Vote";
+
     void SelectPortfolio(int portfolioId)
     {
-        selectedPortfolio = PortfolioService.GetPortfolios().First(p => p.Id == portfolioId);
+        selectedPortfolio = PortfolioService
+            .GetPortfolios()
+            .FirstOrDefault(p => p.Id == portfolioId);
 
-        if (selectedPortfolio.Ratings == null)
+        if (selectedPortfolio == null)
         {
             currentRating = 0;
             voteCount = 0;
+            voteLabel = "Vote";
+            return;
+        }
+
+        if (selectedPortfolio.Ratings == null || !selectedPortfolio.Ratings.Any())
+        {
+            currentRating = 0;
+            voteCount = 0;
+            voteLabel = "Vote";
         }
         else
         {
@@ -108,7 +122,12 @@
 
     void HandleClick(int rating)
     {
+        if (selectedPortfolio == null)
+        {
+            return;
+        }
+
         PortfolioService.AddRating(selectedPortfolio.Id, rating);
-        SelectPortfolio(selectedPortfolio.Id); 
+        SelectPortfolio(selectedPortfolio.Id);
     }
 }
