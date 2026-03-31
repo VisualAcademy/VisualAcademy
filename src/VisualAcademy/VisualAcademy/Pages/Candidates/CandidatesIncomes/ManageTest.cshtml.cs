@@ -9,7 +9,7 @@ public class ManageTestModel : PageModel
 {
     private readonly UserManager<ApplicationUser> _userManager;
 
-    public string UserId { get; set; }
+    public string UserId { get; set; } = string.Empty;
 
     public ManageTestModel(UserManager<ApplicationUser> userManager) => _userManager = userManager;
 
