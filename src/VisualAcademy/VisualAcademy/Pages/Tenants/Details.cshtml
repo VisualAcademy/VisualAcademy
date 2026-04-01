@@ -18,57 +18,66 @@
 }
 else
 {
+    var tenant = Model.TenantModel;
+
     <div>
         <h4>TenantModel</h4>
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.TenantModel.ConnectionString)
+                @Html.DisplayNameFor(_ => tenant.ConnectionString)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.TenantModel.ConnectionString)
+                @Html.DisplayFor(_ => tenant.ConnectionString)
             </dd>
+
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.TenantModel.Name)
+                @Html.DisplayNameFor(_ => tenant.Name)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.TenantModel.Name)
+                @Html.DisplayFor(_ => tenant.Name)
             </dd>
+
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.TenantModel.AuthenticationHeader)
+                @Html.DisplayNameFor(_ => tenant.AuthenticationHeader)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.TenantModel.AuthenticationHeader)
+                @Html.DisplayFor(_ => tenant.AuthenticationHeader)
             </dd>
+
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.TenantModel.AccountID)
+                @Html.DisplayNameFor(_ => tenant.AccountID)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.TenantModel.AccountID)
+                @Html.DisplayFor(_ => tenant.AccountID)
             </dd>
+
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.TenantModel.GSConnectionString)
+                @Html.DisplayNameFor(_ => tenant.GSConnectionString)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.TenantModel.GSConnectionString)
+                @Html.DisplayFor(_ => tenant.GSConnectionString)
             </dd>
+
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.TenantModel.ReportWriterURL)
+                @Html.DisplayNameFor(_ => tenant.ReportWriterURL)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.TenantModel.ReportWriterURL)
+                @Html.DisplayFor(_ => tenant.ReportWriterURL)
             </dd>
+
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.TenantModel.BadgePhotoType)
+                @Html.DisplayNameFor(_ => tenant.BadgePhotoType)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.TenantModel.BadgePhotoType)
+                @Html.DisplayFor(_ => tenant.BadgePhotoType)
             </dd>
+
             <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.TenantModel.PortalName)
+                @Html.DisplayNameFor(_ => tenant.PortalName)
             </dt>
             <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.TenantModel.PortalName)
+                @Html.DisplayFor(_ => tenant.PortalName)
             </dd>
         </dl>
     </div>
