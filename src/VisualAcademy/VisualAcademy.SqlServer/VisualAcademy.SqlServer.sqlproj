@@ -113,6 +113,7 @@
     <None Include="Scripts\Employee_FormData_AliasNames_Extract.sql" />
     <None Include="Scripts\Employee_FormData_ProfessionalLicenses_Extract.sql" />
     <None Include="Seed\LicenseTypes.seed.sql" />
+    <None Include="Seed\AppointmentsTypes.seed.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
