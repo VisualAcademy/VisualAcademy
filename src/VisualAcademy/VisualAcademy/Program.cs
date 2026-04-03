@@ -24,6 +24,7 @@ using VisualAcademy.Models.Candidates;
 using VisualAcademy.Models.Configuration;
 using VisualAcademy.Models.TextTemplates;
 using VisualAcademy.Repositories.Tenants;
+using VisualAcademy.Services.Interfaces;
 using VisualAcademy.Settings;
 using VisualAcademy.Settings.Translators;
 
@@ -281,6 +282,13 @@ namespace VisualAcademy
 
             builder.Services.AddDbContext<Azunt.Data.LogsDbContext>(opt =>
                 opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+            // License Number °ü·Ã ¼­ºñ½º µî·Ï
+            builder.Services.AddScoped<IEmployeeLicenseNumberService, EmployeeLicenseNumberService>();
+            builder.Services.AddScoped<IVendorEmployeeLicenseNumberService, VendorEmployeeLicenseNumberService>();
+            builder.Services.AddScoped<IVendorLicenseNumberService, VendorLicenseNumberService>();
+
 
 
             // ¾Û ºôµå
