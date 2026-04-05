@@ -1,0 +1,194 @@
+﻿@page "/photologs"
+@rendermode InteractiveServer
+
+@using Azunt.Web.Models
+@using Azunt.Web.Services.Interfaces
+
+@inject IPhotoLogService PhotoLogService
+@inject IJSRuntime JSRuntime
+
+@namespace Azunt.Web.Components.Pages.PhotoLogs
+
+<div class="photo-log-wrap">
+    <div class="photo-log-card">
+        <div class="photo-log-card-header clearfix">
+            <div class="pull-left">
+                <h4 class="photo-log-title">Photo Logs</h4>
+                <div class="photo-log-subtitle">
+                    @if (IsEmployeeMode)
+                    {
+                        <span>Employee ID: @EmployeeId</span>
+                    }
+                    else
+                    {
+                        <span>All Photos</span>
+                    }
+                </div>
+            </div>
+
+            <div class="pull-right photo-log-summary">
+                @if (!isLoading)
+                {
+                    <span>Total: @totalCount</span>
+                }
+            </div>
+        </div>
+
+        <div class="photo-log-card-body">
+            @if (isLoading)
+            {
+                <div class="photo-log-empty">Loading...</div>
+            }
+            else if (photoLogs == null || photoLogs.Count == 0)
+            {
+                <div class="photo-log-empty">No photo logs found.</div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover photo-log-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 12%;">Id</th>
+                                <th style="width: 18%;">Employee ID</th>
+                                <th style="width: 50%;">File Name</th>
+                                <th style="width: 20%;" class="text-center">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var photoLog in photoLogs)
+                            {
+                                <tr>
+                                    <td>@photoLog.Id</td>
+                                    <td>@photoLog.EmployeeId</td>
+                                    <td class="photo-log-file-name">@photoLog.FileName</td>
+                                    <td class="text-center">
+                                        <button type="button"
+                                                class="btn btn-sm btn-danger"
+                                                @onclick="() => DeletePhotoLogAsync(photoLog.Id)">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                @if (totalPages > 1)
+                {
+                    <div class="photo-log-pager clearfix">
+                        <div class="pull-left photo-log-page-info">
+                            Page @currentPage of @totalPages
+                        </div>
+
+                        <div class="pull-right">
+                            <button type="button"
+                                    class="btn btn-default btn-sm"
+                                    disabled="@(currentPage <= 1)"
+                                    @onclick="GoToPreviousPageAsync">
+                                Previous
+                            </button>
+
+                            <button type="button"
+                                    class="btn btn-default btn-sm"
+                                    disabled="@(currentPage >= totalPages)"
+                                    @onclick="GoToNextPageAsync">
+                                Next
+                            </button>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public long EmployeeId { get; set; }
+
+    private List<PhotoLog> photoLogs = new();
+    private bool isLoading = true;
+
+    private int currentPage = 1;
+    private int pageSize = 5;
+    private int totalCount = 0;
+    private int totalPages = 0;
+
+    private bool IsEmployeeMode => EmployeeId > 0;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        currentPage = 1;
+        await LoadAsync();
+    }
+
+    private async Task LoadAsync()
+    {
+        isLoading = true;
+
+        if (IsEmployeeMode)
+        {
+            totalCount = await PhotoLogService.GetCountByEmployeeIdAsync(EmployeeId);
+            photoLogs = await PhotoLogService.GetPagedByEmployeeIdAsync(EmployeeId, currentPage, pageSize);
+        }
+        else
+        {
+            totalCount = await PhotoLogService.GetCountAsync();
+            photoLogs = await PhotoLogService.GetPagedAsync(currentPage, pageSize);
+        }
+
+        totalPages = totalCount > 0
+            ? (int)Math.Ceiling((double)totalCount / pageSize)
+            : 0;
+
+        isLoading = false;
+    }
+
+    private async Task GoToPreviousPageAsync()
+    {
+        if (currentPage <= 1)
+        {
+            return;
+        }
+
+        currentPage--;
+        await LoadAsync();
+    }
+
+    private async Task GoToNextPageAsync()
+    {
+        if (currentPage >= totalPages)
+        {
+            return;
+        }
+
+        currentPage++;
+        await LoadAsync();
+    }
+
+    private async Task DeletePhotoLogAsync(long photoLogId)
+    {
+        var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Delete this photo log?");
+        if (!confirmed)
+        {
+            return;
+        }
+
+        var deleted = await PhotoLogService.DeleteAsync(photoLogId);
+
+        if (!deleted)
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Photo log could not be deleted.");
+            return;
+        }
+
+        if (currentPage > 1 && photoLogs.Count == 1)
+        {
+            currentPage--;
+        }
+
+        await LoadAsync();
+    }
+}

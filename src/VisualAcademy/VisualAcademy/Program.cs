@@ -10,6 +10,8 @@ using Azunt.TenantSettingManagement;
 using Azunt.Web.Infrastructure.Extensions;
 using Azunt.Web.Infrastructures;
 using Azunt.Web.Policies;
+using Azunt.Web.Services;
+using Azunt.Web.Services.Interfaces;
 using Azunt.Web.Settings;
 using DotNetNote.Endpoints;
 using Hawaso.Infrastructures;
@@ -289,7 +291,8 @@ namespace VisualAcademy
             builder.Services.AddScoped<IVendorEmployeeLicenseNumberService, VendorEmployeeLicenseNumberService>();
             builder.Services.AddScoped<IVendorLicenseNumberService, VendorLicenseNumberService>();
 
-
+            // PhotoLogService µî·Ï (In-Memory ±¸ÇöÃ¼)
+            builder.Services.AddScoped<IPhotoLogService, InMemoryPhotoLogService>();
 
             // ¾Û ºôµå
             var app = builder.Build();
