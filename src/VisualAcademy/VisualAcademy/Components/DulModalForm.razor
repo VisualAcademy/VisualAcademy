@@ -24,10 +24,10 @@
 
 @code {
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public RenderFragment ChildContent { get; set; } = default!;
 
     [Parameter]
-    public string Title { get; set; }
+    public string Title { get; set; } = string.Empty;
 
     [Parameter]
     public bool ShowModal { get; set; }
@@ -35,7 +35,8 @@
     [Parameter]
     public EventCallback<bool> ShowModalChanged { get; set; }
 
-    private async Task CloseModal() {
+    private async Task CloseModal()
+    {
         ShowModal = false;
         await ShowModalChanged.InvokeAsync(false);
     }
