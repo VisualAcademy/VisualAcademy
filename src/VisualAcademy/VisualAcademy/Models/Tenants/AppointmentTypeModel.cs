@@ -10,17 +10,16 @@ public class AppointmentTypeModel
     [Required]
     [Display(Name = "Appointment Type Name")]
     [StringLength(50)]
-    public string AppointmentTypeName { get; set; }
+    public string AppointmentTypeName { get; set; } = string.Empty;
 
     [Required]
     public bool IsActive { get; set; } = true;
 
-    //[Required]
     [Display(Name = "Date Created")]
     public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
     [Display(Name = "Tenant")]
-    public long? TenantId { get; set; } = null!;
+    public long? TenantId { get; set; }
 
-    public TenantModel? Tenant { get; set; } = null!;
+    public TenantModel? Tenant { get; set; }
 }
