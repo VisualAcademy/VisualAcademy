@@ -4,8 +4,8 @@
         <span>@item.Name:</span>
         <span>@item.Amount.ToString("c0")</span>
         <input type="range" step="@Step" max="@Potential(item)"
-           @bind="item.Amount" @bind:event="oninput" @onchange="() => RemainingChanged.InvokeAsync(RemainingComputed)"
-           style="width: @(100 * Potential(item) / TotalBudget)%" />
+               @bind="item.Amount" @bind:event="oninput" @onchange="() => RemainingChanged.InvokeAsync(RemainingComputed)"
+               style="@($"width: {(100 * Potential(item) / TotalBudget)}%")" />
     }
 
     <span>아빠:</span>
@@ -13,7 +13,7 @@
 </div>
 
 @code {
-    [Parameter] public IEnumerable<BudgetItem> Items { get; set; }
+    [Parameter] public IEnumerable<BudgetItem> Items { get; set; } = Enumerable.Empty<BudgetItem>();
     [Parameter] public decimal TotalBudget { get; set; }
     [Parameter] public decimal Step { get; set; } = 10000;
     [Parameter] public decimal Remaining { get; set; }
