@@ -11,29 +11,34 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <EditForm method="post" Model="Movie" OnValidSubmit="AddMovie" FormName="create" Enhance>
+        <EditForm method="post" Model="CurrentMovie" OnValidSubmit="AddMovie" FormName="create" Enhance>
             <DataAnnotationsValidator />
             <ValidationSummary class="text-danger" />
+
             <div class="mb-3">
-                <label for="title" class="form-label">Title:</label> 
-                <InputText id="title" @bind-Value="Movie.Title" class="form-control" /> 
-                <ValidationMessage For="() => Movie.Title" class="text-danger" /> 
-            </div>        
+                <label for="title" class="form-label">Title:</label>
+                <InputText id="title" @bind-Value="CurrentMovie.Title" class="form-control" />
+                <ValidationMessage For="() => CurrentMovie.Title" class="text-danger" />
+            </div>
+
             <div class="mb-3">
-                <label for="releasedate" class="form-label">ReleaseDate:</label> 
-                <InputDate id="releasedate" @bind-Value="Movie.ReleaseDate" class="form-control" /> 
-                <ValidationMessage For="() => Movie.ReleaseDate" class="text-danger" /> 
-            </div>        
+                <label for="releasedate" class="form-label">ReleaseDate:</label>
+                <InputDate id="releasedate" @bind-Value="CurrentMovie.ReleaseDate" class="form-control" />
+                <ValidationMessage For="() => CurrentMovie.ReleaseDate" class="text-danger" />
+            </div>
+
             <div class="mb-3">
-                <label for="genre" class="form-label">Genre:</label> 
-                <InputText id="genre" @bind-Value="Movie.Genre" class="form-control" /> 
-                <ValidationMessage For="() => Movie.Genre" class="text-danger" /> 
-            </div>        
+                <label for="genre" class="form-label">Genre:</label>
+                <InputText id="genre" @bind-Value="CurrentMovie.Genre" class="form-control" />
+                <ValidationMessage For="() => CurrentMovie.Genre" class="text-danger" />
+            </div>
+
             <div class="mb-3">
-                <label for="price" class="form-label">Price:</label> 
-                <InputNumber id="price" @bind-Value="Movie.Price" class="form-control" /> 
-                <ValidationMessage For="() => Movie.Price" class="text-danger" /> 
-            </div>        
+                <label for="price" class="form-label">Price:</label>
+                <InputNumber id="price" @bind-Value="CurrentMovie.Price" class="form-control" />
+                <ValidationMessage For="() => CurrentMovie.Price" class="text-danger" />
+            </div>
+
             <button type="submit" class="btn btn-primary">Create</button>
         </EditForm>
     </div>
@@ -44,14 +49,15 @@
 </div>
 
 @code {
-
     [SupplyParameterFromForm]
-    public Movie Movie { get; set; } = new();
+    public Movie? Movie { get; set; }
+
+    private Movie CurrentMovie => Movie ??= new Movie();
 
     // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
     public async Task AddMovie()
     {
-        DB.Movie.Add(Movie);
+        DB.Movie.Add(CurrentMovie);
         await DB.SaveChangesAsync();
         NavigationManager.NavigateTo("/movies");
     }
