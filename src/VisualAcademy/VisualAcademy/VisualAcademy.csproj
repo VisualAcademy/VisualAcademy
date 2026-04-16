@@ -15,6 +15,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="NuGet.Packaging" Version="7.3.1" />
+        <PackageReference Include="NuGet.Protocol" Version="7.3.1" />
+        
         <None Include="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
         <None Include="Areas\Identity\Pages\Account\ConfirmEmail.cshtml" />
         <None Include="Areas\Identity\Pages\Account\ConfirmEmailChange.cshtml" />
@@ -171,8 +174,6 @@
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.DataGrid.EntityFrameworkAdapter" Version="4.14.0" />
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Emoji" Version="4.14.0" />
         <PackageReference Include="Microsoft.FluentUI.AspNetCore.Components.Icons" Version="4.14.0" />
-
-        <PackageReference Include="QuestPDF" Version="2026.2.4" />
     </ItemGroup>
 
     <ItemGroup>

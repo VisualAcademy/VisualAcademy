@@ -65,10 +65,6 @@ namespace VisualAcademy
                 builder.Configuration.GetSection("AzureBlob"));
 
 
-            // QuestPDF license
-            QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
-
-
             // Add services to the container.
             builder.Services.AddRazorPages(); // Razor Pages
             builder.Services.AddControllersWithViews(); // MVC
