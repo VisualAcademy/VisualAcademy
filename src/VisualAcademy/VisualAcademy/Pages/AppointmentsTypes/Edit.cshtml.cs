@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using VisualAcademy.Models.Tenants;
 using VisualAcademy.Repositories.Tenants;
 
@@ -7,20 +9,26 @@ namespace VisualAcademy.Pages.AppointmentsTypes
     {
         private readonly IAppointmentTypeRepository _appointmentTypeRepository;
 
-        public EditModel(IAppointmentTypeRepository appointmentTypeRepository) => _appointmentTypeRepository = appointmentTypeRepository;
+        public EditModel(IAppointmentTypeRepository appointmentTypeRepository)
+        {
+            _appointmentTypeRepository = appointmentTypeRepository;
+        }
 
         [BindProperty]
-        public AppointmentTypeModel AppointmentType { get; set; } = default!;
+        public AppointmentTypeModel? AppointmentType { get; set; }
 
         public async Task<IActionResult> OnGetAsync(long id)
         {
-            long tenantId = 1; // tenantId 값을 1로 초기화합니다.
-            AppointmentType = await _appointmentTypeRepository.GetByIdAsync(id, tenantId);
+            const long tenantId = 1;
 
-            if (AppointmentType == null)
+            var appointmentType = await _appointmentTypeRepository.GetByIdAsync(id, tenantId);
+
+            if (appointmentType is null)
             {
                 return NotFound();
             }
+
+            AppointmentType = appointmentType;
             return Page();
         }
 
@@ -31,8 +39,14 @@ namespace VisualAcademy.Pages.AppointmentsTypes
                 return Page();
             }
 
-            long tenantId = 1; // tenantId 값을 1로 초기화합니다.
+            if (AppointmentType is null)
+            {
+                return NotFound();
+            }
+
+            const long tenantId = 1;
             AppointmentType.TenantId = tenantId;
+
             await _appointmentTypeRepository.UpdateAsync(AppointmentType);
 
             return RedirectToPage("./Index");
