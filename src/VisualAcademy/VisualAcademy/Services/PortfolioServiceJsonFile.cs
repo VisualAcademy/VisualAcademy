@@ -5,7 +5,7 @@ namespace RedPlus.Services;
 public class PortfolioServiceJsonFile(IWebHostEnvironment webHostEnvironment)
 {
     /// <summary>
-    /// wwwroot/Portfolios/portfolios.json 파일의 물리적인 경로 읽어오기 
+    /// wwwroot/Portfolios/portfolios.json 파일의 물리적인 경로 읽어오기
     /// </summary>
     private string JsonFileName
     {
@@ -17,34 +17,46 @@ public class PortfolioServiceJsonFile(IWebHostEnvironment webHostEnvironment)
 
     public IEnumerable<Portfolio> GetPortfolios()
     {
-        // Using 선언: https://docs.microsoft.com/ko-kr/dotnet/csharp/whats-new/csharp-8#using-declarations
         using var jsonFileReader = File.OpenText(JsonFileName);
-        var options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
-        var portfolios = JsonSerializer.Deserialize<Portfolio[]>(jsonFileReader.ReadToEnd(), options);
-        return portfolios;
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
+        var portfolios = JsonSerializer.Deserialize<Portfolio[]>(
+            jsonFileReader.ReadToEnd(),
+            options);
+
+        return portfolios ?? Array.Empty<Portfolio>();
     }
 
     public void AddRating(int portfolioId, int rating)
     {
-        var portfolios = GetPortfolios();
+        var portfolios = GetPortfolios().ToList();
 
-        if (portfolios.First(p => p.Id == portfolioId).Ratings == null)
+        var portfolio = portfolios.First(p => p.Id == portfolioId);
+
+        if (portfolio.Ratings == null)
         {
-            portfolios.First(p => p.Id == portfolioId).Ratings = new int[] { rating };
+            portfolio.Ratings = new int[] { rating };
         }
         else
         {
-            var ratings = portfolios.First(p => p.Id == portfolioId).Ratings.ToList();
+            var ratings = portfolio.Ratings.ToList();
             ratings.Add(rating);
-            portfolios.First(p => p.Id == portfolioId).Ratings = ratings.ToArray();
+            portfolio.Ratings = ratings.ToArray();
         }
 
         using var outputStream = File.OpenWrite(JsonFileName);
-        JsonSerializer.Serialize<IEnumerable<Portfolio>>(
+        outputStream.SetLength(0);
+
+        JsonSerializer.Serialize(
             new Utf8JsonWriter(outputStream, new JsonWriterOptions
             {
                 SkipValidation = true,
                 Indented = true
-            }), portfolios);
+            }),
+            portfolios);
     }
 }
