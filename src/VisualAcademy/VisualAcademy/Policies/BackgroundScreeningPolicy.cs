@@ -1,8 +1,5 @@
 ﻿using Azunt.Web.Settings;
 using Microsoft.Extensions.Options;
-using System;
-using System.Linq;
-using VisualAcademy.Settings;
 
 namespace Azunt.Web.Policies;
 
