@@ -1,4 +1,6 @@
-﻿namespace VisualAcademy.Data;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace VisualAcademy.Data;
 
 // Add profile data for application users by adding properties to the ApplicationUser class
 public class ApplicationUser : IdentityUser
@@ -32,4 +34,7 @@ public class ApplicationUser : IdentityUser
     /// 테넌트 ID
     /// </summary>
     public long TenantId { get; set; }
+
+    [Display(Name = "Profile Picture")]
+    public byte[]? ProfilePicture { get; set; }
 }
