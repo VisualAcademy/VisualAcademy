@@ -1,5 +1,6 @@
 ﻿using Azunt.Entities;
 using Azunt.Web.Data;
+using Azunt.Web.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using VisualAcademy.Components.Pages.ApplicantsTransfers;
