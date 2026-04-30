@@ -24,6 +24,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public DbSet<KnownUser> KnownUsers { get; set; }
 
+    public DbSet<SitePage> SitePages => Set<SitePage>();
+
     /// <summary>
     /// 모델(테이블)이 생성될 때 처음 실행 
     /// </summary>
