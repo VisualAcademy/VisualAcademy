@@ -24,6 +24,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 
     public DbSet<KnownUser> KnownUsers { get; set; }
 
+    public DbSet<SitePage> SitePages => Set<SitePage>();
+
     /// <summary>
     /// 모델(테이블)이 생성될 때 처음 실행 
     /// </summary>
@@ -50,6 +52,16 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         //);
 
         builder.Entity<KnownUser>().ToTable("KnownUsers");
+
+        builder.Entity<SitePage>(entity =>
+        {
+            entity.ToTable("SitePages");
+
+            entity.HasKey(e => e.Id);
+
+            entity.HasIndex(e => new { e.RoutePattern, e.HttpMethod })
+                .IsUnique();
+        });
     }
 
     #region SeedRoles: 기본 역할(Role)들을 생성하는 코드 중 하나 
