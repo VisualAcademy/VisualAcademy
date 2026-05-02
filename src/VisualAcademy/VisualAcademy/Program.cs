@@ -42,6 +42,8 @@ namespace VisualAcademy
 
             //[!] ConfigureServices... Startup.cs 파일에서 ConfigureServices 메서드 영역: 
 
+            builder.Services.AddScoped<SitePageRouteSyncService>();
+
             // 테넌트 설정 바인딩
             builder.Services.Configure<TenantSettings>(builder.Configuration.GetSection("TenantSettings"));
 
