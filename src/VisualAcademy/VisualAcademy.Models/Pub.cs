@@ -1,10 +1,9 @@
-﻿namespace VisualAcademy.Models
+﻿namespace VisualAcademy.Models;
+
+public class Pub
 {
-    public class Pub
-    {
-        public int Id { get; set; }
-        public required string Name { get; set; }
-        public required string[] Beers { get; set; }
-        public List<DateOnly> DaysVisited { get; private set; } = new();
-    }
+    public int Id { get; set; }
+    public required string Name { get; set; }
+    public required string[] Beers { get; set; }
+    public List<DateOnly> DaysVisited { get; private set; } = new();
 }
