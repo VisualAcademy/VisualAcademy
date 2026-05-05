@@ -1,19 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace VisualAcademy.Models
+namespace VisualAcademy.Models;
+
+public class TextMessage
 {
-    public class TextMessage
-    {
-        public long Id { get; set; }
+    public long Id { get; set; }
 
-        [Required]
-        public long EmployeeId { get; set; }
+    [Required]
+    public long EmployeeId { get; set; }
 
-        [Required]
-        public string Message { get; set; } = string.Empty;
+    [Required]
+    public string Message { get; set; } = string.Empty;
 
-        public DateTimeOffset DateSent { get; set; } = DateTimeOffset.Now;
+    public DateTimeOffset DateSent { get; set; } = DateTimeOffset.Now;
 
-        public int? TextMessageType { get; set; }
-    }
+    public int? TextMessageType { get; set; }
 }
