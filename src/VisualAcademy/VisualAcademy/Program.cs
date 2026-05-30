@@ -381,41 +381,6 @@ namespace VisualAcademy
 
 
 
-            #region Employees 테이블 초기화/보강 및 시드
-            try
-            {
-                var cfg = app.Services.GetRequiredService<IConfiguration>();
-                var employeesSection = cfg.GetSection("Database:Initializers")
-                                          .GetChildren()
-                                          .FirstOrDefault(x =>
-                                              string.Equals(x["Name"], "Employees", StringComparison.OrdinalIgnoreCase));
-
-                if (employeesSection != null)
-                {
-                    bool forMaster = bool.TryParse(employeesSection["ForMaster"], out var fm) ? fm : false;
-                    bool enableSeeding = bool.TryParse(employeesSection["EnableSeeding"], out var es) ? es : false; // 기본값 false
-
-                    EmployeesTableBuilder.Run(app.Services, forMaster: forMaster, enableSeeding: enableSeeding);
-
-                    Console.WriteLine(
-                        $"Employees table initialization finished. Target={(forMaster ? "Master" : "Tenants")}, Seed={enableSeeding}"
-                    );
-                }
-                else
-                {
-                    Console.WriteLine("Employees initializer not configured in Database:Initializers. Skipped.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Employees table initialization failed: {ex.Message}");
-            }
-            #endregion
-
-
-
-
-
 
             #region 데이터베이스 및 인증 스키마 초기화 - Program.cs에서 직접 호출 
             var config = app.Services.GetRequiredService<IConfiguration>();
@@ -531,6 +496,27 @@ namespace VisualAcademy
             #endregion
 
 
+            #region Employees 테이블에 LicenseNumberSort 컬럼 및 인덱스 추가
+            // 2026-05-31
+            // Azunt.EmployeeManagement NuGet package initializer.
+            // 기존 Employees 테이블이 있는 테넌트 DB에 LicenseNumberSort 컬럼과 인덱스를 보장합니다.
+            try
+            {
+                EmployeesLicenseNumberSortBuilder.Run(
+                    app.Services,
+                    forMaster: false);
+
+                Console.WriteLine("Employees LicenseNumberSort column and index initialization finished. Target=Tenants");
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"[EmployeesLicenseNumberSortBuilder] Startup failed: {ex.Message}");
+            }
+            #endregion
+
+
+
+
             app.MapAzuntMinimalApis();
 
 
@@ -553,7 +539,7 @@ namespace VisualAcademy
             {
                 app.Services.GetRequiredService<ILogger<Program>>()
                     .LogError(ex, "Failed to ensure AspNetUsers.ProfilePicture column at startup.");
-            } 
+            }
             #endregion
 
 
