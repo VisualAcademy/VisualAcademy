@@ -49,9 +49,7 @@ namespace VisualAcademy
             builder.Services.Configure<TenantSettings>(builder.Configuration.GetSection("TenantSettings"));
 
             #region Terminology
-            // Terminology 설정 바인딩
             builder.Services.Configure<TerminologySettings>(builder.Configuration);
-            // Terminology 서비스 등록
             builder.Services.AddSingleton<ITerminologyService, TerminologyService>();
             #endregion
 
@@ -215,7 +213,6 @@ namespace VisualAcademy
 
             }
 
-            // 텍스트템플릿 관리: 기본 CRUD 교과서 코드
             builder.Services.AddDependencyInjectionContainerForTextTemplateApp(connectionString);
 
             // HttpClient 등록
@@ -296,8 +293,6 @@ namespace VisualAcademy
 
             var defaultConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-            // InstructionManagement: 기본 DbContextFactory는 DefaultConnection으로 등록하되,
-            // 실제 KodeeOne 같은 Tenant DB 구조에서는 Repository 메서드에 Tenant ConnectionString을 전달해서 사용합니다.
             builder.Services.AddDependencyInjectionContainerForInstructionApp(
                 defaultConnectionString,
                 InstructionRepositoryMode.EfCoreSqlServer);
