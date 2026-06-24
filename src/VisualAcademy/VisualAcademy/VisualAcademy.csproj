@@ -15,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Azunt.InstructionManagement" Version="1.0.0" />
         <PackageReference Include="NuGet.Packaging" Version="7.6.0" />
         <PackageReference Include="NuGet.Protocol" Version="7.6.0" />
         
