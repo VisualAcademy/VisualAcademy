@@ -30,6 +30,7 @@ using VisualAcademy.Repositories.Tenants;
 using VisualAcademy.Services.Interfaces;
 using VisualAcademy.Settings;
 using VisualAcademy.Settings.Translators;
+using Azunt.InstructionManagement;
 
 namespace VisualAcademy
 {
@@ -293,8 +294,21 @@ namespace VisualAcademy
             // PhotoLogService 등록 (In-Memory 구현체)
             builder.Services.AddScoped<IPhotoLogService, InMemoryPhotoLogService>();
 
+            var defaultConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            // InstructionManagement: 기본 DbContextFactory는 DefaultConnection으로 등록하되,
+            // 실제 KodeeOne 같은 Tenant DB 구조에서는 Repository 메서드에 Tenant ConnectionString을 전달해서 사용합니다.
+            builder.Services.AddDependencyInjectionContainerForInstructionApp(
+                defaultConnectionString,
+                InstructionRepositoryMode.EfCoreSqlServer);
+
             // 앱 빌드
             var app = builder.Build();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                InstructionsTableBuilder.Run(scope.ServiceProvider, forMaster: true);
+            }
 
             //[!] Configure... Startup.cs 파일에서 Configure 메서드 영역: 
 
