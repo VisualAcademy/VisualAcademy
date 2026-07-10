@@ -101,6 +101,7 @@
     <Build Include="dbo\Tables\LogBases.sql" />
     <Build Include="dbo\Tables\Conclusions.sql" />
     <Build Include="dbo\Tables\Reasons.sql" />
+    <Build Include="dbo\Tables\EmployeeEmploymentAuditChanges.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Identity\AspNetRoleClaims.sql" />
