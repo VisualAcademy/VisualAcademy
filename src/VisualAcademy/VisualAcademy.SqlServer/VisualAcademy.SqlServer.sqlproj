@@ -102,6 +102,7 @@
     <Build Include="dbo\Tables\Conclusions.sql" />
     <Build Include="dbo\Tables\Reasons.sql" />
     <Build Include="dbo\Tables\EmployeeEmploymentAuditChanges.sql" />
+    <Build Include="dbo\Tables\EmployeeEmploymentAuditRecords.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Identity\AspNetRoleClaims.sql" />
