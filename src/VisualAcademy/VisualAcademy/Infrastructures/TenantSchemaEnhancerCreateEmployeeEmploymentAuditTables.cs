@@ -7,99 +7,99 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace VisualAcademy.Infrastructures
+namespace VisualAcademy.Infrastructures;
+
+/// <summary>
+/// 모든 Tenant 데이터베이스에 HR Employment Information 전용
+/// Audit Header/Detail 테이블과 관련 인덱스 및 FK를 생성합니다.
+/// </summary>
+public sealed class TenantSchemaEnhancerCreateEmployeeEmploymentAuditTables
 {
-    /// <summary>
-    /// 모든 Tenant 데이터베이스에 HR Employment Information 전용
-    /// Audit Header/Detail 테이블과 관련 인덱스 및 FK를 생성합니다.
-    /// </summary>
-    public sealed class TenantSchemaEnhancerCreateEmployeeEmploymentAuditTables
+    private const int CommandTimeoutSeconds = 60;
+
+    private readonly string _masterConnectionString;
+    private readonly ILogger<TenantSchemaEnhancerCreateEmployeeEmploymentAuditTables> _logger;
+
+    public TenantSchemaEnhancerCreateEmployeeEmploymentAuditTables(
+        string masterConnectionString,
+        ILogger<TenantSchemaEnhancerCreateEmployeeEmploymentAuditTables> logger)
     {
-        private const int CommandTimeoutSeconds = 60;
-
-        private readonly string _masterConnectionString;
-        private readonly ILogger<TenantSchemaEnhancerCreateEmployeeEmploymentAuditTables> _logger;
-
-        public TenantSchemaEnhancerCreateEmployeeEmploymentAuditTables(
-            string masterConnectionString,
-            ILogger<TenantSchemaEnhancerCreateEmployeeEmploymentAuditTables> logger)
+        if (string.IsNullOrWhiteSpace(masterConnectionString))
         {
-            if (string.IsNullOrWhiteSpace(masterConnectionString))
-            {
-                throw new ArgumentException(
-                    "The master connection string is required.",
-                    nameof(masterConnectionString));
-            }
-
-            _masterConnectionString = masterConnectionString;
-            _logger = logger
-                ?? throw new ArgumentNullException(nameof(logger));
+            throw new ArgumentException(
+                "The master connection string is required.",
+                nameof(masterConnectionString));
         }
 
-        /// <summary>
-        /// Master DB의 Tenants 테이블에서 Tenant 연결 문자열을 읽고,
-        /// 모든 Tenant DB의 Audit 테이블 스키마를 보정합니다.
-        /// </summary>
-        public void EnhanceAllTenantDatabases()
+        _masterConnectionString = masterConnectionString;
+        _logger = logger
+            ?? throw new ArgumentNullException(nameof(logger));
+    }
+
+    /// <summary>
+    /// Master DB의 Tenants 테이블에서 Tenant 연결 문자열을 읽고,
+    /// 모든 Tenant DB의 Audit 테이블 스키마를 보정합니다.
+    /// </summary>
+    public void EnhanceAllTenantDatabases()
+    {
+        List<(string TenantName, string ConnectionString)> tenants;
+
+        try
         {
-            List<(string TenantName, string ConnectionString)> tenants;
+            tenants = GetTenantConnectionStrings();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(
+                ex,
+                "Failed to retrieve tenant connection strings while creating Employee Employment Audit tables.");
+
+            return;
+        }
+
+        foreach (var tenant in tenants)
+        {
+            if (ShouldSkipTenant(
+                tenant.TenantName,
+                tenant.ConnectionString))
+            {
+                continue;
+            }
 
             try
             {
-                tenants = GetTenantConnectionStrings();
+                EnsureEmployeeEmploymentAuditTables(
+                    tenant.ConnectionString);
             }
             catch (Exception ex)
             {
+                /*
+                 * ConnectionString에는 계정이나 비밀번호가 포함될 수 있으므로
+                 * 로그에는 TenantName만 남깁니다.
+                 */
                 _logger.LogError(
                     ex,
-                    "Failed to retrieve tenant connection strings while creating Employee Employment Audit tables.");
-
-                return;
-            }
-
-            foreach (var tenant in tenants)
-            {
-                if (ShouldSkipTenant(
-                    tenant.TenantName,
-                    tenant.ConnectionString))
-                {
-                    continue;
-                }
-
-                try
-                {
-                    EnsureEmployeeEmploymentAuditTables(
-                        tenant.ConnectionString);
-                }
-                catch (Exception ex)
-                {
-                    /*
-                     * ConnectionString에는 계정이나 비밀번호가 포함될 수 있으므로
-                     * 로그에는 TenantName만 남깁니다.
-                     */
-                    _logger.LogError(
-                        ex,
-                        "Failed to create Employee Employment Audit tables. TenantName={TenantName}",
-                        tenant.TenantName);
-                }
+                    "Failed to create Employee Employment Audit tables. TenantName={TenantName}",
+                    tenant.TenantName);
             }
         }
+    }
 
-        /// <summary>
-        /// Master DB의 dbo.Tenants에서 Tenant 이름과 연결 문자열을 조회합니다.
-        /// </summary>
-        private List<(string TenantName, string ConnectionString)>
-            GetTenantConnectionStrings()
-        {
-            var result =
-                new List<(string TenantName, string ConnectionString)>();
+    /// <summary>
+    /// Master DB의 dbo.Tenants에서 Tenant 이름과 연결 문자열을 조회합니다.
+    /// </summary>
+    private List<(string TenantName, string ConnectionString)>
+        GetTenantConnectionStrings()
+    {
+        var result =
+            new List<(string TenantName, string ConnectionString)>();
 
-            using var connection =
-                new SqlConnection(_masterConnectionString);
+        using var connection =
+            new SqlConnection(_masterConnectionString);
 
-            connection.Open();
+        connection.Open();
 
-            const string sql = @"
+        const string sql = @"
 SELECT
     [Name],
     [ConnectionString]
@@ -107,122 +107,122 @@ FROM [dbo].[Tenants]
 WHERE [ConnectionString] IS NOT NULL
   AND LTRIM(RTRIM([ConnectionString])) <> '';";
 
-            using var command =
-                new SqlCommand(sql, connection)
-                {
-                    CommandTimeout = CommandTimeoutSeconds
-                };
-
-            using var reader = command.ExecuteReader();
-
-            while (reader.Read())
+        using var command =
+            new SqlCommand(sql, connection)
             {
-                var tenantName =
-                    reader["Name"]?.ToString()?.Trim()
-                    ?? string.Empty;
+                CommandTimeout = CommandTimeoutSeconds
+            };
 
-                var connectionString =
-                    reader["ConnectionString"]?.ToString()?.Trim();
+        using var reader = command.ExecuteReader();
 
-                if (!string.IsNullOrWhiteSpace(connectionString))
-                {
-                    result.Add((
-                        tenantName,
-                        connectionString));
-                }
+        while (reader.Read())
+        {
+            var tenantName =
+                reader["Name"]?.ToString()?.Trim()
+                ?? string.Empty;
+
+            var connectionString =
+                reader["ConnectionString"]?.ToString()?.Trim();
+
+            if (!string.IsNullOrWhiteSpace(connectionString))
+            {
+                result.Add((
+                    tenantName,
+                    connectionString));
             }
-
-            return result;
         }
 
-        /// <summary>
-        /// 삭제되었거나 접속해서는 안 되는 Tenant DB를 제외합니다.
-        /// </summary>
-        private static bool ShouldSkipTenant(
-            string? tenantName,
-            string? connectionString)
+        return result;
+    }
+
+    /// <summary>
+    /// 삭제되었거나 접속해서는 안 되는 Tenant DB를 제외합니다.
+    /// </summary>
+    private static bool ShouldSkipTenant(
+        string? tenantName,
+        string? connectionString)
+    {
+        if (string.Equals(
+            tenantName,
+            "ShakopeeTenant",
+            StringComparison.OrdinalIgnoreCase))
         {
-            if (string.Equals(
-                tenantName,
-                "ShakopeeTenant",
-                StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-
-            if (!string.IsNullOrWhiteSpace(connectionString)
-                && connectionString.IndexOf(
-                    "ShakopeeTenantUser",
-                    StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                return true;
-            }
-
-            return false;
+            return true;
         }
 
-        /// <summary>
-        /// 한 Tenant DB 안에서 Header, Detail, FK, Index를
-        /// 하나의 트랜잭션으로 생성합니다.
-        /// </summary>
-        private static void EnsureEmployeeEmploymentAuditTables(
-            string connectionString)
+        if (!string.IsNullOrWhiteSpace(connectionString)
+            && connectionString.IndexOf(
+                "ShakopeeTenantUser",
+                StringComparison.OrdinalIgnoreCase) >= 0)
         {
-            using var connection =
-                new SqlConnection(connectionString);
+            return true;
+        }
 
-            connection.Open();
+        return false;
+    }
 
-            using var transaction =
-                connection.BeginTransaction();
+    /// <summary>
+    /// 한 Tenant DB 안에서 Header, Detail, FK, Index를
+    /// 하나의 트랜잭션으로 생성합니다.
+    /// </summary>
+    private static void EnsureEmployeeEmploymentAuditTables(
+        string connectionString)
+    {
+        using var connection =
+            new SqlConnection(connectionString);
 
+        connection.Open();
+
+        using var transaction =
+            connection.BeginTransaction();
+
+        try
+        {
+            /*
+             * FK 대상인 Records 테이블을 먼저 생성해야 합니다.
+             */
+            EnsureAuditRecordsTable(
+                connection,
+                transaction);
+
+            EnsureAuditChangesTable(
+                connection,
+                transaction);
+
+            EnsureAuditChangesForeignKey(
+                connection,
+                transaction);
+
+            EnsureAuditIndexes(
+                connection,
+                transaction);
+
+            transaction.Commit();
+        }
+        catch
+        {
             try
             {
-                /*
-                 * FK 대상인 Records 테이블을 먼저 생성해야 합니다.
-                 */
-                EnsureAuditRecordsTable(
-                    connection,
-                    transaction);
-
-                EnsureAuditChangesTable(
-                    connection,
-                    transaction);
-
-                EnsureAuditChangesForeignKey(
-                    connection,
-                    transaction);
-
-                EnsureAuditIndexes(
-                    connection,
-                    transaction);
-
-                transaction.Commit();
+                transaction.Rollback();
             }
             catch
             {
-                try
-                {
-                    transaction.Rollback();
-                }
-                catch
-                {
-                    // 원래 발생한 스키마 생성 예외를 유지합니다.
-                }
-
-                throw;
+                // 원래 발생한 스키마 생성 예외를 유지합니다.
             }
-        }
 
-        /// <summary>
-        /// 한 번의 Employment Information 저장 작업을 나타내는
-        /// Audit Header 테이블을 생성합니다.
-        /// </summary>
-        private static void EnsureAuditRecordsTable(
-            SqlConnection connection,
-            SqlTransaction transaction)
-        {
-            const string sql = @"
+            throw;
+        }
+    }
+
+    /// <summary>
+    /// 한 번의 Employment Information 저장 작업을 나타내는
+    /// Audit Header 테이블을 생성합니다.
+    /// </summary>
+    private static void EnsureAuditRecordsTable(
+        SqlConnection connection,
+        SqlTransaction transaction)
+    {
+        const string sql = @"
 IF OBJECT_ID(
     N'[dbo].[EmployeeEmploymentAuditRecords]',
     N'U') IS NULL
@@ -255,21 +255,21 @@ BEGIN
     );
 END;";
 
-            ExecuteNonQuery(
-                connection,
-                transaction,
-                sql);
-        }
+        ExecuteNonQuery(
+            connection,
+            transaction,
+            sql);
+    }
 
-        /// <summary>
-        /// Audit Header 한 건에 포함된 실제 필드 변경 내역을 저장하는
-        /// Audit Detail 테이블을 생성합니다.
-        /// </summary>
-        private static void EnsureAuditChangesTable(
-            SqlConnection connection,
-            SqlTransaction transaction)
-        {
-            const string sql = @"
+    /// <summary>
+    /// Audit Header 한 건에 포함된 실제 필드 변경 내역을 저장하는
+    /// Audit Detail 테이블을 생성합니다.
+    /// </summary>
+    private static void EnsureAuditChangesTable(
+        SqlConnection connection,
+        SqlTransaction transaction)
+    {
+        const string sql = @"
 IF OBJECT_ID(
     N'[dbo].[EmployeeEmploymentAuditChanges]',
     N'U') IS NULL
@@ -301,21 +301,21 @@ BEGIN
     );
 END;";
 
-            ExecuteNonQuery(
-                connection,
-                transaction,
-                sql);
-        }
+        ExecuteNonQuery(
+            connection,
+            transaction,
+            sql);
+    }
 
-        /// <summary>
-        /// 기존에 Detail 테이블만 생성되어 있거나 FK가 누락된 환경도
-        /// 보정할 수 있도록 FK 존재 여부를 별도로 검사합니다.
-        /// </summary>
-        private static void EnsureAuditChangesForeignKey(
-            SqlConnection connection,
-            SqlTransaction transaction)
-        {
-            const string sql = @"
+    /// <summary>
+    /// 기존에 Detail 테이블만 생성되어 있거나 FK가 누락된 환경도
+    /// 보정할 수 있도록 FK 존재 여부를 별도로 검사합니다.
+    /// </summary>
+    private static void EnsureAuditChangesForeignKey(
+        SqlConnection connection,
+        SqlTransaction transaction)
+    {
+        const string sql = @"
 IF OBJECT_ID(
        N'[dbo].[EmployeeEmploymentAuditRecords]',
        N'U') IS NOT NULL
@@ -347,21 +347,21 @@ BEGIN
             [FK_EmployeeEmploymentAuditChanges_Record];
 END;";
 
-            ExecuteNonQuery(
-                connection,
-                transaction,
-                sql);
-        }
+        ExecuteNonQuery(
+            connection,
+            transaction,
+            sql);
+    }
 
-        /// <summary>
-        /// 목록, 상세 조회 및 기존 AuditTrail 연결에 필요한
-        /// 인덱스를 생성합니다.
-        /// </summary>
-        private static void EnsureAuditIndexes(
-            SqlConnection connection,
-            SqlTransaction transaction)
-        {
-            const string sql = @"
+    /// <summary>
+    /// 목록, 상세 조회 및 기존 AuditTrail 연결에 필요한
+    /// 인덱스를 생성합니다.
+    /// </summary>
+    private static void EnsureAuditIndexes(
+        SqlConnection connection,
+        SqlTransaction transaction)
+    {
+        const string sql = @"
 IF NOT EXISTS
 (
     SELECT 1
@@ -430,77 +430,76 @@ BEGIN
         ([AuditRecordID], [SortOrder]);
 END;";
 
-            ExecuteNonQuery(
+        ExecuteNonQuery(
+            connection,
+            transaction,
+            sql);
+    }
+
+    private static void ExecuteNonQuery(
+        SqlConnection connection,
+        SqlTransaction transaction,
+        string sql)
+    {
+        using var command =
+            new SqlCommand(
+                sql,
                 connection,
-                transaction,
-                sql);
-        }
-
-        private static void ExecuteNonQuery(
-            SqlConnection connection,
-            SqlTransaction transaction,
-            string sql)
-        {
-            using var command =
-                new SqlCommand(
-                    sql,
-                    connection,
-                    transaction)
-                {
-                    CommandTimeout = CommandTimeoutSeconds
-                };
-
-            command.ExecuteNonQuery();
-        }
-
-        /// <summary>
-        /// Startup.cs에서 간단히 호출하기 위한 진입점입니다.
-        /// </summary>
-        public static void Run(IServiceProvider services)
-        {
-            ArgumentNullException.ThrowIfNull(services);
-
-            try
+                transaction)
             {
-                var configuration =
-                    services.GetRequiredService<IConfiguration>();
+                CommandTimeout = CommandTimeoutSeconds
+            };
 
-                var logger =
-                    services.GetRequiredService<
-                        ILogger<
-                            TenantSchemaEnhancerCreateEmployeeEmploymentAuditTables>>();
+        command.ExecuteNonQuery();
+    }
 
-                var masterConnectionString =
-                    configuration.GetConnectionString(
-                        "DefaultConnection");
+    /// <summary>
+    /// Startup.cs에서 간단히 호출하기 위한 진입점입니다.
+    /// </summary>
+    public static void Run(IServiceProvider services)
+    {
+        ArgumentNullException.ThrowIfNull(services);
 
-                if (string.IsNullOrWhiteSpace(
-                    masterConnectionString))
-                {
-                    logger.LogError(
-                        "Employee Employment Audit table creation was skipped because DefaultConnection is not configured.");
+        try
+        {
+            var configuration =
+                services.GetRequiredService<IConfiguration>();
 
-                    return;
-                }
+            var logger =
+                services.GetRequiredService<
+                    ILogger<
+                        TenantSchemaEnhancerCreateEmployeeEmploymentAuditTables>>();
 
-                var enhancer =
-                    new TenantSchemaEnhancerCreateEmployeeEmploymentAuditTables(
-                        masterConnectionString,
-                        logger);
+            var masterConnectionString =
+                configuration.GetConnectionString(
+                    "DefaultConnection");
 
-                enhancer.EnhanceAllTenantDatabases();
-            }
-            catch (Exception ex)
+            if (string.IsNullOrWhiteSpace(
+                masterConnectionString))
             {
-                var fallbackLogger =
-                    services.GetService<
-                        ILogger<
-                            TenantSchemaEnhancerCreateEmployeeEmploymentAuditTables>>();
+                logger.LogError(
+                    "Employee Employment Audit table creation was skipped because DefaultConnection is not configured.");
 
-                fallbackLogger?.LogError(
-                    ex,
-                    "An error occurred while creating Employee Employment Audit tables.");
+                return;
             }
+
+            var enhancer =
+                new TenantSchemaEnhancerCreateEmployeeEmploymentAuditTables(
+                    masterConnectionString,
+                    logger);
+
+            enhancer.EnhanceAllTenantDatabases();
+        }
+        catch (Exception ex)
+        {
+            var fallbackLogger =
+                services.GetService<
+                    ILogger<
+                        TenantSchemaEnhancerCreateEmployeeEmploymentAuditTables>>();
+
+            fallbackLogger?.LogError(
+                ex,
+                "An error occurred while creating Employee Employment Audit tables.");
         }
     }
 }
