@@ -1,8 +1,11 @@
 using Azunt.ArticleManagement;
+using Azunt.AttachmentManagement;
 using Azunt.DepotManagement;
 using Azunt.DivisionManagement;
 using Azunt.EmployeeManagement;
 using Azunt.Endpoints;
+using Azunt.Initializers;
+using Azunt.InstructionManagement;
 using Azunt.Models.Enums;
 using Azunt.ResourceManagement;
 using Azunt.Services.Terminology;
@@ -30,7 +33,6 @@ using VisualAcademy.Repositories.Tenants;
 using VisualAcademy.Services.Interfaces;
 using VisualAcademy.Settings;
 using VisualAcademy.Settings.Translators;
-using Azunt.InstructionManagement;
 
 namespace VisualAcademy
 {
@@ -297,8 +299,59 @@ namespace VisualAcademy
                 defaultConnectionString,
                 InstructionRepositoryMode.EfCoreSqlServer);
 
+
+            var masterConnectionString =
+                builder.Configuration.GetConnectionString(
+                    "DefaultConnection")
+                ?? throw new InvalidOperationException(
+                    "DefaultConnection is not configured.");
+
+            builder.Services.AddDependencyInjectionContainerForAttachmentApp(
+                masterConnectionString,
+                AttachmentServicesRegistrationExtensions
+                    .RepositoryMode
+                    .Dapper);
+
             // æ€ ∫ÙµÂ
             var app = builder.Build();
+
+            #region Attachments
+            var initializeMasterSchema =
+        app.Configuration.GetValue<bool>(
+            "AttachmentManagement:InitializeMasterSchemaOnStartup");
+
+            var initializeTenantSchemas =
+                app.Configuration.GetValue<bool>(
+                    "AttachmentManagement:InitializeTenantSchemasOnStartup");
+
+            var ensureIndexes =
+                app.Configuration.GetValue<bool>(
+                    "AttachmentManagement:EnsureIndexes");
+
+            var failFast =
+                app.Configuration.GetValue(
+                    "AttachmentManagement:FailFast",
+                    true);
+
+            // 1. ∏∂Ω∫≈Õ DB
+            if (initializeMasterSchema)
+            {
+                await AttachmentMasterSchemaRunner.RunAsync(
+                    services: app.Services,
+                    masterConnectionString: masterConnectionString,
+                    ensureIndexes: ensureIndexes);
+            }
+
+            // 2. ¿¸√º Tenant DB
+            if (initializeTenantSchemas)
+            {
+                await AttachmentTenantSchemaRunner.RunAsync(
+                    services: app.Services,
+                    masterConnectionString: masterConnectionString,
+                    ensureIndexes: ensureIndexes,
+                    failFast: failFast);
+            } 
+            #endregion
 
             using (var scope = app.Services.CreateScope())
             {
