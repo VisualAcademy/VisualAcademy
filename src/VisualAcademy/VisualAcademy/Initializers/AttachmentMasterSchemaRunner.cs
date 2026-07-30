@@ -1,6 +1,4 @@
 ﻿using Azunt.AttachmentManagement;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Azunt.Initializers;
 
