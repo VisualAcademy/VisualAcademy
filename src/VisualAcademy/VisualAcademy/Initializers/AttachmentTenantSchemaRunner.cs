@@ -1,8 +1,4 @@
 ﻿using Azunt.AttachmentManagement;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
 
 namespace Azunt.Initializers;
 
