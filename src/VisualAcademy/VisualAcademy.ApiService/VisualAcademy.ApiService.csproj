@@ -11,7 +11,15 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi"
+                          Version="10.0.10" />
+
+        <!--
+            Microsoft.AspNetCore.OpenApi가 Microsoft.OpenApi >= 2.0.0을
+            전이 종속성으로 참조하므로 보안 패치 버전을 명시적으로 지정합니다.
+        -->
+        <PackageReference Include="Microsoft.OpenApi"
+                          Version="2.7.5" />
     </ItemGroup>
 
 </Project>
