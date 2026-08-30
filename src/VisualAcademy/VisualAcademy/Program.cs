@@ -1,5 +1,6 @@
 using Azunt.ArticleManagement;
 using Azunt.AttachmentManagement;
+using Azunt.BundleManagement;
 using Azunt.DepotManagement;
 using Azunt.DivisionManagement;
 using Azunt.EmployeeManagement;
@@ -314,6 +315,15 @@ namespace VisualAcademy
 
             // ¾Û ºôµå
             var app = builder.Build();
+
+            // Install Bundles Table before running the application
+            await using (var bundleSchemaScope = app.Services.CreateAsyncScope())
+            {
+                var bundlesTableBuilder =
+                    bundleSchemaScope.ServiceProvider.GetRequiredService<BundlesTableBuilder>();
+
+                await bundlesTableBuilder.EnsureAsync(connectionString);
+            }
 
             #region Attachments
             var initializeMasterSchema =
