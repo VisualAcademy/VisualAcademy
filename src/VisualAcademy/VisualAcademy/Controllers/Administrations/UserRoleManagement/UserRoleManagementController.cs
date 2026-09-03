@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace VisualAcademy.Controllers.Administrations.UserRoleManagement
+﻿namespace VisualAcademy.Controllers.Administrations.UserRoleManagement
 {
     public class UserRoleManagementController : Controller
     {
