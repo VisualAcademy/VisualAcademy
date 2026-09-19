@@ -105,6 +105,7 @@
     <Build Include="dbo\Tables\EmployeeEmploymentAuditRecords.sql" />
     <Build Include="dbo\Tables\Instructions.sql" />
     <Build Include="dbo\Tables\InventoryCategories.sql" />
+    <Build Include="dbo\Tables\InventoryItems.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Identity\AspNetRoleClaims.sql" />
