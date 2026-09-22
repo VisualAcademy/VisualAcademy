@@ -108,6 +108,7 @@
     <Build Include="dbo\Tables\InventoryItems.sql" />
     <Build Include="dbo\Tables\Warehouses.sql" />
     <Build Include="dbo\Tables\WarehouseLocations.sql" />
+    <Build Include="dbo\Tables\InventoryStocks.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Identity\AspNetRoleClaims.sql" />
