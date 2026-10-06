@@ -126,7 +126,7 @@
 
     <ItemGroup>
         <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="3.53.3" />
-        <PackageReference Include="Azunt" Version="1.2.3" />
+        <PackageReference Include="Azunt" Version="1.2.4" />
         <PackageReference Include="Azunt.ApplicantTypeManagement" Version="1.0.0" />
         <PackageReference Include="Azunt.AppointmentTypeManagement" Version="1.0.4" />
         <PackageReference Include="Azunt.ArticleManagement" Version="1.0.1" />
