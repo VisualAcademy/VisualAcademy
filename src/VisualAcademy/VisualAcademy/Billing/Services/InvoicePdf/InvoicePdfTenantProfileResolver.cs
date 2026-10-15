@@ -1,6 +1,5 @@
-﻿namespace VisualAcademy.Billing.Services.InvoicePdf
+﻿namespace VisualAcademy.Billing.Services.InvoicePdf;
+
+public class InvoicePdfTenantProfileResolver
 {
-    public class InvoicePdfTenantProfileResolver
-    {
-    }
 }
