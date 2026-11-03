@@ -8,19 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Remove="Data\Migrations\**" />
-      <Content Remove="Data\Migrations\**" />
-      <EmbeddedResource Remove="Data\Migrations\**" />
-      <None Remove="Data\Migrations\**" />
+        <Compile Remove="Data\Migrations\**" />
+        <Content Remove="Data\Migrations\**" />
+        <EmbeddedResource Remove="Data\Migrations\**" />
+        <None Remove="Data\Migrations\**" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Azunt.AttachmentManagement" Version="1.0.0" />
-        <PackageReference Include="Azunt.BundleManagement" Version="1.1.0" />
-        <PackageReference Include="Azunt.InstructionManagement" Version="1.0.0" />
-        <PackageReference Include="NuGet.Packaging" Version="7.9.0" />
-        <PackageReference Include="NuGet.Protocol" Version="7.9.0" />
-        
         <None Include="Areas\Identity\Pages\Account\AccessDenied.cshtml" />
         <None Include="Areas\Identity\Pages\Account\ConfirmEmail.cshtml" />
         <None Include="Areas\Identity\Pages\Account\ConfirmEmailChange.cshtml" />
@@ -125,6 +119,12 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="Azunt.AttachmentManagement" Version="1.0.0" />
+        <PackageReference Include="Azunt.BundleManagement" Version="1.1.0" />
+        <PackageReference Include="Azunt.InstructionManagement" Version="1.0.0" />
+        <PackageReference Include="NuGet.Packaging" Version="7.9.0" />
+        <PackageReference Include="NuGet.Protocol" Version="7.9.0" />
+
         <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="3.53.3" />
         <PackageReference Include="Azunt" Version="1.2.4" />
         <PackageReference Include="Azunt.ApplicantTypeManagement" Version="1.0.0" />
@@ -164,8 +164,8 @@
         <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.14" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.14" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.14">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.14" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
@@ -181,8 +181,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\VisualAcademy.Models.TextTemplates\VisualAcademy.Models.TextTemplates.csproj" />
-      <ProjectReference Include="..\VisualAcademy.Models\VisualAcademy.Models.csproj" />
+        <ProjectReference Include="..\VisualAcademy.Models.TextTemplates\VisualAcademy.Models.TextTemplates.csproj" />
+        <ProjectReference Include="..\VisualAcademy.Models\VisualAcademy.Models.csproj" />
     </ItemGroup>
 
 </Project>
