@@ -46,6 +46,7 @@
 
         <!-- Override vulnerable transitive dependencies -->
         <PackageReference Include="SQLitePCLRaw.lib.e_sqlite3" Version="3.53.3" />
+        <PackageReference Include="System.Security.Cryptography.Pkcs" Version="9.0.21" />
         <PackageReference Include="System.IO.Packaging" Version="10.0.14" />
     </ItemGroup>
 
