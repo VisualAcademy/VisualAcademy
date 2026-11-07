@@ -111,6 +111,7 @@
     <Build Include="dbo\Tables\InventoryStocks.sql" />
     <Build Include="dbo\Tables\InventoryTransactions.sql" />
     <Build Include="dbo\Tables\StripePayoutSnapshots.sql" />
+    <Build Include="dbo\Tables\StripePayoutTransactionSnapshots.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\Identity\AspNetRoleClaims.sql" />
