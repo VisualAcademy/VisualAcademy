@@ -313,6 +313,9 @@ public class Program
                 .RepositoryMode
                 .Dapper);
 
+        // Register the Bundles table builder before creating the service provider.
+        builder.Services.AddScoped<BundlesTableBuilder>();
+
         // ¾Û ºôµå
         var app = builder.Build();
 
