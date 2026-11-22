@@ -1,277 +1,31 @@
-﻿@*Razor Pages, MVC, Blazor 공통 레이아웃*@
-
-@using Microsoft.Extensions.Configuration 
+@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - @Configuration["TenantName"]</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/VisualAcademy.styles.css" asp-append-version="true" />
-    <style>
-        .nav-item.active > .nav-link {
-            background-color: #f8f9fa;
-            color: #495057;
-        }
-    </style>
-
-    <style>
-        .dropdown-submenu {
-            position: relative; /* 상대적 위치 설정으로, 절대 위치를 가진 자식 요소들의 기준점을 설정합니다. */
-        }
-
-            .dropdown-submenu a::after {
-                transform: rotate(-90deg); /* 가상 요소(대개 화살표)를 -90도 회전시킵니다. */
-                position: absolute; /* 가상 요소를 상대적 위치를 가진 부모 요소 내에서 절대 위치로 설정합니다. */
-                right: 6px; /* 부모 요소의 오른쪽 가장자리에서 6px 떨어진 곳에 위치시킵니다. */
-                top: .8em; /* 부모 요소의 상단에서 .8em 떨어진 곳에 위치시킵니다. */
-            }
-
-            .dropdown-submenu .dropdown-menu {
-                top: 0; /* 서브메뉴의 상단을 부모 메뉴의 상단과 맞춥니다. */
-                left: 100%; /* 서브메뉴를 부모 메뉴의 바로 오른쪽에 위치시킵니다. */
-                margin-left: .1rem; /* 부모 메뉴와의 간격을 위해 왼쪽 여백을 조금 추가합니다. */
-                margin-right: .1rem; /* 일관된 간격을 위해 오른쪽 여백을 조금 추가합니다. */
-            }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/azunt@1.1.1/src/azunt.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewData["Title"] - VisualAcademy</title>
+  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+  <link rel="stylesheet" href="~/css/site.mvc.css" asp-append-version="true" />
+  <link rel="stylesheet" href="~/VisualAcademy.styles.css" asp-append-version="true" />
+  <link rel="stylesheet" href="~/css/azunt-core.css" asp-append-version="true" />
+  <link rel="stylesheet" href="~/css/azunt-landing.css" asp-append-version="true" />
+  <link rel="stylesheet" href="~/css/azunt-visualacademy.css" asp-append-version="true" />
+  <script src="https://cdn.jsdelivr.net/npm/azunt@1.1.1/src/azunt.js"></script>
+  @await RenderSectionAsync("Styles", required: false)
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">@Configuration["TenantName"]</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="/aspnetcore-roadmap/index.html">ASP.NET Core 강의 로드맵</a>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#"
-                               id="navbarBooks" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Books
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarBooks">
-                                <li><a class="dropdown-item text-dark" href="#">C# 교과서</a></li>
-                                <li><a class="dropdown-item text-dark" href="#">ASP.NET &amp; Core를 다루는 기술</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item text-dark" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#"
-                                   id="navbarDemos" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Demo
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDemos">
-                                <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle text-dark" href="#">Configuration</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/badge">Badge</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle text-dark" href="#">VisualAcademy</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Youtube</a></li>
-                                        <li class="dropdown-submenu">
-                                            <a class="dropdown-item dropdown-toggle text-dark" href="#">JavaCampus</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Java</a></li>
-                                                <li><a class="dropdown-item" href="#">Spring Boot</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#"
-                               id="navbarBooks" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Courses
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarBooks">
-                                <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle text-dark" href="#">DevLec</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">C#</a></li>
-                                        <li><a class="dropdown-item" href="#">ASP.NET Core</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle text-dark" href="#">VisualAcademy</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Youtube</a></li>
-                                        <li class="dropdown-submenu">
-                                            <a class="dropdown-item dropdown-toggle text-dark" href="#">JavaCampus</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Java</a></li>
-                                                <li><a class="dropdown-item" href="#">Spring Boot</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark" href="#"
-                               id="navbarBooks" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Modules
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarBooks">
-                                <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle text-dark" href="#">DropDownLists</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="/StandardReports">Standard Reports</a></li>
-                                        <li><a class="dropdown-item" href="#">ASP.NET Core</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a class="dropdown-item dropdown-toggle text-dark" href="#">VisualAcademy</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Youtube</a></li>
-                                        <li class="dropdown-submenu">
-                                            <a class="dropdown-item dropdown-toggle text-dark" href="#">JavaCampus</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#">Java</a></li>
-                                                <li><a class="dropdown-item" href="#">Spring Boot</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - @Configuration["TenantName"] - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-
-    <script src="/_framework/blazor.server.js"></script>
-
-    <script>
-        // DOMContentLoaded 이벤트 리스너를 등록하여 문서 로드가 완료되면 실행
-        document.addEventListener("DOMContentLoaded", function () {
-            // 현재 페이지의 URL 경로를 가져옴
-            var currentPageUrl = window.location.pathname;
-            // 모든 .nav-item 요소를 선택
-            var navItems = document.querySelectorAll(".nav-item");
-
-            // navItems의 각 요소에 대해 반복
-            navItems.forEach(function (navItem) {
-                // .nav-link 요소를 찾음
-                var navLink = navItem.querySelector(".nav-link");
-
-                // navLink의 href 속성 값이 현재 페이지 URL과 일치하는지 확인
-                if (navLink.getAttribute("href") === currentPageUrl) {
-                    // 일치한다면, 해당 navItem에 'active' 클래스를 추가
-                    navItem.classList.add("active");
-                }
-                else {
-                    // 일치하지 않는다면, 해당 navItem에서 'active' 클래스를 제거
-                    navItem.classList.remove("active");
-                }
-            });
-        });
-    </script>
-
-    <script>
-        // 문서가 완전히 로드되었을 때 스크립트가 실행되도록 합니다.
-        document.addEventListener('DOMContentLoaded', function () {
-            // 모든 드롭다운 토글 요소를 선택합니다.
-            var dropdownToggleElements = document.querySelectorAll('.dropdown-submenu .dropdown-toggle');
-
-            // 각 토글 요소에 대한 이벤트 리스너를 설정합니다.
-            dropdownToggleElements.forEach(function (dropdownToggle) {
-                dropdownToggle.addEventListener('click', function (event) {
-                    event.preventDefault(); // 클릭에 의한 기본 동작을 방지합니다.
-                    event.stopPropagation(); // 이벤트가 상위로 전파되는 것을 방지합니다.
-
-                    // 클릭된 토글 바로 다음에 오는 서브 메뉴를 선택합니다.
-                    var currentSubMenu = this.nextElementSibling;
-                    // 현재 서브 메뉴가 보이는 상태인지 확인합니다.
-                    var isCurrentlyShown = currentSubMenu.classList.contains('show');
-                    // 현재 토글의 상위 메뉴를 찾습니다.
-                    var parentMenu = this.parentElement.parentElement.closest('.dropdown-submenu');
-
-                    // 만약 상위 메뉴가 있고 현재 서브 메뉴가 열려 있다면, 서브 메뉴를 닫습니다.
-                    if (parentMenu && isCurrentlyShown) {
-                        closeSubMenu(currentSubMenu);
-                        return; // 추가 실행을 중단합니다.
-                    }
-
-                    // 상위 메뉴를 클릭했을 때, 다른 모든 서브 메뉴를 닫고 현재 메뉴의 상태를 토글합니다.
-                    if (!parentMenu) {
-                        closeAllSubMenus(this); // 다른 모든 서브 메뉴를 닫습니다.
-                        if (!isCurrentlyShown) {
-                            currentSubMenu.classList.add('show'); // 현재 메뉴를 엽니다.
-                        }
-                    } else {
-                        // 하위 메뉴를 클릭했을 때 현재 메뉴의 상태에 따라 토글합니다.
-                        if (!isCurrentlyShown) {
-                            currentSubMenu.classList.add('show'); // 현재 메뉴를 엽니다.
-                        } else {
-                            closeSubMenu(currentSubMenu); // 현재 메뉴를 닫습니다.
-                        }
-                    }
-                });
-            });
-
-            // 지정된 요소를 제외한 모든 서브 메뉴를 닫는 함수입니다.
-            function closeAllSubMenus(exceptThis) {
-                document.querySelectorAll('.dropdown-submenu .dropdown-menu').forEach(function (menu) {
-                    if (!exceptThis.contains(menu)) {
-                        closeSubMenu(menu); // 서브 메뉴를 닫습니다.
-                    }
-                });
-            }
-
-            // 지정된 메뉴와 그 하위 메뉴를 닫는 함수입니다.
-            function closeSubMenu(menu) {
-                menu.classList.remove('show'); // 메뉴를 닫습니다.
-                var subMenus = menu.querySelectorAll('.dropdown-menu');
-                subMenus.forEach(function (subMenu) {
-                    subMenu.classList.remove('show'); // 하위 메뉴를 닫습니다.
-                });
-            }
-        });
-    </script>
-
-    @await RenderSectionAsync("Scripts", required: false)
+<body class="az-public-body" data-az-shell="landing" data-az-shell-mode="mvc-razor">
+  @await Html.PartialAsync("~/Views/Shared/_AzPublicHeader.cshtml")
+  <main class="az-va-public-main" id="az-public-main">@RenderBody()</main>
+  @await Html.PartialAsync("~/Views/Shared/_AzPublicFooter.cshtml")
+  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="~/js/site.js" asp-append-version="true"></script>
+  <script src="~/js/site.mvc.js" asp-append-version="true"></script>
+  <script src="~/js/azunt-landing.js" asp-append-version="true"></script>
+  <script src="/_framework/blazor.server.js"></script>
+  @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

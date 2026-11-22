@@ -1,20 +1,9 @@
-﻿@inherits LayoutComponentBase
-
+@inherits LayoutComponentBase
 <PageTitle>VisualAcademy</PageTitle>
-
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4 auth">
-            <LoginDisplay />
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+<section class="az-va-dashboard-page">
+  <div class="az-va-dashboard-heading">
+    <div><span class="az-va-dashboard-eyebrow">VisualAcademy workspace</span><h1>Dashboard</h1></div>
+    <div class="az-va-dashboard-auth"><LoginDisplay /></div>
+  </div>
+  <div class="az-va-dashboard-content">@Body</div>
+</section>
