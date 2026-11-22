@@ -24,3 +24,22 @@
 .az-dashboard-body #blazor-error-ui { display:none; position:fixed; bottom:0; left:0; right:0; z-index:3000; padding:14px 24px; background:#fff7d6; box-shadow:0 -2px 8px #0002; }
 .az-dashboard-body #blazor-error-ui .dismiss { position:absolute; right:16px; cursor:pointer; }
 @media(max-width:720px){.az-va-dashboard-page{padding:18px 14px 40px}.az-va-dashboard-heading{align-items:flex-start;flex-direction:column}.az-va-dashboard-content{padding:14px}}
+
+/* VisualAcademy dashboard pages: no fabricated backend status or metrics. */
+.az-va-dashboard-section { max-width: 1200px; padding: 4px 0 38px; }
+.az-va-dashboard-section h1 { margin: 10px 0 12px; color: #152b49; font-size: clamp(25px,2.5vw,32px); font-weight: 750; }
+.az-va-dashboard-lead { max-width: 760px; margin-bottom: 25px; color: #5b6b83; font-size: 14px; line-height: 1.75; }
+.az-va-dashboard-tiles { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; margin-bottom: 26px; }
+.az-va-dashboard-tile { min-height: 128px; padding: 22px; display: flex; flex-direction: column; gap: 13px; background: #fff; border: 1px solid #dce4ef; border-radius: 8px; color: #183457; text-decoration: none !important; }
+.az-va-dashboard-tile strong { color: #193451; font-size: 16px; }
+.az-va-dashboard-tile span { color: #61718a; font-size: 13px; line-height: 1.6; }
+a.az-va-dashboard-tile:hover { border-color: #95c5eb; box-shadow: 0 5px 13px rgba(20,62,100,.08); }
+.az-va-dashboard-disclaimer { padding: 17px 20px; border: 1px solid #c9dfef; background: #f5faff; border-radius: 8px; color: #4d637b; font-size: 13px; line-height: 1.7; }
+.az-va-dashboard-links { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 14px; }
+.az-va-dashboard-links a { color: #075da4; font-weight: 650; text-decoration: none; }
+.az-va-dashboard-links a:hover { text-decoration: underline; }
+@media(max-width:850px) { .az-va-dashboard-tiles { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media(max-width:550px) { .az-va-dashboard-tiles { grid-template-columns: 1fr; } }
+
+/* Dashboard home/Starter examples use the flat Azunt workspace canvas. */
+.az-va-dashboard-content:has(> .az-va-dashboard-section) { background: transparent; border: 0; border-radius: 0; padding: 0; }

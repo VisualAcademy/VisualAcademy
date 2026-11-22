@@ -1,0 +1,68 @@
+@page "/dashboard/resources"
+@page "/dashboard/resources/app-services"
+@page "/dashboard/resources/databases"
+@page "/dashboard/resources/storage"
+@page "/dashboard/management"
+@page "/dashboard/management/identity"
+@page "/dashboard/management/identity/users"
+@page "/dashboard/management/identity/roles"
+@page "/dashboard/management/tenants"
+@page "/dashboard/monitoring"
+@page "/dashboard/monitoring/activity"
+@page "/dashboard/monitoring/health"
+@inject NavigationManager Navigation
+
+<PageTitle>@Current.Title - VisualAcademy</PageTitle>
+<div class="az-va-dashboard-section">
+    <div class="az-portal-breadcrumb">Dashboard <span>/</span> @Current.Title</div>
+    <span class="az-va-dashboard-eyebrow">Azunt Starter · UI example</span>
+    <h1>@Current.Title</h1>
+    <p class="az-va-dashboard-lead">@Current.Description</p>
+    <div class="az-va-dashboard-tiles">
+        @foreach (var title in Current.Highlights)
+        {
+            <div class="az-va-dashboard-tile"><strong>@title</strong><span>AzuntSiteStarter 디자인 및 탐색 예제</span></div>
+        }
+    </div>
+    <div class="az-va-dashboard-disclaimer">
+        이 페이지는 AzuntSiteStarter의 화면 구성 예제이며, 실제 사용자·서비스·데이터베이스·테넌트 정보를 조회하거나 변경하지 않습니다.
+        기존 VisualAcademy 기능은 사이드바의 VisualAcademy 메뉴를 이용하세요.
+    </div>
+    <div class="az-va-dashboard-links">
+        <a href="/dashboard">대시보드</a>
+        <a href="/Articles">게시판</a>
+        <a href="/Candidates">Candidates</a>
+        <a href="/Identity/Account/Manage">내 계정</a>
+    </div>
+</div>
+
+@code {
+    private sealed record Section(string Title, string Description, string[] Highlights);
+
+    private static readonly Dictionary<string, Section> Sections = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["/dashboard/resources"] = new("Resources", "리소스 메뉴의 배치를 확인하는 화면 예제입니다.", ["App services", "Databases", "Storage"]),
+        ["/dashboard/resources/app-services"] = new("App services", "애플리케이션 리소스의 화면 구성 예제입니다.", ["Web applications", "Deployment", "Configuration"]),
+        ["/dashboard/resources/databases"] = new("Databases", "데이터베이스 화면 구성 예제입니다.", ["SQL resources", "Connections", "Backups"]),
+        ["/dashboard/resources/storage"] = new("Storage", "스토리지 화면 구성 예제입니다.", ["Blob", "Files", "Usage"]),
+        ["/dashboard/management"] = new("Management", "관리 기능의 화면 구성 예제입니다.", ["Identity", "Tenants", "Policies"]),
+        ["/dashboard/management/identity"] = new("Identity", "ID 및 접근 권한 메뉴의 화면 구성 예제입니다.", ["Users", "Roles", "Access"]),
+        ["/dashboard/management/identity/users"] = new("Users", "사용자 관리 화면의 예제입니다.", ["Accounts", "Invitations", "Roles"]),
+        ["/dashboard/management/identity/roles"] = new("Roles", "역할 관리 화면의 예제입니다.", ["Role list", "Permissions", "Assignments"]),
+        ["/dashboard/management/tenants"] = new("Tenants", "테넌트 관리 화면의 예제입니다.", ["Tenants", "Configuration", "Access"]),
+        ["/dashboard/monitoring"] = new("Monitoring", "모니터링 화면의 예제입니다.", ["Activity log", "Service health", "Status"]),
+        ["/dashboard/monitoring/activity"] = new("Activity log", "활동 기록 화면의 예제입니다.", ["Timeline", "Filters", "History"]),
+        ["/dashboard/monitoring/health"] = new("Service health", "서비스 상태 화면의 예제입니다.", ["Availability", "Incidents", "Maintenance"])
+    };
+
+    private Section Current
+    {
+        get
+        {
+            var path = new Uri(Navigation.Uri).AbsolutePath.TrimEnd('/');
+            return Sections.TryGetValue(path, out var section)
+                ? section
+                : new Section("Azunt Starter", "화면 구성 예제입니다.", []);
+        }
+    }
+}

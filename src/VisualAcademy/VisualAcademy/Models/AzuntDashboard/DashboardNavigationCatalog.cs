@@ -15,6 +15,7 @@ public sealed class DashboardNavigationNodeViewModel
     public string Text { get; init; } = "";
     public string Icon { get; init; } = "";
     public string Href { get; init; } = "";
+    public bool IsAvailable { get; init; } = true;
     public int Depth { get; init; }
     public bool IsCurrent { get; init; }
     public bool ContainsCurrent { get; init; }
@@ -94,7 +95,7 @@ public static class DashboardNavigationCatalog
                 new("va-nav-29", "경쟁 업체 (Competitors)", "resources", "/Competitors"),
                 new("va-nav-30", "견적 (Quotes)", "resources", "/Quotes"),
                 new("va-nav-31", "주문 (Orders)", "resources", "/Orders"),
-                new("va-nav-32", "송장 (Invoices)", "resources", "/Invoices")
+                new("va-nav-32", "송장 (Invoices)", "resources", "/invoices/manage")
             ]),
             new("va-nav-33", "참고자료 (Reference)", "resources", "/Products", [
                 new("va-nav-34", "제품 (Products)", "resources", "/Products"),
@@ -188,11 +189,62 @@ public static class DashboardNavigationCatalog
         return new DashboardNavigationNodeViewModel
         {
             Key = item.Key, Text = item.Text, Icon = item.Icon, Href = item.Href,
+            IsAvailable = IsPageAvailable(item.Href),
             Depth = depth, IsCurrent = isCurrent, ContainsCurrent = containsCurrent,
             IsExpanded = item.ExpandedByDefault || containsCurrent,
             Group = item.Group, Children = children
         };
     }
+
+    // Unimplemented links already existed in the original VisualAcademy navigation.
+    // Keep the menu hierarchy visible but prevent broken Blazor fallback navigation.
+    // Remove an entry when its real controller/component/page has been implemented.
+    private static readonly HashSet<string> UnsupportedPaths = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "/Accounts",
+        "/Assets",
+        "/Cases",
+        "/Competitors",
+        "/Contacts",
+        "/ContentBlocks",
+        "/Contracts",
+        "/CustomerJourneys",
+        "/docs/",
+        "/docs/private/",
+        "/Emails",
+        "/EmailTemplates",
+        "/Events",
+        "/ExpenseEntries",
+        "/IncidentTypes",
+        "/KnowledgeBase",
+        "/Leads",
+        "/MarketingForms",
+        "/MarketingLists",
+        "/MarketingPages",
+        "/Opportunities",
+        "/Orders",
+        "/PriceLists",
+        "/Products",
+        "/Projects",
+        "/Queues",
+        "/Quotes",
+        "/ResourceScheduling",
+        "/ScheduleBoard",
+        "/Segments",
+        "/ServiceLevelAgreements",
+        "/ServiceTasks",
+        "/ServiceTerritories",
+        "/Tasks",
+        "/Territories",
+        "/TimeEntries",
+        "/Units",
+        "/WorkOrders"
+    };
+
+    private static bool IsPageAvailable(string href) =>
+        !string.IsNullOrWhiteSpace(href) && href != "#" &&
+        (href.StartsWith("http", StringComparison.OrdinalIgnoreCase) ||
+         !UnsupportedPaths.Contains(href) && !UnsupportedPaths.Contains(href.TrimEnd('/')));
 
     private static string Normalize(string? path)
     {

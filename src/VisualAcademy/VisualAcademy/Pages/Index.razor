@@ -1,9 +1,16 @@
-﻿@page "/dashboard"
-
-<PageTitle>Index</PageTitle>
-
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+@page "/dashboard"
+<PageTitle>Dashboard - VisualAcademy</PageTitle>
+<div class="az-va-dashboard-section">
+    <div class="az-portal-breadcrumb">VisualAcademy <span>/</span> Dashboard</div>
+    <span class="az-va-dashboard-eyebrow">VisualAcademy Workspace</span>
+    <h1>Dashboard</h1>
+    <p class="az-va-dashboard-lead">VisualAcademy의 기존 학습·게시판·Blazor 데모를 Azunt 대시보드에서 이용할 수 있습니다.</p>
+    <div class="az-va-dashboard-tiles">
+        <a class="az-va-dashboard-tile" href="/Articles"><strong>게시판</strong><span>Articles 게시판 열기</span></a>
+        <a class="az-va-dashboard-tile" href="/Candidates"><strong>Candidates</strong><span>학습 예제 및 Candidates 목록</span></a>
+        <a class="az-va-dashboard-tile" href="/TodoListInMemory"><strong>TodoList</strong><span>Blazor 예제 열기</span></a>
+        <a class="az-va-dashboard-tile" href="/invoices/manage"><strong>Invoices</strong><span>기존 송장 관리 페이지</span></a>
+        <a class="az-va-dashboard-tile" href="/dashboard/resources"><strong>Azunt UI examples</strong><span>대시보드 메뉴 템플릿 예제</span></a>
+    </div>
+    <div class="az-va-dashboard-disclaimer">원본 VisualAcademy에 실제 페이지가 없는 CRM·마케팅 등 메뉴는 비활성 상태로 표시됩니다. 기존 기능이나 데이터를 새로 만든 것은 아닙니다.</div>
+</div>

@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="~/css/azunt-core.css" asp-append-version="true" />
   <link rel="stylesheet" href="~/css/azunt-dashboard.css" asp-append-version="true" />
   <link rel="stylesheet" href="~/css/azunt-visualacademy.css" asp-append-version="true" />
+  <link rel="stylesheet" href="~/css/azunt-dashboard-compat.css" asp-append-version="true" />
   <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>
 <body class="az-dashboard-body" data-az-shell="dashboard" data-az-shell-mode="blazor-server">
@@ -74,30 +75,25 @@
         <span class="az-portal-app-icon az-app-icon-resources"><svg aria-hidden="true"><use href="/images/dashboard-icons.svg#resources"></use></svg></span>
         <span>Resources</span>
       </a>
-      <a class="az-portal-app-item" href="/courses">
+      <span class="az-portal-app-item az-is-unavailable" aria-disabled="true" title="VisualAcademy에 해당 페이지가 구현되어 있지 않습니다">
         <span class="az-portal-app-icon az-app-icon-courses"><svg aria-hidden="true"><use href="/images/dashboard-icons.svg#courses"></use></svg></span>
-        <span>Courses</span>
-      </a>
-      <a class="az-portal-app-item" href="/docs/">
+        <span>Courses</span></span>
+      <span class="az-portal-app-item az-is-unavailable" aria-disabled="true" title="VisualAcademy에 해당 페이지가 구현되어 있지 않습니다">
         <span class="az-portal-app-icon az-app-icon-docs"><svg aria-hidden="true"><use href="/images/dashboard-icons.svg#docs"></use></svg></span>
-        <span>Documentation</span>
-      </a>
-      <a class="az-portal-app-item" href="/docs/private/">
+        <span>Documentation</span></span>
+      <span class="az-portal-app-item az-is-unavailable" aria-disabled="true" title="VisualAcademy에 해당 페이지가 구현되어 있지 않습니다">
         <span class="az-portal-app-icon az-app-icon-protected"><svg aria-hidden="true"><use href="/images/dashboard-icons.svg#shield"></use></svg></span>
-        <span>Protected docs</span>
-      </a>
+        <span>Protected docs</span></span>
       <a class="az-portal-app-item" href="/Identity/Account/Manage">
         <span class="az-portal-app-icon az-app-icon-account"><svg aria-hidden="true"><use href="/images/dashboard-icons.svg#account"></use></svg></span>
         <span>Account</span>
       </a>
-      <a class="az-portal-app-item" href="/products">
+      <span class="az-portal-app-item az-is-unavailable" aria-disabled="true" title="VisualAcademy에 해당 페이지가 구현되어 있지 않습니다">
         <span class="az-portal-app-icon az-app-icon-products"><svg aria-hidden="true"><use href="/images/dashboard-icons.svg#products"></use></svg></span>
-        <span>Products</span>
-      </a>
-      <a class="az-portal-app-item" href="/pricing">
+        <span>Products</span></span>
+      <span class="az-portal-app-item az-is-unavailable" aria-disabled="true" title="VisualAcademy에 해당 페이지가 구현되어 있지 않습니다">
         <span class="az-portal-app-icon az-app-icon-pricing"><svg aria-hidden="true"><use href="/images/dashboard-icons.svg#pricing"></use></svg></span>
-        <span>Pricing</span>
-      </a>
+        <span>Pricing</span></span>
       <a class="az-portal-app-item" href="/Articles"><span class="az-portal-app-icon az-app-icon-docs"><svg aria-hidden="true"><use href="/images/dashboard-icons.svg#docs"></use></svg></span><span>Articles</span></a>
       <a class="az-portal-app-item" href="/StandardReports"><span class="az-portal-app-icon az-app-icon-resources"><svg aria-hidden="true"><use href="/images/dashboard-icons.svg#resources"></use></svg></span><span>Reports</span></a>
       <a class="az-portal-app-item" href="/aspnetcore-roadmap/index.html"><span class="az-portal-app-icon az-app-icon-courses"><svg aria-hidden="true"><use href="/images/dashboard-icons.svg#courses"></use></svg></span><span>Course roadmap</span></a>
@@ -106,8 +102,8 @@
     <div class="az-portal-app-menu-divider"></div>
     <div class="az-portal-app-quick-links">
       <a href="/dashboard/resources">Browse resources <span aria-hidden="true">→</span></a>
-      <a href="/courses/aspnet-core">Browse courses <span aria-hidden="true">→</span></a>
-      <a href="/docs/getting-started/site-structure">Getting started <span aria-hidden="true">→</span></a>
+      <span class="az-is-unavailable" title="VisualAcademy에 해당 페이지가 구현되어 있지 않습니다">Browse courses</span>
+      <span class="az-is-unavailable" title="VisualAcademy에 해당 페이지가 구현되어 있지 않습니다">Getting started</span>
       <a href="/Identity/Account/Manage">Profile and account <span aria-hidden="true">→</span></a>
     </div>
   </section>
